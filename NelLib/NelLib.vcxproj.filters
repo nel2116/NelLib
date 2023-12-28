@@ -1,9 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="window.cpp" />
+    <ClCompile Include="Source\NelLib.cpp" />
+    <ClCompile Include="Source\System\window.cpp" />
+    <ClCompile Include="Source\DirectX\Renderer.cpp" />
+    <ClCompile Include="Source\DirectX\Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="window.h" />
+    <ClInclude Include="Source\NelLib.h" />
+    <ClInclude Include="Source\System\window.h" />
+    <ClInclude Include="Source\System\common.h" />
+    <ClInclude Include="Source\DirectX\Renderer.h" />
+    <ClInclude Include="Source\DirectX\Vertex.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shader\VertexShader.cso" />
+    <None Include="Assets\Shader\PixelShader.cso" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Source\HLSL\PixelShader.hlsl" />
+    <FxCompile Include="Source\HLSL\VertexShader.hlsl" />
   </ItemGroup>
 </Project>

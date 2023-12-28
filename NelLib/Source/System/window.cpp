@@ -1,8 +1,31 @@
+// ======= インクルード部 ======= //
 #include "window.h"
+
+// ====== グローバル変数 ======
+extern int ClientWidth = 0;         // ウィンドウの幅
+extern int ClientHeight = 0;        // ウィンドウの高さ
+extern bool Windowed = true;        // ウィンドウモードかどうか
+extern float Aspect = 0;            // アスペクト比
+extern unsigned ActiveWindow = 0;   // アクティブウィンドウのハンドル
+extern int MouseDelta = 0;		    // マウスの移動量
+int CursorFlag = 1;				    // カーソルの表示フラグ
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wp, LPARAM lp)
 {
     switch (uMsg) {
+    case WM_SIZE:
+        if (wp == SIZE_RESTORED || wp == SIZE_MAXIMIZED) {
+            ClientWidth = lp & 0xFFFF;
+            ClientHeight = (lp >> 16) & 0xFFFF;
+            // D3D.changeSize();
+        }
+        return 0;
+    case WM_MOUSEWHEEL:
+        MouseDelta = GET_WHEEL_DELTA_WPARAM(wp);
+        return 0;
+    case WM_ACTIVATE:
+        ActiveWindow = wp & 0xFFFF;
+        return 0;
     case WM_DESTROY:
         PostQuitMessage(0);
         return 0;
@@ -31,16 +54,17 @@ void createWindow(const char* appName, int windowWidth, int windowHeight)
 {
     //「ウィンドウクラス構造体」の値を設定して、ウィンドウクラスを登録する
     HINSTANCE hInstance = GetModuleHandle(NULL);
-    HBRUSH hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
+    HBRUSH hBrush = (HBRUSH)GetStockObject(BLACK_BRUSH);
     WNDCLASSA wc{};
     wc.style = CS_BYTEALIGNCLIENT;              //いくつかの定数を組み合わせてクラススタイルを指定
     wc.lpfnWndProc = WndProc;                   //コールバック関数を示すポインタを指定
     wc.hInstance = hInstance;                   //インスタンスハンドルを指定
-    wc.hIcon = LoadIcon(hInstance, IDC_ICON);   //アイコンハンドルを指定
+    wc.hIcon = LoadIcon(hInstance, "MYICON");   //アイコンハンドルを指定
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);   //カーソルハンドルを指定
     wc.hbrBackground = hBrush;                  //背景用のブラシハンドルを指定
     wc.lpszClassName = "GameWindow";            //ウインドウクラス名を指定
-    RegisterClass(&wc);//ここで登録！！！
+    ATOM rt = RegisterClass(&wc);//ここで登録！！！
+    WARNING(rt == 0, "ウィンドウクラスが登録できませんでした", "");
 
     //ウィンドウスタイルを決定する
     unsigned windowStyle = WS_SYSMENU;//枠あり
@@ -62,12 +86,13 @@ void createWindow(const char* appName, int windowWidth, int windowHeight)
         hInstance,                  //アプリケーションインスタンスのハンドル
         NULL                        //ウィンドウに関連付けるモジュールハンドル
     );
+    WARNING(hWnd == 0, "ウィンドウがつくれませんでした", "");
 
     //ウィンドウの大きさと位置を再計算する。
     RECT rect;
-    GetClientRect(hWnd, &rect);    //直前で作ったクライアント領域の大きさを取得
-    windowWidth += (windowWidth - rect.right);   //ウィンドウ枠の幅を加算
-    windowHeight += (windowHeight - rect.bottom); //タイトルバーおよびウィンドウ枠の高さを加算
+    GetClientRect(hWnd, &rect);                     //直前で作ったクライアント領域の大きさを取得
+    windowWidth += (windowWidth - rect.right);      //ウィンドウ枠の幅を加算
+    windowHeight += (windowHeight - rect.bottom);   //タイトルバーおよびウィンドウ枠の高さを加算
     //ウィンドウが中央に表示されるような表示位置を計算する。
     int windowPosX = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
     int windowPosY = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
@@ -76,4 +101,17 @@ void createWindow(const char* appName, int windowWidth, int windowHeight)
 
     //ウィンドウを表示する
     ShowWindow(hWnd, SW_SHOW);
+}
+
+void initDeltaTime()
+{
+}
+
+void setDeltaTime()
+{
+}
+
+unsigned getTime()
+{
+    return 0;
 }
