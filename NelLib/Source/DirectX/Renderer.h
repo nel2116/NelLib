@@ -3,26 +3,29 @@
 #include <d3d11.h>
 
 #pragma comment(lib,"d3d11.lib")
-#pragma comment(lib,"dxgi.lib")
 
-#include "Vertex.h"
-// #include "Shader.h"
 #include "../System/common.h"
 
 
+class RenderTarget;
+class DepthStencil;
 
-struct Shader
+enum BlendMode
 {
-	Shader() {}
-	~Shader() {
-		SAFE_RELEASE(pVertexShader);
-		SAFE_RELEASE(pPixelShader);
-		SAFE_RELEASE(pInputLayout);
-	}
+	BLEND_NONE,
+	BLEND_ALPHA,
+	BLEND_ADD,
+	BLEND_ADDALPHA,
+	BLEND_SUB,
+	BLEND_SCREEN,
+	BLEND_MAX
+};
 
-	ID3D11VertexShader* pVertexShader = nullptr;
-	ID3D11PixelShader* pPixelShader = nullptr;
-	ID3D11InputLayout* pInputLayout = nullptr;
+enum SamplerState
+{
+	SAMPLER_LINEAR,
+	SAMPLER_POINT,
+	SAMPLER_MAX
 };
 
 // ====== クラス宣言部 ======
@@ -35,8 +38,9 @@ public:		// ----- メンバ関数 -----
 	/// <remarks>初期化を行う</remarks>
 	/// <param name="baseWidth">幅</param>
 	/// <param name="baseHeight">高さ</param>
+	/// <param name="fullscreen">フルスクリーンかどうか</param>
 	/// <remarks>ライブラリ側で呼んでいるので呼ぶ必要なし</remarks>
-	void Init(int baseWidth, int baseHeight);
+	void Init(int baseWidth, int baseHeight,bool fullscreen);
 	/// <summary>
 	/// 解放関数
 	/// </summary>
@@ -45,7 +49,6 @@ public:		// ----- メンバ関数 -----
 	void Release();
 	void Begin();
 	void End();
-	void Present();
 	void SetClearColor(float r, float g, float b, float a);
 
 	/// <summary>
@@ -53,99 +56,79 @@ public:		// ----- メンバ関数 -----
 	/// </summary>
 	/// <returns>デバイス</returns>
 	/// <remarks>デバイスを取得する</remarks>
-	ID3D11Device* GetDevice() { return m_Device; }
+	ID3D11Device* GetDevice() { return m_pDevice; }
 
 	/// <summary>
 	/// デバイスコンテキストの取得関数
 	/// </summary>
 	/// <returns>デバイスコンテキスト</returns>
 	/// <remarks>デバイスコンテキストを取得する</remarks>
-	ID3D11DeviceContext* GetContext() { return m_Context; }
+	ID3D11DeviceContext* GetContext() { return m_pContext; }
 
+	/// <summary>
+	/// スワップチェインの取得関数
+	/// </summary>
+	/// <returns>スワップチェイン</returns>
+	/// <remarks>スワップチェインを取得する</remarks>
+	IDXGISwapChain* GetSwapChain() { return m_pSwapChain; }
+
+	/// <summary>
+	/// レンダーターゲットビューの取得関数
+	/// </summary>
+	/// <returns>レンダーターゲットビュー</returns>
+	/// <remarks>レンダーターゲットビューを取得する</remarks>
+	RenderTarget* GetDefaultRTV(){ return m_pRTV; }
+
+	/// <summary>
+	/// 深度ステンシルビューの取得関数
+	/// </summary>
+	/// <returns>深度ステンシルビュー</returns>
+	/// <remarks>深度ステンシルビューを取得する</remarks>
+	DepthStencil* GetDefaultDSV(){ return m_pDSV; }
+
+	/// <summary>
+	/// レンダーターゲットの設定関数
+	///	</summary>
+	/// <param name="num">レンダーターゲットの数</param>
+	/// <param name="ppViews">レンダーターゲットビュー</param>
+	/// <param name="pView">深度ステンシルビュー</param>
+	/// <remarks>レンダーターゲットを設定する</remarks>
+	void SetRenderTargets(UINT num, RenderTarget** ppViews, DepthStencil* pView);
+
+	/// <summary>
+	/// カリングモードの設定関数
+	/// </summary>
+	/// <param name="cull">カリングモード</param>
+	/// <remarks>カリングモードを設定する</remarks>
+	void SetCullingMode(D3D11_CULL_MODE cull);
+
+	/// <summary>
+	/// ブレンドステートの設定関数
+	///	</summary>
+	/// <param name="blend">ブレンドモード</param>
+	/// <remarks>ブレンドステートを設定する</remarks>
+	void SetBlendMode(BlendMode blend);
+
+	/// <summary>
+	/// サンプラーステートの設定関数
+	/// </summary>
+	/// <param name="state">サンプラーステート</param>
+	/// <remarks>サンプラーステートを設定する</remarks>
+	void SetSamplerState(SamplerState state);
 
 private:	// ----- メンバ関数 -----
-	/// <summary>
-	/// デバイスの作成関数
-	/// </summary>
-	/// <remarks>デバイスの作成を行う</remarks>
-	void createDevice();
-
-	/// <summary>
-	/// レンダーターゲットの作成関数
-	/// </summary>
-	/// <remarks>レンダーターゲットの作成を行う</remarks>
-	void createRenderTarget();
-
-	/// <summary>
-	/// ビューポートの設定関数
-	/// </summary>
-	/// <remarks>ビューポートの設定を行う</remarks>
-	void setViewport();
-
-	/// <summary>
-	/// 深度ステンシルステートの作成関数
-	/// </summary>
-	/// <remarks>深度ステンシルステートの作成を行う</remarks>
-	void createDepthStencielState();
-
-	/// <summary>
-	/// ブレンドステートの作成関数
-	/// </summary>
-	/// <remarks>ブレンドステートの作成を行う</remarks>
-	void createBlendState();
-
-	/// <summary>
-	/// ラスタライザーステートの作成関数
-	/// </summary>
-	/// <remarks>ラスタライザーステートの作成を行う</remarks>
-	void createRasterizerState();
-
-	/// <summary>
-	/// サンプラーステートの作成関数
-	/// </summary>
-	/// <remarks>サンプラーステートの作成を行う</remarks>
-	void createSamplerState();
-
-	/// <summary>
-	/// シェーダーの生成関数
-	/// </summary>
-	/// <remarks>シェーダーの生成を行う</remarks>
-	void createShaderFromRes();
-
-	/// <summary>
-	/// 定数バッファの生成関数
-	/// </summary>
-	/// <remarks>定数バッファの生成を行う</remarks>
-	void createConstantBuffer();
-
-	void createTexCoordBuffer();     // テクスチャ座標バッファの生成
-
-
-	bool CompileShader(const WCHAR* vsPath, const WCHAR* psPath, Shader& outShader);
 
 private:	// ----- メンバ変数 -----
-	ID3D11Device* m_Device = nullptr;			            // デバイス
-	ID3D11DeviceContext* m_Context = nullptr;	            // デバイスコンテキスト
-	IDXGISwapChain* m_SwapChain = nullptr;		            // スワップチェイン
+	ID3D11Device* m_pDevice = nullptr;			            // デバイス
+	ID3D11DeviceContext* m_pContext = nullptr;	            // デバイスコンテキスト
+	IDXGISwapChain* m_pSwapChain = nullptr;		            // スワップチェイン
 	DXGI_SAMPLE_DESC MSAA = { 0,0 };			            // MSAA設定
-	ID3D11RenderTargetView* m_RenderTargetView = nullptr;	// レンダーターゲットビュー
-	ID3D11DepthStencilView* m_DepthStencilView = nullptr;	// 深度ステンシルビュー
-	ID3D11DepthStencilState* m_DepthStencilState = nullptr;	// 深度ステンシルステート
-	ID3D11BlendState* m_BlendState = nullptr;	            // ブレンドステート
-	ID3D11RasterizerState* m_RasterizerStateWire = 0;		// ラスタライザーステート
-	ID3D11RasterizerState* m_RasterizerStateCullBack = 0;	// ラスタライザーステート
-	ID3D11RasterizerState* m_RasterizerStateCullNone = 0;	// ラスタライザーステート
-	ID3D11SamplerState* m_SamplerStateClamp = 0;			// サンプラーステート	
-	ID3D11SamplerState* m_SamplerStateWrap = 0;				// サンプラーステート
-	Triangle m_testTriangle;									// 三角形
-	// ID3D11VertexShader* m_VertexShader = nullptr;			// 頂点シェーダー
-	// ID3D11PixelShader* m_PixelShader = nullptr;				// ピクセルシェーダー
-	// ID3D11InputLayout* m_VertexLayout = nullptr;				// 頂点レイアウト
-	// ID3D11Buffer* m_ConstantBuffer = nullptr;				// 定数バッファ
+	RenderTarget* m_pRTV = nullptr;							// レンダーターゲットビュー
+	DepthStencil* m_pDSV = nullptr;							// 深度ステンシルビュー
+	ID3D11BlendState* m_pBlendState[BLEND_MAX];	            // ブレンドステート
+	ID3D11RasterizerState* m_pRasterizerState[3];			// ラスタライザーステート
+	ID3D11SamplerState* m_pSamplerState[SAMPLER_MAX];		// サンプラーステート
 	float m_ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };		// クリアカラー
-	// VertexShader* m_pVS;									// 頂点シェーダー
-	// PixelShader* m_pPS;										// ピクセルシェーダー
-	Shader m_testShader;
 
 	float m_Width = 0.0f;									// 幅
 	float m_Height = 0.0f;									// 高さ

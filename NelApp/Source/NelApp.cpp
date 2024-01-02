@@ -18,8 +18,6 @@ void Draw()
 	RENDERER.Begin();
 
 	RENDERER.End();
-
-	RENDERER.Present();
 }
 void Uninit()
 {

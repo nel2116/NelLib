@@ -7,7 +7,7 @@ void gmain();
 void window(const char* appName, int width, int height)
 {
     createWindow(appName,width,height);
-    RENDERER.Init(width,height);
+    RENDERER.Init(width,height,false);
 }
 
 int APIENTRY WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ INT)

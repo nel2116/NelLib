@@ -4,14 +4,14 @@
     <ClCompile Include="Source\NelLib.cpp" />
     <ClCompile Include="Source\System\window.cpp" />
     <ClCompile Include="Source\DirectX\Renderer.cpp" />
-    <ClCompile Include="Source\DirectX\Vertex.cpp" />
+    <ClCompile Include="Source\DirectX\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\NelLib.h" />
     <ClInclude Include="Source\System\window.h" />
     <ClInclude Include="Source\System\common.h" />
     <ClInclude Include="Source\DirectX\Renderer.h" />
-    <ClInclude Include="Source\DirectX\Vertex.h" />
+    <ClInclude Include="Source\DirectX\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\VertexShader.cso" />
