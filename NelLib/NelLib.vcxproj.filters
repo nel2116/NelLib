@@ -5,6 +5,14 @@
     <ClCompile Include="Source\System\window.cpp" />
     <ClCompile Include="Source\DirectX\Renderer.cpp" />
     <ClCompile Include="Source\DirectX\Texture.cpp" />
+    <ClCompile Include="Source\DirectX\Shader.cpp" />
+    <ClCompile Include="Source\DirectX\MeshBuffer.cpp" />
+    <ClCompile Include="Source\DirectX\Sprite.cpp" />
+    <ClCompile Include="Source\System\MATRIX.cpp" />
+    <ClCompile Include="Source\System\VECTOR.cpp" />
+    <ClCompile Include="Source\System\let.cpp" />
+    <ClCompile Include="Source\System\mathUtil.cpp" />
+    <ClCompile Include="Source\System\COLOR.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\NelLib.h" />
@@ -12,6 +20,17 @@
     <ClInclude Include="Source\System\common.h" />
     <ClInclude Include="Source\DirectX\Renderer.h" />
     <ClInclude Include="Source\DirectX\Texture.h" />
+    <ClInclude Include="Source\DirectX\Shader.h" />
+    <ClInclude Include="Source\DirectX\MeshBuffer.h" />
+    <ClInclude Include="Source\DirectX\Sprite.h" />
+    <ClInclude Include="Source\DirectX\VERTEX.h" />
+    <ClInclude Include="Source\DirectX\VERTEX_BUFFER.h" />
+    <ClInclude Include="Source\System\MATRIX.h" />
+    <ClInclude Include="Source\System\VECTOR.h" />
+    <ClInclude Include="Source\System\mathUtil.h" />
+    <ClInclude Include="Source\System\let.h" />
+    <ClInclude Include="Source\System\QUATERNION.h" />
+    <ClInclude Include="Source\System\COLOR.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\VertexShader.cso" />

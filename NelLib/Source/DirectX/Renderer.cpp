@@ -1,9 +1,14 @@
 #include "Renderer.h"
 #include "Texture.h"
+#include "Shader.h"
+#include "MeshBuffer.h"
 #include "../System/window.h"
+
 
 void Renderer::Init(int baseWidth, int baseHeight,bool fullscreen)
 {
+	m_FillColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+
     //基準となる幅と高さ
     if (baseWidth == 0 || baseHeight == 0) {
         m_Width = (float)ClientWidth;
@@ -80,7 +85,8 @@ void Renderer::Init(int baseWidth, int baseHeight,bool fullscreen)
 
 	//--- レンダーターゲット設定
 	m_pRTV = new RenderTarget();
-	WARNING(hr = m_pRTV->CreateFromScreen(),"レンダーターゲットの作成に失敗しました","");
+	hr = m_pRTV->CreateFromScreen();
+	WARNING(FAILED(hr), "レンダーターゲットの作成に失敗しました", "");
 	m_pDSV = new DepthStencil();
 	WARNING(FAILED(hr = m_pDSV->Create(m_pRTV->GetWidth(), m_pRTV->GetHeight(), false)), "深度ステンシルの作成に失敗しました", "");
 	SetRenderTargets(1, &m_pRTV, nullptr);
@@ -151,12 +157,27 @@ void Renderer::Init(int baseWidth, int baseHeight,bool fullscreen)
 	}
 	SetSamplerState(SAMPLER_LINEAR);
 
+	// シェーダー
+	CreateDefaultShader();
+
 	// クリアカラーの設定
-    SetClearColor(0.0f, 0.2f, 0.8f, 1.0f);
+    SetClearColor(0.3f, 0.6f, 1.0f, 1.0f);
+
+	// メッシュ
+	CreateRectBuffer();
 }
 
 void Renderer::Release()
 {
+	// メッシュの解放
+	for (auto& mesh : m_MeshBuffer)
+		SAFE_DELETE(mesh);
+	m_MeshBuffer.clear();
+
+	// シェーダーの解放
+	SAFE_DELETE(m_pVS);
+	SAFE_DELETE(m_pPS);
+
     // デバイスの解放
     SAFE_DELETE(m_pDSV);
     SAFE_DELETE(m_pRTV);
@@ -237,6 +258,92 @@ void Renderer::SetSamplerState(SamplerState state)
 {
 	if (state < 0 || state >= SAMPLER_MAX) return;
 	m_pContext->PSSetSamplers(0, 1, &m_pSamplerState[state]);
+}
+
+void Renderer::rect(float px, float py, float w, float h, float rad, float z)
+{
+	if (!m_pVS) { return; }
+	if (!m_pPS) { return; }
+
+	// 行列
+	m_World.identity();								// 単位行列
+	m_World.mulScaling(w, h, 1.0f);					// 拡大
+	m_World.mulRotateZ(-rad);						// 回転
+	m_World.mulTranslate(px, -py, z / 1000.0f);		// 平行移動
+
+	m_Proj.identity();								// 単位行列
+	m_Proj.ortho(0, m_Width, m_Height, 0, -1, 1);	// 正射影
+
+	// 定数バッファ
+	m_pVS->WriteBuffer(0, &m_World);				// ワールド行列
+	m_pVS->WriteBuffer(1, &m_Proj);					// プロジェクション行列
+	m_pPS->WriteBuffer(0, &m_FillColor);			// メッシュカラー
+	m_pVS->Bind();									// 頂点シェーダーをセット
+	m_pPS->Bind();									// ピクセルシェーダーをセット
+	
+	// 描画
+	m_MeshBuffer[0]->Draw();
+}
+
+void Renderer::CreateRectBuffer()
+{
+	VERTEX vtx[] = {
+		{  -0.5f,  0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f  },
+		{   0.5f,  0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f  },
+		{  -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f  },
+		{   0.5f, -0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f  },
+	};
+
+	// メッシュ
+	MeshBuffer::Description desc = {};
+	desc.pVtx = vtx;
+	desc.vtxSize = sizeof(VERTEX);
+	desc.vtxCount = _countof(vtx);
+	desc.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+	MeshBuffer* pMesh = new MeshBuffer(desc);
+	m_MeshBuffer.emplace_back(pMesh);
+}
+
+void Renderer::CreateDefaultShader()
+{
+	const char* VS = R"EOT(
+struct VS_IN {
+	float3 pos : POSITION0;
+	float3 normal : NORMAL0;
+	float2 uv : TEXCOORD0;
+};
+struct VS_OUT {
+	float4 pos : SV_POSITION;
+};
+cbuffer cbWorld : register(b0) {
+    row_major matrix World;
+};
+cbuffer cbProj : register(b1) {
+    row_major matrix Proj;
+};
+VS_OUT main(VS_IN vin) {
+	VS_OUT vout;
+	vout.pos = float4(vin.pos, 1.0f);
+	vout.pos = mul(vout.pos, World);
+	vout.pos = mul(vout.pos, Proj);
+	return vout;
+})EOT";
+	const char* PS = R"EOT(
+struct PS_IN {
+	float4 pos : SV_POSITION;
+};
+cbuffer cbProj : register(b0) {
+    float4 MeshColor;
+};
+float4 main(PS_IN pin) : SV_TARGET {
+	return MeshColor;
+})EOT";
+
+	// シェーダー
+	m_pVS = new VertexShader();
+	m_pVS->Compile(VS);
+	m_pPS = new PixelShader();
+	m_pPS->Compile(PS);
 }
 
 Renderer::~Renderer()

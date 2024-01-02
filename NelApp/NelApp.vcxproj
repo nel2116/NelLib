@@ -142,9 +142,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GameObjects\testObject.cpp" />
     <ClCompile Include="Source\NelApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\GameObjects\testObject.h" />
     <ClInclude Include="Source\NelApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

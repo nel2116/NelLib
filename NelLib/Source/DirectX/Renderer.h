@@ -5,10 +5,15 @@
 #pragma comment(lib,"d3d11.lib")
 
 #include "../System/common.h"
-
+#include "../System/MATRIX.h"
+#include "../System/COLOR.h"
+#include "VERTEX.h"
+#include "VERTEX_BUFFER.h"
 
 class RenderTarget;
 class DepthStencil;
+class Shader;
+class MeshBuffer;
 
 enum BlendMode
 {
@@ -116,9 +121,17 @@ public:		// ----- メンバ関数 -----
 	/// <remarks>サンプラーステートを設定する</remarks>
 	void SetSamplerState(SamplerState state);
 
+	float GetWidth() { return m_Width; }
+	float GetHeight() { return m_Height; }
+
+	void rect(float px, float py, float w, float h, float rad, float z);
+
 private:	// ----- メンバ関数 -----
+	void CreateRectBuffer();
+	void CreateDefaultShader();
 
 private:	// ----- メンバ変数 -----
+	// DirectX11関連
 	ID3D11Device* m_pDevice = nullptr;			            // デバイス
 	ID3D11DeviceContext* m_pContext = nullptr;	            // デバイスコンテキスト
 	IDXGISwapChain* m_pSwapChain = nullptr;		            // スワップチェイン
@@ -129,9 +142,20 @@ private:	// ----- メンバ変数 -----
 	ID3D11RasterizerState* m_pRasterizerState[3];			// ラスタライザーステート
 	ID3D11SamplerState* m_pSamplerState[SAMPLER_MAX];		// サンプラーステート
 	float m_ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };		// クリアカラー
-
 	float m_Width = 0.0f;									// 幅
 	float m_Height = 0.0f;									// 高さ
+	std::vector<MeshBuffer*> m_MeshBuffer;					// メッシュバッファ
+
+	// 共通使用マトリックス
+	MATRIX m_World;											// ワールド行列
+	MATRIX m_Proj;											// 射影行列
+	
+	// デフォルト値
+	COLOR m_FillColor;										// 塗りつぶし色
+
+	// デフォルトシェーダ
+	Shader* m_pVS;											// 頂点シェーダ
+	Shader* m_pPS;											// ピクセルシェーダ
 
 public:		// 以下シングルトン関連
 	~Renderer();

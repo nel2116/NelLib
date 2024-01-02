@@ -1,6 +1,7 @@
 
 #include<crtdbg.h>
 #include "../Source/DirectX/Renderer.h"
+#include "../Source/DirectX/Sprite.h"
 #include "NelLib.h"
 void gmain();
 
@@ -8,6 +9,7 @@ void window(const char* appName, int width, int height)
 {
     createWindow(appName,width,height);
     RENDERER.Init(width,height,false);
+    Sprite::Init();
 }
 
 int APIENTRY WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ INT)

@@ -2,8 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Source\NelApp.cpp" />
+    <ClCompile Include="Source\GameObjects\testObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\NelApp.h" />
+    <ClInclude Include="Source\GameObjects\testObject.h" />
   </ItemGroup>
 </Project>
