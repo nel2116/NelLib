@@ -71,10 +71,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\Source;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Sources;$(SolutionDir)\..\NelLib\Sources;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)\Source;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Sources;$(SolutionDir)\..\NelLib\Sources;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -142,12 +142,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\GameObjects\testObject.cpp" />
-    <ClCompile Include="Source\NelApp.cpp" />
+    <ClCompile Include="Sources\GameObjects\testObject.cpp" />
+    <ClCompile Include="Sources\NelApp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\GameObjects\testObject.h" />
-    <ClInclude Include="Source\NelApp.h" />
+    <ClInclude Include="Sources\GameObjects\testObject.h" />
+    <ClInclude Include="Sources\NelApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

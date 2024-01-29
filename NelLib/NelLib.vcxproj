@@ -71,10 +71,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)\Source</IncludePath>
+    <IncludePath>$(SolutionDir)\..\NelLib\Sources</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\Source</IncludePath>
+    <IncludePath>$(SolutionDir)\..\NelLib\Sources</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -141,47 +141,55 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\DirectX\MeshBuffer.cpp" />
-    <ClCompile Include="Source\DirectX\Renderer.cpp" />
-    <ClCompile Include="Source\DirectX\Shader.cpp" />
-    <ClCompile Include="Source\DirectX\Sprite.cpp" />
-    <ClCompile Include="Source\DirectX\Texture.cpp" />
-    <ClCompile Include="Source\NelLib.cpp" />
-    <ClCompile Include="Source\System\COLOR.cpp" />
-    <ClCompile Include="Source\System\let.cpp" />
-    <ClCompile Include="Source\System\mathUtil.cpp" />
-    <ClCompile Include="Source\System\MATRIX.cpp" />
-    <ClCompile Include="Source\System\VECTOR.cpp" />
-    <ClCompile Include="Source\System\window.cpp" />
+    <ClCompile Include="Sources\DirectX\MeshBuffer.cpp" />
+    <ClCompile Include="Sources\DirectX\Renderer.cpp" />
+    <ClCompile Include="Sources\DirectX\Shader.cpp" />
+    <ClCompile Include="Sources\DirectX\Sprite.cpp" />
+    <ClCompile Include="Sources\DirectX\Texture.cpp" />
+    <ClCompile Include="Sources\NelLib.cpp" />
+    <ClCompile Include="Sources\System\COLOR.cpp" />
+    <ClCompile Include="Sources\System\Geometory.cpp" />
+    <ClCompile Include="Sources\System\Input.cpp" />
+    <ClCompile Include="Sources\System\let.cpp" />
+    <ClCompile Include="Sources\System\mathUtil.cpp" />
+    <ClCompile Include="Sources\System\Model.cpp" />
+    <ClCompile Include="Sources\System\VECTOR.cpp" />
+    <ClCompile Include="Sources\System\VECTOR2.cpp" />
+    <ClCompile Include="Sources\System\window.cpp" />
+    <ClCompile Include="Sources\System\_geometory.cpp" />
+    <ClCompile Include="Sources\System\_model.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\DirectX\MeshBuffer.h" />
-    <ClInclude Include="Source\DirectX\Renderer.h" />
-    <ClInclude Include="Source\DirectX\Shader.h" />
-    <ClInclude Include="Source\DirectX\Sprite.h" />
-    <ClInclude Include="Source\DirectX\Texture.h" />
-    <ClInclude Include="Source\DirectX\VERTEX.h" />
-    <ClInclude Include="Source\DirectX\VERTEX_BUFFER.h" />
-    <ClInclude Include="Source\NelLib.h" />
-    <ClInclude Include="Source\System\COLOR.h" />
-    <ClInclude Include="Source\System\common.h" />
-    <ClInclude Include="Source\System\let.h" />
-    <ClInclude Include="Source\System\mathUtil.h" />
-    <ClInclude Include="Source\System\MATRIX.h" />
-    <ClInclude Include="Source\System\QUATERNION.h" />
-    <ClInclude Include="Source\System\VECTOR.h" />
-    <ClInclude Include="Source\System\window.h" />
+    <ClInclude Include="Sources\DirectX\MeshBuffer.h" />
+    <ClInclude Include="Sources\DirectX\Renderer.h" />
+    <ClInclude Include="Sources\DirectX\Shader.h" />
+    <ClInclude Include="Sources\DirectX\Sprite.h" />
+    <ClInclude Include="Sources\DirectX\Texture.h" />
+    <ClInclude Include="Sources\DirectX\VERTEX.h" />
+    <ClInclude Include="Sources\DirectX\VERTEX_BUFFER.h" />
+    <ClInclude Include="Sources\NelLib.h" />
+    <ClInclude Include="Sources\System\COLOR.h" />
+    <ClInclude Include="Sources\System\common.h" />
+    <ClInclude Include="Sources\System\Geometory.h" />
+    <ClInclude Include="Sources\System\Input.h" />
+    <ClInclude Include="Sources\System\let.h" />
+    <ClInclude Include="Sources\System\mathUtil.h" />
+    <ClInclude Include="Sources\System\Model.h" />
+    <ClInclude Include="Sources\System\QUATERNION.h" />
+    <ClInclude Include="Sources\System\VECTOR.h" />
+    <ClInclude Include="Sources\System\VECTOR2.h" />
+    <ClInclude Include="Sources\System\window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\PixelShader.cso" />
     <None Include="Assets\Shader\VertexShader.cso" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Source\HLSL\PixelShader.hlsl">
+    <FxCompile Include="Sources\HLSL\PixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="Source\HLSL\VertexShader.hlsl">
+    <FxCompile Include="Sources\HLSL\VertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>

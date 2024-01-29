@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\NelApp.cpp" />
-    <ClCompile Include="Source\GameObjects\testObject.cpp" />
+    <ClCompile Include="Sources\NelApp.cpp" />
+    <ClCompile Include="Sources\GameObjects\testObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\NelApp.h" />
-    <ClInclude Include="Source\GameObjects\testObject.h" />
+    <ClInclude Include="Sources\NelApp.h" />
+    <ClInclude Include="Sources\GameObjects\testObject.h" />
   </ItemGroup>
 </Project>
