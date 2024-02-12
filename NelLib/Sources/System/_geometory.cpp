@@ -53,7 +53,7 @@ void Geometory::MakeBox()
 	desc.idxCount = _countof(idx);					// インデックスの数
 	desc.idxSize = sizeof(int);						// インデックス一つあたりのデータサイズ
 	desc.topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-	m_pBox = new MeshBuffer(desc);
+	m_pBox = NEW MeshBuffer(desc);
 }
 
 void Geometory::MakeCylinder()

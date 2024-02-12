@@ -138,7 +138,7 @@ VS_OUT main(VS_IN vin) {
 	return vout;
 })EOT";
 
-	m_pVS = new VertexShader();
+	m_pVS = NEW VertexShader();
 	m_pVS->Compile(VSCode);
 }
 
@@ -172,7 +172,7 @@ float4 main(PS_IN pin) : SV_TARGET0 {
 })EOT";
 #endif
 
-	m_pPS = new PixelShader();
+	m_pPS = NEW PixelShader();
 	m_pPS->Compile(PSCode);
 }
 void Geometory::MakeLineShader()
@@ -209,14 +209,14 @@ float4 main(PS_IN pin) : SV_TARGET0 {
 	return pin.color;
 })EOT";
 
-	m_pLineShader[0] = new VertexShader();
+	m_pLineShader[0] = NEW VertexShader();
 	m_pLineShader[0]->Compile(VSCode);
-	m_pLineShader[1] = new PixelShader();
+	m_pLineShader[1] = NEW PixelShader();
 	m_pLineShader[1]->Compile(PSCode);
 }
 void Geometory::MakeLine()
 {
-	m_pLineVtx = new LineVertex[MAX_LINE_NUM * 2];
+	m_pLineVtx = NEW LineVertex[MAX_LINE_NUM * 2];
 	m_lineCnt = 0;
 	MeshBuffer::Description desc = {};
 	desc.pVtx = m_pLineVtx;
@@ -224,5 +224,5 @@ void Geometory::MakeLine()
 	desc.vtxSize = sizeof(LineVertex);
 	desc.topology = D3D11_PRIMITIVE_TOPOLOGY_LINELIST;
 	desc.isWrite = true;
-	m_pLines = new MeshBuffer(desc);
+	m_pLines = NEW MeshBuffer(desc);
 }

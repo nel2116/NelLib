@@ -18,6 +18,11 @@
     <ClCompile Include="Sources\System\VECTOR2.cpp" />
     <ClCompile Include="Sources\System\Model.cpp" />
     <ClCompile Include="Sources\System\_model.cpp" />
+    <ClCompile Include="Sources\Objects\Object.cpp" />
+    <ClCompile Include="Sources\Managers\ObjectsManager.cpp" />
+    <ClCompile Include="Sources\Objects\Camera\CameraBase.cpp" />
+    <ClCompile Include="Sources\Objects\Camera\CameraDebug.cpp" />
+    <ClCompile Include="Sources\Managers\TimeManger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelLib.h" />
@@ -39,13 +44,19 @@
     <ClInclude Include="Sources\System\Input.h" />
     <ClInclude Include="Sources\System\VECTOR2.h" />
     <ClInclude Include="Sources\System\Model.h" />
+    <ClInclude Include="Sources\Managers\ObjectsManager.h" />
+    <ClInclude Include="Sources\Objects\Object.h" />
+    <ClInclude Include="Sources\Components\Component.h" />
+    <ClInclude Include="Sources\System\Macro.h" />
+    <ClInclude Include="Sources\Objects\Camera\CameraBase.h" />
+    <ClInclude Include="Sources\Objects\Camera\CameraDebug.h" />
+    <ClInclude Include="Sources\Managers\TimeManger.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\VertexShader.cso" />
     <None Include="Assets\Shader\PixelShader.cso" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Sources\HLSL\PixelShader.hlsl" />
-    <FxCompile Include="Sources\HLSL\VertexShader.hlsl" />
+    <FxCompile Include="Sources\HLSL\VS_Model.hlsl" />
   </ItemGroup>
 </Project>

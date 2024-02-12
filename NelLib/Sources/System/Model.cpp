@@ -110,6 +110,7 @@ struct PS_IN {
 	float4 pos : SV_POSITION;
 	float3 normal : NORMAL0;
 	float2 uv : TEXCOORD0;
+	float4 color : COLOR0;
 };
 Texture2D tex : register(t0);
 SamplerState samp : register(s0);
@@ -117,9 +118,9 @@ float4 main(PS_IN pin) : SV_TARGET
 {
 	return tex.Sample(samp, pin.uv);
 })EOT";
-	*vs = new VertexShader();
+	*vs = NEW VertexShader();
 	(*vs)->Compile(ModelVS);
-	*ps = new PixelShader();
+	*ps = NEW PixelShader();
 	(*ps)->Compile(ModelPS);
 }
 
@@ -133,7 +134,6 @@ bool Model::Load(const char* file, float scale, Flip flip)
 	// assimp‚ÌÝ’è
 	Assimp::Importer importer;
 	int flag = 0;
-	flag |= aiProcess_Triangulate;
 	flag |= aiProcess_JoinIdenticalVertices;
 	flag |= aiProcess_Triangulate;
 	flag |= aiProcess_FlipUVs;
@@ -172,7 +172,7 @@ void Model::Draw()
 	m_pPS->Bind();
 	for (unsigned int i = 0; i < m_meshes.size(); ++i)
 	{
-		m_pPS->SetTexture(0,m_materials[m_meshes[i].materialID].pTexture);
+		m_pPS->SetTexture(0, m_materials[m_meshes[i].materialID].pTexture);
 		m_meshes[i].pMesh->Draw();
 	}
 }
@@ -182,7 +182,7 @@ void Model::Reset()
 	auto meshIt = m_meshes.begin();
 	while (meshIt != m_meshes.end())
 	{
-		if(meshIt->pMesh) delete meshIt->pMesh;
+		if (meshIt->pMesh) delete meshIt->pMesh;
 		++meshIt;
 	}
 

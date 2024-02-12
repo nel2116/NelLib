@@ -65,7 +65,7 @@ void Model::MakeMesh(const void* ptr, float scale, Flip flip)
 		desc.idxSize		= sizeof(unsigned long);
 		desc.idxCount		= m_meshes[i].indices.size();
 		desc.topology		= D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-		m_meshes[i].pMesh	= new MeshBuffer(desc);
+		m_meshes[i].pMesh	= NEW MeshBuffer(desc);
 	}
 }
 void Model::MakeMaterial(const void* ptr, std::string directory)
@@ -98,7 +98,7 @@ void Model::MakeMaterial(const void* ptr, std::string directory)
 		if (pScene->mMaterials[i]->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
 		{
 			// テクスチャ領域確保
-			m_materials[i].pTexture = new Texture;
+			m_materials[i].pTexture = NEW Texture;
 			// そのまま探索
 			hr = m_materials[i].pTexture->Create(path.C_Str());
 			// モデルと同じ階層を探索

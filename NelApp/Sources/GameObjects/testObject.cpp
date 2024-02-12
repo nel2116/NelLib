@@ -6,9 +6,14 @@
 #define SPRITE_DEBUG (0)
 #define GEOMETORY_DEBUG (1)
 #define MODEL_DEBUG (1)
+#define SHADER_DEBUG (1)
+#define ASPECT (16.0f / 9.0f)
+#define RADIAN (M_PI / 180.0f)
 
 TestObject::TestObject()
 	: m_pModel(nullptr)
+	, m_pVS(nullptr)
+	, m_pCamera(nullptr)
 {
 }
 
@@ -21,10 +26,16 @@ void TestObject::Init()
 #if MODEL_DEBUG
 	// モデルの読み込み
 	m_pModel = new Model();
-	m_pModel->Load("Assets/Models/eyeBat/eyebat.fbx", 0.1f);
-	WARNING(!m_pModel, "モデルの読み込みに失敗しました", "");
+	WARNINGHR(m_pModel->Load("Assets/Models/eyeBat/eyebat.fbx", 0.1f), "モデルの読み込みに失敗しました");
 
 #endif // MODEL_DEBUG
+#if SHADER_DEBUG
+	m_pVS = new VertexShader();
+	WARNINGHR(m_pVS->Load("../NelLib/Assets/Shaders/VS_Model.cso"), "シェーダの読み込みに失敗しました");
+	m_pModel->SetVertexShader(m_pVS);
+
+#endif // SHADER_DEBUG
+
 }
 
 void TestObject::Update()
@@ -78,9 +89,24 @@ void TestObject::Draw()
 
 #endif // GEOMETORY_DEBUG
 #if MODEL_DEBUG
+	// Warld空間
+	DirectX::XMFLOAT4X4 ModelMat[3] = {};			// 行列の宣言
+	DirectX::XMMATRIX Trans = DirectX::XMMatrixTranslation(0.0f, 0.0f, 0.0f);	// 移動行列
+	Trans = DirectX::XMMatrixTranspose(Trans);		// 転置処理
+	DirectX::XMStoreFloat4x4(&ModelMat[0], Trans);	// Transをmat[0]に格納
+
+	// View空間
+	ModelMat[1] = m_pCamera->GetTransposedViewMatrix();
+
+	// Projection空間
+	ModelMat[2] = m_pCamera->GetTransposedProjectionMatrix();
+
+	// シェーダに行列を渡す
+	m_pVS->WriteBuffer(0, ModelMat);
+
 	RenderTarget* RTV = RENDERER.GetDefaultRTV();
 	DepthStencil* DSV = RENDERER.GetDefaultDSV();
-	RENDERER.SetRenderTargets(1,&RTV,DSV);			// レンダーターゲットの設定
+	RENDERER.SetRenderTargets(1, &RTV, DSV);			// レンダーターゲットの設定
 	// モデルの描画
 	m_pModel->Draw();
 
@@ -90,4 +116,5 @@ void TestObject::Draw()
 void TestObject::Uninit()
 {
 	SAFE_DELETE(m_pModel);
+	SAFE_DELETE(m_pVS);
 }

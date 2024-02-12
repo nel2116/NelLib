@@ -15,20 +15,4 @@
 #include <vector>
 #include <list>
 
-#ifdef _DEBUG
-#define WARNING(flag,msg1,msg2)\
-{if(flag){\
-	char buf[512];\
-	wsprintfA(buf , "%s\n%s\n\n%s : %d",msg1,msg2, __FILE__,__LINE__);\
-	MessageBoxA(NULL,buf,"WARNING",MB_OK | MB_ICONERROR);\
-	exit(1);\
-	}\
-}
-#else
-#define WARNING(flag,msg1,msg2){}
-#endif // _DEBUG
-
-#define SAFE_RELEASE(p) {if(p){(p)->Release();(p)=NULL;}}
-#define SAFE_DELETE(p) {if(p){delete(p);(p)=NULL;}}
-#define SAFE_DELETE_ARRAY(p) {if(p){delete[](p);(p)=NULL;}}
-#define SAFE_FREE(p) {if(p){free(p);(p)=NULL;}}
+#include "Macro.h"

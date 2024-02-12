@@ -35,7 +35,7 @@ HRESULT Shader::Load(const char* pFileName)
 
 	// ƒƒ‚ƒŠ‚É“Ç‚Ýž‚Ý
 	fseek(fp, 0, SEEK_SET);
-	char* pData = new char[fileSize];
+	char* pData = NEW char[fileSize];
 	fread(pData, fileSize, 1, fp);
 	fclose(fp);
 
@@ -194,7 +194,7 @@ HRESULT VertexShader::MakeShader(void* pData, UINT size)
 	if (FAILED(hr)) { return hr; }
 
 	pReflection->GetDesc(&shaderDesc);
-	pInputDesc = new D3D11_INPUT_ELEMENT_DESC[shaderDesc.InputParameters];
+	pInputDesc = NEW D3D11_INPUT_ELEMENT_DESC[shaderDesc.InputParameters];
 	for(UINT i = 0; i < shaderDesc.InputParameters; ++ i)
 	{
 		pReflection->GetInputParameterDesc(i, &sigDesc);

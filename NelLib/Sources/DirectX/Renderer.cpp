@@ -5,19 +5,19 @@
 #include <System/window.h>
 
 
-void Renderer::Init(int baseWidth, int baseHeight,bool fullscreen)
+void Renderer::Init(int baseWidth, int baseHeight, bool fullscreen)
 {
 	m_FillColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-    //基準となる幅と高さ
-    if (baseWidth == 0 || baseHeight == 0) {
-        m_Width = (float)ClientWidth;
-        m_Height = (float)ClientHeight;
-    }
-    else {
-        m_Width = (float)baseWidth;
-        m_Height = (float)baseHeight;
-    }
+	//基準となる幅と高さ
+	if (baseWidth == 0 || baseHeight == 0) {
+		m_Width = (float)ClientWidth;
+		m_Height = (float)ClientHeight;
+	}
+	else {
+		m_Width = (float)baseWidth;
+		m_Height = (float)baseHeight;
+	}
 	HRESULT	hr = E_FAIL;
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));						    // ゼロクリア
@@ -30,8 +30,9 @@ void Renderer::Init(int baseWidth, int baseHeight,bool fullscreen)
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	    // バックバッファの使用方法
 	sd.BufferCount = 1;									    // バックバッファの数
 	sd.OutputWindow = FindWindow("GameWindow", NULL);;	    // 関連付けるウインドウ
-	sd.Windowed = fullscreen ? FALSE : TRUE;
-	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+	sd.Windowed = fullscreen ? FALSE : TRUE;				// ウインドウモード
+	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;				// バックバッファの交換方法
+	sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;		// フルスクリーン切り替えの許可
 
 	// ドライバの種類
 	D3D_DRIVER_TYPE driverTypes[] =
@@ -40,10 +41,10 @@ void Renderer::Init(int baseWidth, int baseHeight,bool fullscreen)
 		D3D_DRIVER_TYPE_WARP,		// 高精度(低速
 		D3D_DRIVER_TYPE_REFERENCE,	// CPUで描画
 	};
-	UINT numDriverTypes = ARRAYSIZE(driverTypes);
+	UINT numDriverTypes = ARRAYSIZE(driverTypes);	// ドライバの数
 
 	UINT createDeviceFlags = 0;
-	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;	// デバッグレイヤーを有効にする
 
 	// 機能レベル
 	D3D_FEATURE_LEVEL featureLevels[] =
@@ -81,14 +82,14 @@ void Renderer::Init(int baseWidth, int baseHeight,bool fullscreen)
 			break;
 		}
 	}
-	WARNING(FAILED(hr), "DirectX11デバイスの作成に失敗しました", "");
+	WARNINGHR(hr, "DirectX11デバイスの作成に失敗しました");
 
 	//--- レンダーターゲット設定
-	m_pRTV = new RenderTarget();
+	m_pRTV = NEW RenderTarget();
 	hr = m_pRTV->CreateFromScreen();
-	WARNING(FAILED(hr), "レンダーターゲットの作成に失敗しました", "");
-	m_pDSV = new DepthStencil();
-	WARNING(FAILED(hr = m_pDSV->Create(m_pRTV->GetWidth(), m_pRTV->GetHeight(), false)), "深度ステンシルの作成に失敗しました", "");
+	WARNINGHR(hr, "レンダーターゲットの作成に失敗しました");
+	m_pDSV = NEW DepthStencil();
+	WARNINGHR(hr = m_pDSV->Create(m_pRTV->GetWidth(), m_pRTV->GetHeight(), false), "深度ステンシルの作成に失敗しました");
 	SetRenderTargets(1, &m_pRTV, nullptr);
 
 
@@ -105,7 +106,7 @@ void Renderer::Init(int baseWidth, int baseHeight,bool fullscreen)
 	{
 		rasterizer.CullMode = cull[i];
 		hr = m_pDevice->CreateRasterizerState(&rasterizer, &m_pRasterizerState[i]);
-		WARNING(FAILED(hr), "ラスタライザーステートの作成に失敗しました", "");
+		WARNINGHR(hr, "ラスタライザーステートの作成に失敗しました");
 	}
 	SetCullingMode(D3D11_CULL_BACK);
 
@@ -136,7 +137,7 @@ void Renderer::Init(int baseWidth, int baseHeight,bool fullscreen)
 		blendDesc.RenderTarget[0].SrcBlend = blend[i][0];
 		blendDesc.RenderTarget[0].DestBlend = blend[i][1];
 		hr = m_pDevice->CreateBlendState(&blendDesc, &m_pBlendState[i]);
-		WARNING(FAILED(hr), "ブレンドステートの作成に失敗しました", "");
+		WARNINGHR(hr, "ブレンドステートの作成に失敗しました");
 	}
 	SetBlendMode(BLEND_ALPHA);
 
@@ -153,30 +154,30 @@ void Renderer::Init(int baseWidth, int baseHeight,bool fullscreen)
 	{
 		samplerDesc.Filter = filter[i];
 		hr = m_pDevice->CreateSamplerState(&samplerDesc, &m_pSamplerState[i]);
-		WARNING(FAILED(hr), "サンプラーステートの作成に失敗しました", "");
+		WARNINGHR(hr, "サンプラーステートの作成に失敗しました");
 	}
 	SetSamplerState(SAMPLER_LINEAR);
 
 	// クリアカラーの設定
-    SetClearColor(0.3f, 0.6f, 1.0f, 1.0f);
+	SetClearColor(0.3f, 0.6f, 1.0f, 1.0f);
 }
 
 void Renderer::Release()
 {
-    // デバイスの解放
-    SAFE_DELETE(m_pDSV);
-    SAFE_DELETE(m_pRTV);
-    for (int i = 0; i < SAMPLER_MAX; ++i)
-        SAFE_RELEASE(m_pSamplerState[i]);
-    for (int i = 0; i < BLEND_MAX; ++i)
-        SAFE_RELEASE(m_pBlendState[i]);
-    for (int i = 0; i < 3; ++i)
-        SAFE_RELEASE(m_pRasterizerState[i]);
-    if (m_pContext)
-        m_pContext->ClearState();
-    SAFE_RELEASE(m_pContext);
-    if (m_pSwapChain)
-        m_pSwapChain->SetFullscreenState(false, NULL);
+	// デバイスの解放
+	SAFE_DELETE(m_pDSV);
+	SAFE_DELETE(m_pRTV);
+	for (int i = 0; i < SAMPLER_MAX; ++i)
+		SAFE_RELEASE(m_pSamplerState[i]);
+	for (int i = 0; i < BLEND_MAX; ++i)
+		SAFE_RELEASE(m_pBlendState[i]);
+	for (int i = 0; i < 3; ++i)
+		SAFE_RELEASE(m_pRasterizerState[i]);
+	if (m_pContext)
+		m_pContext->ClearState();
+	SAFE_RELEASE(m_pContext);
+	if (m_pSwapChain)
+		m_pSwapChain->SetFullscreenState(false, NULL);
 	SAFE_RELEASE(m_pSwapChain);
 	SAFE_RELEASE(m_pDevice);
 }
@@ -190,17 +191,17 @@ void Renderer::Begin()
 
 void Renderer::End()
 {
-    // バックバッファとフロントバッファの入れ替え
-    m_pSwapChain->Present(0, 0);
+	// バックバッファとフロントバッファの入れ替え
+	m_pSwapChain->Present(0, 0);
 }
 
 
 void Renderer::SetClearColor(float r, float g, float b, float a)
 {
-    m_ClearColor[0] = r;
-    m_ClearColor[1] = g;
-    m_ClearColor[2] = b;
-    m_ClearColor[3] = a;
+	m_ClearColor[0] = r;
+	m_ClearColor[1] = g;
+	m_ClearColor[2] = b;
+	m_ClearColor[3] = a;
 }
 
 void Renderer::SetRenderTargets(UINT num, RenderTarget** ppViews, DepthStencil* pView)
@@ -248,5 +249,5 @@ void Renderer::SetSamplerState(SamplerState state)
 
 Renderer::~Renderer()
 {
-    Release();
+	Release();
 }
