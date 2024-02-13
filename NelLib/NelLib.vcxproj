@@ -149,6 +149,7 @@
     <ClCompile Include="Sources\DirectX\Shader.cpp" />
     <ClCompile Include="Sources\DirectX\Sprite.cpp" />
     <ClCompile Include="Sources\DirectX\Texture.cpp" />
+    <ClCompile Include="Sources\Managers\CameraManager.cpp" />
     <ClCompile Include="Sources\Managers\ObjectsManager.cpp" />
     <ClCompile Include="Sources\Managers\TimeManger.cpp" />
     <ClCompile Include="Sources\NelLib.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Sources\DirectX\Texture.h" />
     <ClInclude Include="Sources\DirectX\VERTEX.h" />
     <ClInclude Include="Sources\DirectX\VERTEX_BUFFER.h" />
+    <ClInclude Include="Sources\Managers\CameraManager.h" />
     <ClInclude Include="Sources\Managers\ObjectsManager.h" />
     <ClInclude Include="Sources\Managers\TimeManger.h" />
     <ClInclude Include="Sources\NelLib.h" />

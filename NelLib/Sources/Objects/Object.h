@@ -5,15 +5,16 @@
 #include <algorithm>
 #include <Components/Component.h>
 #include <System/Macro.h>
+#include <Objects/Camera/CameraBase.h>
 
 // ゲームオブジェクトの基底クラス
 class Object
 {
 public:
 	// コンストラクタ
-	Object() : order(50), enable(true), destroy(false), parent(nullptr) {}
+	Object() : order(50), enable(true), destroy(false), parent(nullptr), camera{}
 
-	// デストラクタ
+		// デストラクタ
 	virtual ~Object();
 
 	// 初期化処理
@@ -42,6 +43,8 @@ public:	// ゲッターセッター
 	bool IsDestroy() { return destroy; }
 	// 破棄するかどうかの設定
 	void Destroy() { destroy = true; enable = false; }
+	// カメラの設定
+	void SetCamera(CameraBase* camera) { this->camera = camera; }
 
 public:	// 親子関係
 	// 親オブジェクトの取得
@@ -97,7 +100,7 @@ private:
 	// コンポーネントをオーダーの順番に並び替える
 	void SortComponents();
 
-private:
+private:	// メンバ変数
 	// コンポーネントのリスト
 	std::vector<Component*> components;
 	// コンポーネントの更新中に配列が変更されるとイテレータが無効になるので、新たに追加されたコンポーネントを一時的に保持する
@@ -105,6 +108,6 @@ private:
 	int order;		// 各オブジェクトの処理する順番,値が小さいほど早く処理される
 	bool enable;	// 有効かどうか
 	bool destroy;	// 破棄するかどうか
-	// 親子関係
+	CameraBase* camera;	// カメラ
 	Object* parent;	// 親オブジェクト
 };

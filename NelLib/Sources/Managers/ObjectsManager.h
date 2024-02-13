@@ -4,6 +4,7 @@
 #include <vector>
 #include <Objects/Object.h>
 #include <System/Macro.h>
+#include "CameraManager.h"
 
 class ObjectsManager
 {
@@ -39,6 +40,7 @@ public:
 	{
 		T* object = NEW T();
 		object->Init();
+		object->SetCamera(CAMERA_MANAGER.GetNowCamera());
 		newObjects.push_back(object);
 		return object;
 	}

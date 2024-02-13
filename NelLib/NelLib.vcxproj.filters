@@ -23,6 +23,7 @@
     <ClCompile Include="Sources\Objects\Camera\CameraBase.cpp" />
     <ClCompile Include="Sources\Objects\Camera\CameraDebug.cpp" />
     <ClCompile Include="Sources\Managers\TimeManger.cpp" />
+    <ClCompile Include="Sources\Managers\CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelLib.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="Sources\Objects\Camera\CameraBase.h" />
     <ClInclude Include="Sources\Objects\Camera\CameraDebug.h" />
     <ClInclude Include="Sources\Managers\TimeManger.h" />
+    <ClInclude Include="Sources\Managers\CameraManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\VertexShader.cso" />

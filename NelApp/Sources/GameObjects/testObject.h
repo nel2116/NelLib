@@ -3,7 +3,6 @@
 #include <System/Model.h>
 #include <DirectX/Shader.h>
 #include <Objects/Object.h>
-#include <Objects/Camera/CameraBase.h>
 
 // クラス定義
 class TestObject : public Object
@@ -22,13 +21,10 @@ public:
 	void Draw() override;
 	void Uninit() override;
 
-	void SetCamera(CameraBase* camera) { m_pCamera = camera; }
-
 private:
 	// メンバ変数
 	Model* m_pModel;
 	VertexShader* m_pVS;
-	CameraBase* m_pCamera;
 };
 
 #endif // !___TEST_OBJECT_H___

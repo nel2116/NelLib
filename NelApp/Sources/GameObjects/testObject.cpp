@@ -13,7 +13,6 @@
 TestObject::TestObject()
 	: m_pModel(nullptr)
 	, m_pVS(nullptr)
-	, m_pCamera(nullptr)
 {
 }
 
