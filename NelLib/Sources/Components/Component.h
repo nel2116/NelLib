@@ -12,7 +12,7 @@ public:
 	Component(Object* owner) : owner(owner), order(50), enable(true), destroy(false) {}
 
 	// デストラクタ
-	virtual ~Component() { Uninit(); }
+	virtual ~Component() {}
 
 	// 初期化処理
 	virtual void Init() = 0;
@@ -36,10 +36,14 @@ public:
 	// 有効かどうかの設定
 	void SetEnable(bool enable) { this->enable = enable; }
 
+	// オーナーオブジェクトの取得
+	Object* GetOwner() { return owner; }
+
 	// 破棄するかどうかの取得
 	bool IsDestroy() { return destroy; }
 	// 破棄するかどうかの設定
 	void Destroy() { destroy = true; enable = false; }
+
 
 private:
 	Object* owner;	// オーナーオブジェクト

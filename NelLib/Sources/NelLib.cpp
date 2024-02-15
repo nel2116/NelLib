@@ -5,6 +5,8 @@
 #include <NelLib.h>
 #include <Managers/ObjectsManager.h>
 #include <Managers/TimeManger.h>
+#include <Managers/CameraManager.h>
+#include <Managers/TextureManager.h>
 
 // ====== プロトタイプ宣言 ======
 void Init();
@@ -23,7 +25,9 @@ void window(const char* appName, int width, int height)
 	InitInput();						// 入力初期化
 	// マネージャ初期化
 	OBJECTS_MANAGER.Init();				// オブジェクトマネージャ初期化
+	TEXTURE_MANAGER.Init();				// テクスチャマネージャ初期化
 	TIME_MANAGER.Init();				// タイムマネージャ初期化
+	CAMERA_MANAGER.Init();				// カメラマネージャ初期化
 
 	// ジオメトリ用カメラ初期化
 	DirectX::XMFLOAT4X4 mat[2];
@@ -115,12 +119,11 @@ int APIENTRY WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ INT)
 
 	// ゲームのメインループ
 	gmain();
-	// マネージャの削除
-	OBJECTS_MANAGER.DestroyInstance();
-	TIME_MANAGER.DestroyInstance();
+
+	// システムの終了処理
 	UninitInput();
 	Sprite::Uninit();
 	Geometory::Uninit();
-	RENDERER.DestroyInstance();
+	RENDERER.Release();
 	return 0;
 }

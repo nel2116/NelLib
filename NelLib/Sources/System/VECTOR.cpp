@@ -28,7 +28,7 @@ VECTOR VECTOR::operator-(const VECTOR& v) const
 
 VECTOR VECTOR::operator-(const float f) const
 {
-	return VECTOR(x - f,y - f, z - f);
+	return VECTOR(x - f, y - f, z - f);
 }
 
 VECTOR VECTOR::operator*(float f) const
@@ -134,6 +134,16 @@ VECTOR VECTOR::normalize()
 		z /= len;
 	}
 	return VECTOR(x, y, z);
+}
+
+VECTOR VECTOR::lerp(const VECTOR& v, float t) const
+{
+	// leap
+	return VECTOR(
+		x + (v.x - x) * t,
+		y + (v.y - y) * t,
+		z + (v.z - z) * t
+	);
 }
 
 float VECTOR::dot(const VECTOR& v) const

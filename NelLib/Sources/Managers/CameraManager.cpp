@@ -1,10 +1,13 @@
 #include "CameraManager.h"
 #include "ObjectsManager.h"
+#include <Objects/Camera/CameraDebug.h>
+#include <Objects/Camera/CameraUI.h>
 
 void CameraManager::Init()
 {
-	CameraBase* camera[E_CAM_MAX] = { nullptr };
+	CameraBase* camera[E_CAM_MAX] = {};
 	camera[E_CAM_DEBUG] = OBJECTS_MANAGER.AddObject<CameraDebug>();
+	camera[E_CAM_UI] = OBJECTS_MANAGER.AddObject<CameraUI>();
 	for (int i = 0; i < E_CAM_MAX; ++i)
 	{
 		m_Cameras.push_back(camera[i]);
@@ -31,3 +34,4 @@ void CameraManager::SetNowCamera(CameraType type)
 {
 	m_nowCamera = type;
 }
+

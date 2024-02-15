@@ -24,6 +24,11 @@
     <ClCompile Include="Sources\Objects\Camera\CameraDebug.cpp" />
     <ClCompile Include="Sources\Managers\TimeManger.cpp" />
     <ClCompile Include="Sources\Managers\CameraManager.cpp" />
+    <ClCompile Include="Sources\Managers\TextureManager.cpp" />
+    <ClCompile Include="Sources\Components\SpriteComponent.cpp" />
+    <ClCompile Include="Sources\Components\TransformComponent.cpp" />
+    <ClCompile Include="Sources\System\QUATERNION.cpp" />
+    <ClCompile Include="Sources\Objects\Camera\CameraUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelLib.h" />
@@ -53,6 +58,11 @@
     <ClInclude Include="Sources\Objects\Camera\CameraDebug.h" />
     <ClInclude Include="Sources\Managers\TimeManger.h" />
     <ClInclude Include="Sources\Managers\CameraManager.h" />
+    <ClInclude Include="Sources\System\Singleton.h" />
+    <ClInclude Include="Sources\Managers\TextureManager.h" />
+    <ClInclude Include="Sources\Components\SpriteComponent.h" />
+    <ClInclude Include="Sources\Components\TransformComponent.h" />
+    <ClInclude Include="Sources\Objects\Camera\CameraUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\VertexShader.cso" />

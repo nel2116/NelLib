@@ -1,10 +1,13 @@
 #include "ObjectsManager.h"
+#include <Objects/Camera/CameraBase.h>
 
 void ObjectsManager::Update()
 {
 	// 新たに追加されたオブジェクトを追加
 	for (auto newObject : newObjects)
 	{
+		newObject->SetCamera(CAMERA_MANAGER.GetNowCamera());
+		newObject->Init();
 		objects.push_back(newObject);
 	}
 	newObjects.clear();
@@ -18,6 +21,7 @@ void ObjectsManager::Update()
 		// 有効でないは処理を飛ばす
 		if (!object->IsEnable()) { continue; }
 		object->Update();
+		object->UpdateComponents();
 	}
 	// 破棄フラグが立っているオブジェクトを削除
 	auto itr = std::partition(objects.begin(), objects.end(), [](Object* object) { return object->IsDestroy(); });
@@ -33,6 +37,7 @@ void ObjectsManager::Draw()
 		// 有効でないは処理を飛ばす
 		if (!object->IsEnable()) { continue; }
 		object->Draw();
+		object->DrawComponents();
 	}
 }
 

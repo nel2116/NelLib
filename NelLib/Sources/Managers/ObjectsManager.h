@@ -4,16 +4,14 @@
 #include <vector>
 #include <Objects/Object.h>
 #include <System/Macro.h>
+#include <System/Singleton.h>
 #include "CameraManager.h"
 
-class ObjectsManager
+class ObjectsManager : public Singleton<ObjectsManager>
 {
 public:
 	// デストラクタ
-	~ObjectsManager()
-	{
-		Uninit();
-	}
+	~ObjectsManager() { Uninit(); }
 
 	// 初期化処理
 	void Init()
@@ -39,8 +37,6 @@ public:
 	T* AddObject()
 	{
 		T* object = NEW T();
-		object->Init();
-		object->SetCamera(CAMERA_MANAGER.GetNowCamera());
 		newObjects.push_back(object);
 		return object;
 	}
@@ -71,29 +67,8 @@ private:
 	std::vector<Object*> newObjects;
 
 public:	// シングルトン関連
-
-	// インスタンスの取得
-	static ObjectsManager& GetInstance()
-	{
-		if (instance == nullptr)
-		{
-			instance = NEW ObjectsManager();
-		}
-		return *instance;
-	}
-
-	// インスタンスの破棄
-	static void DestroyInstance()
-	{
-		SAFE_DELETE(instance);
-	}
-
-private:
-	static inline ObjectsManager* instance = nullptr;
+	friend Singleton<ObjectsManager>;
 	ObjectsManager() {}
-	ObjectsManager(const ObjectsManager& obj) = delete;
-	ObjectsManager& operator=(const ObjectsManager& obj) = delete;
-
 };
 
 // シングルトンのインスタンスを取得するマクロ

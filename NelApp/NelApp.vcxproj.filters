@@ -3,9 +3,11 @@
   <ItemGroup>
     <ClCompile Include="Sources\NelApp.cpp" />
     <ClCompile Include="Sources\GameObjects\testObject.cpp" />
+    <ClCompile Include="Sources\GameObjects\UI_testObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelApp.h" />
     <ClInclude Include="Sources\GameObjects\testObject.h" />
+    <ClInclude Include="Sources\GameObjects\UI_testObject.h" />
   </ItemGroup>
 </Project>

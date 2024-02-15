@@ -144,6 +144,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\Components\SpriteComponent.cpp" />
+    <ClCompile Include="Sources\Components\TransformComponent.cpp" />
     <ClCompile Include="Sources\DirectX\MeshBuffer.cpp" />
     <ClCompile Include="Sources\DirectX\Renderer.cpp" />
     <ClCompile Include="Sources\DirectX\Shader.cpp" />
@@ -151,10 +153,12 @@
     <ClCompile Include="Sources\DirectX\Texture.cpp" />
     <ClCompile Include="Sources\Managers\CameraManager.cpp" />
     <ClCompile Include="Sources\Managers\ObjectsManager.cpp" />
+    <ClCompile Include="Sources\Managers\TextureManager.cpp" />
     <ClCompile Include="Sources\Managers\TimeManger.cpp" />
     <ClCompile Include="Sources\NelLib.cpp" />
     <ClCompile Include="Sources\Objects\Camera\CameraBase.cpp" />
     <ClCompile Include="Sources\Objects\Camera\CameraDebug.cpp" />
+    <ClCompile Include="Sources\Objects\Camera\CameraUI.cpp" />
     <ClCompile Include="Sources\Objects\Object.cpp" />
     <ClCompile Include="Sources\System\COLOR.cpp" />
     <ClCompile Include="Sources\System\Geometory.cpp" />
@@ -162,6 +166,7 @@
     <ClCompile Include="Sources\System\let.cpp" />
     <ClCompile Include="Sources\System\mathUtil.cpp" />
     <ClCompile Include="Sources\System\Model.cpp" />
+    <ClCompile Include="Sources\System\QUATERNION.cpp" />
     <ClCompile Include="Sources\System\VECTOR.cpp" />
     <ClCompile Include="Sources\System\VECTOR2.cpp" />
     <ClCompile Include="Sources\System\window.cpp" />
@@ -170,6 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\Components\Component.h" />
+    <ClInclude Include="Sources\Components\SpriteComponent.h" />
+    <ClInclude Include="Sources\Components\TransformComponent.h" />
     <ClInclude Include="Sources\DirectX\MeshBuffer.h" />
     <ClInclude Include="Sources\DirectX\Renderer.h" />
     <ClInclude Include="Sources\DirectX\Shader.h" />
@@ -179,10 +186,12 @@
     <ClInclude Include="Sources\DirectX\VERTEX_BUFFER.h" />
     <ClInclude Include="Sources\Managers\CameraManager.h" />
     <ClInclude Include="Sources\Managers\ObjectsManager.h" />
+    <ClInclude Include="Sources\Managers\TextureManager.h" />
     <ClInclude Include="Sources\Managers\TimeManger.h" />
     <ClInclude Include="Sources\NelLib.h" />
     <ClInclude Include="Sources\Objects\Camera\CameraBase.h" />
     <ClInclude Include="Sources\Objects\Camera\CameraDebug.h" />
+    <ClInclude Include="Sources\Objects\Camera\CameraUI.h" />
     <ClInclude Include="Sources\Objects\Object.h" />
     <ClInclude Include="Sources\System\COLOR.h" />
     <ClInclude Include="Sources\System\common.h" />
@@ -193,6 +202,7 @@
     <ClInclude Include="Sources\System\mathUtil.h" />
     <ClInclude Include="Sources\System\Model.h" />
     <ClInclude Include="Sources\System\QUATERNION.h" />
+    <ClInclude Include="Sources\System\Singleton.h" />
     <ClInclude Include="Sources\System\VECTOR.h" />
     <ClInclude Include="Sources\System\VECTOR2.h" />
     <ClInclude Include="Sources\System\window.h" />

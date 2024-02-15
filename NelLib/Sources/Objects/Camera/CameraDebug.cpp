@@ -17,6 +17,7 @@ CameraDebug::~CameraDebug()
 
 void CameraDebug::Update()
 {
+	DirectX::XMFLOAT3 pos = m_pTransform->GetPosition3();
 	// カメラの位置を動かす
 	if (IsKeyPress(VK_UP)) { m_radY += MOVE_SPEED; }
 	if (IsKeyPress(VK_DOWN)) { m_radY -= MOVE_SPEED; }
@@ -27,7 +28,7 @@ void CameraDebug::Update()
 
 	// カメラの注視点を向いてるベクトに合わせて動かす
 	// カメラの位置と注視点のベクトル
-	DirectX::XMVECTOR vCamPos = DirectX::XMLoadFloat3(&m_pos);
+	DirectX::XMVECTOR vCamPos = DirectX::XMLoadFloat3(&pos);
 	DirectX::XMVECTOR vCamLook = DirectX::XMLoadFloat3(&m_look);
 
 	// カメラの正面方向のベクトル
@@ -68,10 +69,10 @@ void CameraDebug::Update()
 	if (m_distance < 0.1f) { m_distance = 0.1f; }
 
 	// カメラの位置を計算
-	m_pos.x = cosf(m_radY) * sinf(m_radXZ) * m_distance + m_look.x;
-	m_pos.y = sinf(m_radY) * m_distance + m_look.y;
-	m_pos.z = cosf(m_radY) * cosf(m_radXZ) * m_distance + m_look.z;
-
+	pos.x = cosf(m_radY) * sinf(m_radXZ) * m_distance + m_look.x;
+	pos.y = sinf(m_radY) * m_distance + m_look.y;
+	pos.z = cosf(m_radY) * cosf(m_radXZ) * m_distance + m_look.z;
+	m_pTransform->SetPosition(pos);
 }
 
 

@@ -1,13 +1,16 @@
 #pragma once
 
 // ====== インクルード部 ======
-#include <System/Macro.h>
 #include <Windows.h>
+#include <System/Macro.h>
+#include <System/Singleton.h>
 
 // ====== クラス宣言 ======
-class TimeManager
+class TimeManager : public Singleton<TimeManager>
 {
-public:
+public:	// メンバ関数
+	// デストラクタ
+	~TimeManager() { Finalize(); }
 	// 初期化
 	void Init();
 	// 更新
@@ -38,30 +41,10 @@ private:
 	int m_frameCount;		// フレーム数
 	float m_fps;			// FPS
 
-public:	// シングルトン
-	// インスタンス取得
-	static TimeManager& GetInstance()
-	{
-		if (instance == nullptr)
-		{
-			instance = NEW TimeManager();
-		}
-		return *instance;
-	}
-
-	// インスタンス破棄
-	static void DestroyInstance()
-	{
-		SAFE_DELETE(instance);
-	}
-
-private:
-	static inline TimeManager* instance = nullptr;
+private:	// シングルトン関連
 	// コンストラクタ
+	friend Singleton<TimeManager>;
 	TimeManager() : m_startTime(0), m_currentTime(0), m_deltaTime(0), m_lastTime(0), m_frameTime(0), m_frameCount(0), m_fps(0) {}
-	TimeManager(const TimeManager&) = delete;
-	TimeManager& operator=(const TimeManager&) = delete;
-	~TimeManager() { Finalize(); }
 };
 
 // シングルトンインスタンス

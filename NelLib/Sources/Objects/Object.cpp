@@ -1,6 +1,17 @@
 #include "Object.h"
 #include <System/Macro.h>
 
+Object::Object()
+	: order(50)
+	, enable(true)
+	, destroy(false)
+	, m_pParent(nullptr)
+	, m_pCamera()
+	, m_pTransform(nullptr)
+{
+	m_pTransform = AddComponent<TransformComponent>();
+}
+
 Object::~Object()
 {
 	// コンポーネントの終了処理
@@ -17,6 +28,7 @@ void Object::UpdateComponents()
 	// 新たに追加されたコンポーネントを追加
 	for (auto newComponent : newComponents)
 	{
+		newComponent->Init();
 		components.push_back(newComponent);
 	}
 	newComponents.clear();
@@ -34,7 +46,7 @@ void Object::UpdateComponents()
 
 	// 破棄フラグが立っているコンポーネントのポインタを削除
 	auto itr = std::partition(components.begin(), components.end(), [](Component* component) { return component->IsDestroy(); });
-	std::for_each(components.begin(), itr, [](Component* component) { SAFE_DELETE(component); });
+	std::for_each(components.begin(), itr, [](Component* component) { component->Uninit(); SAFE_DELETE(component); });
 	components.erase(components.begin(), itr);
 }
 

@@ -6,6 +6,7 @@
 
 #include <System/common.h>
 #include <System/COLOR.h>
+#include <System/Singleton.h>
 #include "VERTEX.h"
 #include "VERTEX_BUFFER.h"
 
@@ -33,9 +34,11 @@ enum SamplerState
 };
 
 // ====== クラス宣言部 ======
-class Renderer
+class Renderer : public Singleton<Renderer>
 {
 public:		// ----- メンバ関数 -----
+	// デストラクタ
+	~Renderer();
 	/// <summary>
 	/// 初期化関数
 	/// </summary>
@@ -143,33 +146,8 @@ private:	// ----- メンバ変数 -----
 	// デフォルト値
 	COLOR m_FillColor;										// 塗りつぶし色
 
-public:		// 以下シングルトン関連
-	~Renderer();
-	/// <summary>
-	/// レンダラーのインスタンスを取得する関数
-	/// </summary>
-	/// <returns>レンダラーのインスタンス</returns>
-	/// <remarks>この関数を呼ぶと、レンダラーのインスタンスが取得できる</remarks>
-	static Renderer& GetInstance()
-	{
-		if (instance == nullptr)
-		{
-			instance = NEW Renderer();
-		}
-		return *instance;
-	}
-
-	/// <summary>
-	/// レンダラーのインスタンスを破棄する関数
-	/// </summary>
-	static void DestroyInstance()
-	{
-		SAFE_DELETE(instance);
-	}
-
-private:
-	// 唯一のインスタンス用ポインタ
-	static inline Renderer* instance = nullptr;
+private:	// 以下シングルトン関連
+	friend Singleton<Renderer>;
 	Renderer()
 		: m_FillColor(0.0f, 0.0f, 0.0f, 1.0f)
 		, m_Width(0.0f)
@@ -185,8 +163,6 @@ private:
 		, m_ClearColor{ 0.0f, 0.0f, 0.0f, 1.0f }
 		, MSAA{ 0,0 }
 	{}
-	Renderer(const Renderer& other) = delete;
-	Renderer& operator=(const Renderer& other) = delete;
 };
 
 #define RENDERER Renderer::GetInstance()
