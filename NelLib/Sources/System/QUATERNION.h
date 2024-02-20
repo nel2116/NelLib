@@ -1,84 +1,78 @@
 #pragma once
+#include <cmath>
+#include <DirectXMath.h>
 #include"mathUtil.h"
 #include"VECTOR.h"
-#include <DirectXMath.h>
+
+#define PI 3.1415926f
 
 class QUATERNION
 {
 public:
+	// メンバ変数
+	float w; // 実数部
+	float x; // 虚数部のx成分
+	float y; // 虚数部のy成分
+	float z; // 虚数部のz成分
+
 	// コンストラクタ
-	QUATERNION() : m_x(0.0f), m_y(0.0f), m_z(0.0f), m_w(1.0f) {}
-	// コンストラクタ
-	QUATERNION(float x, float y, float z, float w) : m_x(x), m_y(y), m_z(z), m_w(w) {}
-	// コンストラクタ
-	QUATERNION(DirectX::XMFLOAT4 quaternion) : m_x(quaternion.x), m_y(quaternion.y), m_z(quaternion.z), m_w(quaternion.w) {}
+	QUATERNION(); // デフォルトコンストラクタ
+	QUATERNION(float x, float y, float z, float w); // 引数付きコンストラクタ
+	QUATERNION(const QUATERNION& q); // コピーコンストラクタ
+
 	// デストラクタ
-	~QUATERNION() {}
+	~QUATERNION();
 
-	// ゲッター、セッター
-	// クォータニオンの設定
-	void SetQuaternion(DirectX::XMFLOAT4 quaternion) { m_x = quaternion.x; m_y = quaternion.y; m_z = quaternion.z; m_w = quaternion.w; }
+	// 代入演算子
+	QUATERNION& operator=(const QUATERNION& q);
 
-	// クォータニオンの設定
-	void SetQuaternion(float x, float y, float z, float w) { m_x = x; m_y = y; m_z = z; m_w = w; }
+	// 単項演算子
+	QUATERNION operator-() const; // 符号反転
+	QUATERNION operator~() const; // 共役
 
-	// クォータニオンの設定
-	void SetQuaternion(QUATERNION quaternion) { m_x = quaternion.GetX(); m_y = quaternion.GetY(); m_z = quaternion.GetZ(); m_w = quaternion.GetW(); }
+	// 二項演算子
+	QUATERNION operator+(const QUATERNION& q) const; // 加算
+	QUATERNION operator+(float s) const; // スカラー加算
+	QUATERNION operator-(const QUATERNION& q) const; // 減算
+	QUATERNION operator-(float s) const; // スカラー減算
+	QUATERNION operator*(const QUATERNION& q) const; // 乗算
+	QUATERNION operator*(float s) const; // スカラー乗算
+	QUATERNION operator/(const QUATERNION& q) const; // 除算
+	QUATERNION operator/(float s) const; // スカラー除算
 
-	// クォータニオンの設定
-	void SetQuaternion(VECTOR axis, float angle);
+	// 代入演算子
+	QUATERNION& operator+=(const QUATERNION& q); // 加算
+	QUATERNION& operator+=(float s); // スカラー加算
+	QUATERNION& operator-=(const QUATERNION& q); // 減算
+	QUATERNION& operator-=(float s); // スカラー減算
+	QUATERNION& operator*=(const QUATERNION& q); // 乗算
+	QUATERNION& operator*=(float s); // スカラー乗算
+	QUATERNION& operator/=(const QUATERNION& q); // 除算
+	QUATERNION& operator/=(float s); // スカラー除算
 
-	// Xの取得
-	float GetX() { return m_x; }
-	// Xの設定
-	void SetX(float x) { m_x = x; }
-	// Yの取得
-	float GetY() { return m_y; }
-	// Yの設定
-	void SetY(float y) { m_y = y; }
-	// Zの取得
-	float GetZ() { return m_z; }
-	// Zの設定
-	void SetZ(float z) { m_z = z; }
-	// Wの取得
-	float GetW() { return m_w; }
-	// Wの設定
-	void SetW(float w) { m_w = w; }
+	// その他の演算子	
+	QUATERNION operator*(const Vector3& v) const; // 乗算
+	QUATERNION operator/(const Vector3& v) const; // 除算
 
-	// 回転行列の取得
-	DirectX::XMFLOAT4X4 GetRotationMatrix() { return m_rotationMatrix; }
+	// メンバ関数
+	float magnitude() const; // ノルム（大きさ）を返す
+	QUATERNION normalize() const; // 正規化したクォータニオンを返す
+	QUATERNION inverse() const; // 逆元のクォータニオンを返す
+	float dot(const QUATERNION& q) const; // 内積を返す
+	QUATERNION cross(const QUATERNION& q) const; // 外積を返す
+	QUATERNION slerp(const QUATERNION& q, float t) const; // 球面線形補間を返す
+	QUATERNION lerp(const QUATERNION& q, float t) const; // 線形補間を返す
+	DirectX::XMVECTOR toXMVECTOR() const; // クォータニオンをXMVECTORに変換して返す
+	DirectX::XMMATRIX toMatrix() const; // クォータニオンを行列に変換して返す
+	DirectX::XMMATRIX toMatrixTranspose() const; // クォータニオンを行列に変換して返す
+	DirectX::XMMATRIX toMatrixInverse() const; // クォータニオンを行列に変換して返す
+	DirectX::XMFLOAT4 toFloat4() const; // クォータニオンをXMFLOAT4に変換して返す
+	DirectX::XMFLOAT4X4 toFloat4x4() const; // クォータニオンをXMFLOAT4X4に変換して返す
 
-	// 回転する関数
-	void rotate(QUATERNION rotate);
+	// クォータニオンの生成
+	QUATERNION AngleAxis(float angle, Vector3 axis) const;// 軸回りの回転を表すクォータニオンを生成して返す
 
-	// 回転する関数
-	void rotate(VECTOR rotate);
-
-	// 回転する関数
-	void rotate(float x, float y, float z);
-
-	// 回転する関数
-	void rotate(VECTOR axis, float angle);
-
-	// leap関数
-	void lerp(QUATERNION start, QUATERNION end, float t);
-
-	// slerp関数
-	void slerp(QUATERNION start, QUATERNION end, float t);
-
-	// クォータニオンの取得
-	DirectX::XMFLOAT4 GetQuaternion() { return DirectX::XMFLOAT4(m_x, m_y, m_z, m_w); }
-
-private:
-	// X
-	float m_x;
-	// Y
-	float m_y;
-	// Z
-	float m_z;
-	// W
-	float m_w;
-
-	// 回転行列
-	DirectX::XMFLOAT4X4 m_rotationMatrix;
+	// 静的メンバ関数
+	// クォータニオンの生成
+	static QUATERNION createIdentity(); // 単位クォータニオンを生成して返す
 };

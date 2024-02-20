@@ -11,11 +11,9 @@
     <ClCompile Include="Sources\System\VECTOR.cpp" />
     <ClCompile Include="Sources\System\let.cpp" />
     <ClCompile Include="Sources\System\mathUtil.cpp" />
-    <ClCompile Include="Sources\System\COLOR.cpp" />
     <ClCompile Include="Sources\System\_geometory.cpp" />
     <ClCompile Include="Sources\System\Geometory.cpp" />
     <ClCompile Include="Sources\System\Input.cpp" />
-    <ClCompile Include="Sources\System\VECTOR2.cpp" />
     <ClCompile Include="Sources\System\Model.cpp" />
     <ClCompile Include="Sources\System\_model.cpp" />
     <ClCompile Include="Sources\Objects\Object.cpp" />
@@ -27,8 +25,8 @@
     <ClCompile Include="Sources\Managers\TextureManager.cpp" />
     <ClCompile Include="Sources\Components\SpriteComponent.cpp" />
     <ClCompile Include="Sources\Components\TransformComponent.cpp" />
-    <ClCompile Include="Sources\System\QUATERNION.cpp" />
     <ClCompile Include="Sources\Objects\Camera\CameraUI.cpp" />
+    <ClCompile Include="Sources\System\QUATERNION.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelLib.h" />
@@ -45,10 +43,8 @@
     <ClInclude Include="Sources\System\mathUtil.h" />
     <ClInclude Include="Sources\System\let.h" />
     <ClInclude Include="Sources\System\QUATERNION.h" />
-    <ClInclude Include="Sources\System\COLOR.h" />
     <ClInclude Include="Sources\System\Geometory.h" />
     <ClInclude Include="Sources\System\Input.h" />
-    <ClInclude Include="Sources\System\VECTOR2.h" />
     <ClInclude Include="Sources\System\Model.h" />
     <ClInclude Include="Sources\Managers\ObjectsManager.h" />
     <ClInclude Include="Sources\Objects\Object.h" />

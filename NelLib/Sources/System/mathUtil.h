@@ -17,17 +17,17 @@ void mathArrow(float sx, float sy, float ex, float ey, float size = 30.0f);
 void mathText(class let l, float x, float y);
 void mathArc(float startAngle, float centralAngle, float radius);
 //positionÇVECTORÇ≈éÛÇØéÊÇÈ,êFÇ∆ê¸ÇÃëæÇ≥Ç‡åàÇﬂÇÈÅB
-void mathPoint(const class VECTOR& p, const struct COLOR& c, float strokeW);
-void mathCircle(const class VECTOR& p, float diameter,
+void mathPoint(const class Vector3& p, const struct COLOR& c, float strokeW);
+void mathCircle(const class Vector3& p, float diameter,
 	const struct COLOR& fillC, const struct COLOR& c, float strokeW);
-void mathRect(const class VECTOR& p, float w, float h, float angle,
+void mathRect(const class Vector3& p, float w, float h, float angle,
 	enum RECT_MODE mode, const struct COLOR& fillC, const struct COLOR& strokeC, float strokeW);
-void mathLine(const class VECTOR& sp, const class VECTOR& ep, const struct COLOR& c, float strokeW);
-void mathImage(int img, const class VECTOR& p, float angle = 0, float scale = 1);
-void mathArrow(const class VECTOR& sp, const class VECTOR& ep,
+void mathLine(const class Vector3& sp, const class Vector3& ep, const struct COLOR& c, float strokeW);
+void mathImage(int img, const class Vector3& p, float angle = 0, float scale = 1);
+void mathArrow(const class Vector3& sp, const class Vector3& ep,
 	const struct COLOR& c, float strokeW, float size = 30.0f);
-void mathText(class let l, const class VECTOR& p, enum TEXT_MODE mode, const struct COLOR& c, float size = 30);
-void mathBracket(const class VECTOR& sp, const class VECTOR& ep, float r,
+void mathText(class let l, const class Vector3& p, enum TEXT_MODE mode, const struct COLOR& c, float size = 30);
+void mathBracket(const class Vector3& sp, const class Vector3& ep, float r,
 	const struct COLOR& c, float strokeW);
 void mathArc(float startAngle, float centralAngle, float radius, const struct COLOR& c, float strokeW);
 extern float mathMouseX;

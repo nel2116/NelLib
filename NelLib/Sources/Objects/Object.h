@@ -86,6 +86,7 @@ public:	// コンポーネント関連
 	template <typename T>
 	T* GetComponent()
 	{
+		// コンポーネントのリストから指定した型のコンポーネントを取得する
 		for (auto component : components)
 		{
 			T* castComponent = dynamic_cast<T*>(component);
@@ -94,6 +95,16 @@ public:	// コンポーネント関連
 				return castComponent;
 			}
 		}
+		// 見つからなかった場合は追加予定のコンポーネントリストから取得する
+		for (auto component : newComponents)
+		{
+			T* castComponent = dynamic_cast<T*>(component);
+			if (castComponent != nullptr)
+			{
+				return castComponent;
+			}
+		}
+		// それでも見つからなかった場合はnullptrを返す
 		return nullptr;
 	}
 

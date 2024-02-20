@@ -13,31 +13,29 @@ CameraBase::CameraBase()
 	m_pTransform->SetPosition(0.0f, 0.0f, -0.3f);
 }
 
-DirectX::XMFLOAT4X4 CameraBase::GetTransposedViewMatrix()
+DirectX::XMFLOAT4X4 CameraBase::GetViewMatrix()
 {
 	UpdateViewMatrix();
-	DirectX::XMFLOAT4X4 view;
-	DirectX::XMStoreFloat4x4(&view, DirectX::XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_view)));
-	return view;
+	return m_view;
 }
 
-DirectX::XMFLOAT4X4 CameraBase::GetTransposedProjectionMatrix()
+DirectX::XMFLOAT4X4 CameraBase::GetProjectionMatrix()
 {
 	UpdateProjectionMatrix();
-	DirectX::XMFLOAT4X4 projection;
-	DirectX::XMStoreFloat4x4(&projection, DirectX::XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_projection)));
-	return projection;
+	return m_projection;
 }
 
 void CameraBase::UpdateViewMatrix()
 {
 	// ビュー行列の更新
 	DirectX::XMFLOAT3 pos = m_pTransform->GetPosition3();
-	DirectX::XMStoreFloat4x4(&m_view, DirectX::XMMatrixLookAtLH(DirectX::XMLoadFloat3(&pos), DirectX::XMLoadFloat3(&m_look), DirectX::XMLoadFloat3(&m_up)));
+	DirectX::XMMATRIX view = DirectX::XMMatrixLookAtLH(DirectX::XMLoadFloat3(&pos), DirectX::XMLoadFloat3(&m_look), DirectX::XMLoadFloat3(&m_up));
+	DirectX::XMStoreFloat4x4(&m_view, DirectX::XMMatrixTranspose(view));
 }
 
 void CameraBase::UpdateProjectionMatrix()
 {
 	// プロジェクション行列の更新
-	DirectX::XMStoreFloat4x4(&m_projection, DirectX::XMMatrixPerspectiveFovLH(m_fov, m_aspect, m_near, m_far));
+	DirectX::XMMATRIX projection = DirectX::XMMatrixPerspectiveFovLH(m_fov, m_aspect, m_near, m_far);
+	DirectX::XMStoreFloat4x4(&m_projection, DirectX::XMMatrixTranspose(projection));
 }

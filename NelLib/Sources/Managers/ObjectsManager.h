@@ -53,6 +53,16 @@ public:
 				return castObject;
 			}
 		}
+		// 見つからなかった場合は追加予定のオブジェクトを検索
+		for (auto object : newObjects)
+		{
+			T* castObject = dynamic_cast<T*>(object);
+			if (castObject != nullptr)
+			{
+				return castObject;
+			}
+		}
+		// それでも見つからなかった場合はnullptrを返す
 		return nullptr;
 	}
 

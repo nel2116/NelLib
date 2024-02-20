@@ -5,8 +5,8 @@
 #pragma comment(lib,"d3d11.lib")
 
 #include <System/common.h>
-#include <System/COLOR.h>
 #include <System/Singleton.h>
+#include <System/VECTOR.h>
 #include "VERTEX.h"
 #include "VERTEX_BUFFER.h"
 
@@ -144,7 +144,7 @@ private:	// ----- メンバ変数 -----
 	float m_Height;									        // 高さ
 
 	// デフォルト値
-	COLOR m_FillColor;										// 塗りつぶし色
+	Vector4 m_FillColor;										// 塗りつぶし色
 
 private:	// 以下シングルトン関連
 	friend Singleton<Renderer>;

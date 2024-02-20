@@ -39,12 +39,12 @@ void CameraUI::Update()
 
 void CameraUI::UpdateViewMatrix()
 {
-	DirectX::XMMATRIX view = DirectX::XMMatrixIdentity();
+	DirectX::XMMATRIX view = DirectX::XMMatrixTranspose(DirectX::XMMatrixIdentity());
 	DirectX::XMStoreFloat4x4(&m_view, view);
 }
 
 void CameraUI::UpdateProjectionMatrix()
 {
-	DirectX::XMMATRIX proj = DirectX::XMMatrixOrthographicOffCenterLH(m_ViewLeft, m_ViewRight, m_ViewBottom, m_ViewTop, 0.0f, 1.0f);
+	DirectX::XMMATRIX proj = DirectX::XMMatrixTranspose(DirectX::XMMatrixOrthographicOffCenterLH(m_ViewLeft, m_ViewRight, m_ViewTop, m_ViewBottom, 0.01f, 100.0f));
 	DirectX::XMStoreFloat4x4(&m_projection, proj);
 }

@@ -38,9 +38,8 @@ void TestObject::Init()
 void TestObject::Update()
 {
 #if MODEL_DEBUG
-	static float speed = 0.01f;
-	m_pTransform->rotate(speed, speed, speed);
-	speed += 0.1f;
+
+
 #endif // MODEL_DEBUG
 
 }
@@ -67,10 +66,10 @@ void TestObject::Draw()
 	ModelMat[0] = m_pTransform->GetWorldMatrix();	// ワールド行列
 
 	// View空間
-	ModelMat[1] = m_pCamera->GetTransposedViewMatrix();
+	ModelMat[1] = m_pCamera->GetViewMatrix();
 
 	// Projection空間
-	ModelMat[2] = m_pCamera->GetTransposedProjectionMatrix();
+	ModelMat[2] = m_pCamera->GetProjectionMatrix();
 
 	// シェーダに行列を渡す
 	m_pVS->WriteBuffer(0, ModelMat);

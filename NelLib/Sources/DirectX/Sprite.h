@@ -6,8 +6,7 @@
 #include "MeshBuffer.h"
 #include "Shader.h"
 #include "Texture.h"
-#include <System/COLOR.h>
-#include <System/VECTOR2.h>
+#include <System/VECTOR.h>
 
 class Sprite
 {
@@ -16,11 +15,11 @@ public:
 	static void Uninit();
 	static void Draw();
 
-	static void SetOffset(VECTOR2 offset);
-	static void SetSize(VECTOR2 size);
-	static void SetUVPos(VECTOR2 pos);
-	static void SetUVScale(VECTOR2 scale);
-	static void SetColor(COLOR color);
+	static void SetOffset(Vector2 offset);
+	static void SetSize(Vector2 size);
+	static void SetUVPos(Vector2 pos);
+	static void SetUVScale(Vector2 scale);
+	static void SetColor(Vector4 color);
 	static void SetTexture(Texture* tex);
 
 	static void SetWorld(DirectX::XMFLOAT4X4 world);

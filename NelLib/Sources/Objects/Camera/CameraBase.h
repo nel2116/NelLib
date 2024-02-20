@@ -13,10 +13,10 @@ public:
 	virtual void Uninit() override {}
 
 	// 転置済みビュー行列を取得
-	virtual DirectX::XMFLOAT4X4 GetTransposedViewMatrix();
+	virtual DirectX::XMFLOAT4X4 GetViewMatrix();
 
 	// 転置済みプロジェクション行列を取得
-	virtual DirectX::XMFLOAT4X4 GetTransposedProjectionMatrix();
+	virtual DirectX::XMFLOAT4X4 GetProjectionMatrix();
 
 protected:
 	// ビュー行列を更新

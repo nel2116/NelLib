@@ -103,28 +103,28 @@ void Sprite::Draw()
 	m_data.mesh->Draw();
 }
 
-void Sprite::SetOffset(VECTOR2 offset)
+void Sprite::SetOffset(Vector2 offset)
 {
 	m_data.param[0].x = offset.x;
 	m_data.param[0].y = offset.y;
 }
-void Sprite::SetSize(VECTOR2 size)
+void Sprite::SetSize(Vector2 size)
 {
 	m_data.param[0].z = size.x;
 	m_data.param[0].w = size.y;
 }
 
-void Sprite::SetUVPos(VECTOR2 pos)
+void Sprite::SetUVPos(Vector2 pos)
 {
 	m_data.param[1].x = pos.x;
 	m_data.param[1].y = pos.y;
 }
-void Sprite::SetUVScale(VECTOR2 scale)
+void Sprite::SetUVScale(Vector2 scale)
 {
 	m_data.param[1].z = scale.x;
 	m_data.param[1].w = scale.y;
 }
-void Sprite::SetColor(COLOR color)
+void Sprite::SetColor(Vector4 color)
 {
 	m_data.param[2].x = color.r;
 	m_data.param[2].y = color.g;
