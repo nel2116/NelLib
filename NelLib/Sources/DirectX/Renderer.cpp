@@ -100,8 +100,16 @@ void Renderer::Init(int baseWidth, int baseHeight, bool fullscreen)
 		D3D11_CULL_FRONT,
 		D3D11_CULL_BACK
 	};
-	rasterizer.FillMode = D3D11_FILL_SOLID;
-	rasterizer.FrontCounterClockwise = false;
+	rasterizer.FillMode = D3D11_FILL_SOLID;		// ポリゴンの塗りつぶし
+	rasterizer.FrontCounterClockwise = false;	// 反時計回りが表面
+	rasterizer.DepthBias = 0;					// 深度バイアス
+	rasterizer.DepthBiasClamp = 0.0f;			// 深度バイアスのクランプ
+	rasterizer.SlopeScaledDepthBias = 0.0f;		// スロープスケール付き深度バイアス
+	rasterizer.DepthClipEnable = true;			// 深度クリッピングの有効
+	rasterizer.ScissorEnable = false;			// シザー矩形の有効
+	rasterizer.MultisampleEnable = false;		// マルチサンプリングの有効
+	rasterizer.AntialiasedLineEnable = false;	// アンチエイリアス線の有効
+
 	for (int i = 0; i < 3; ++i)
 	{
 		rasterizer.CullMode = cull[i];

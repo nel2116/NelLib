@@ -1,6 +1,8 @@
 #pragma once
 
 // ====== インクルード部 ======
+#include <windows.h>
+#include <typeinfo>
 #include <vector>
 #include <algorithm>
 #include <Components/TransformComponent.h>
@@ -67,17 +69,17 @@ public:	// コンポーネント関連
 	template <typename T>
 	T* AddComponent()
 	{
-		// すでに同じコンポーネントがアタッチされている場合は追加しない
-		for (auto component : components)
+		T* newComponent = nullptr;
+		// Componentの派生クラスでなければnullptrを返す
+		if (!typeid(T).before(typeid(Component*)))
 		{
-			T* castComponent = dynamic_cast<T*>(component);
-			if (castComponent != nullptr)
-			{
-				return castComponent;
-			}
+			//typeidから型情報を取得してエラーとして出力する
+			std::string typeName = typeid(T).name();
+			std::string error = "エラー: " + typeName + " はComponentクラスを継承していません。";
+			OutputDebugStringA(error.c_str());
+			return newComponent;
 		}
-		// 新たに追加されたコンポーネントを一時的に保持する
-		T* newComponent = NEW T(this);
+		newComponent = NEW T(this);
 		newComponents.push_back(newComponent);
 		return newComponent;
 	}
@@ -86,26 +88,21 @@ public:	// コンポーネント関連
 	template <typename T>
 	T* GetComponent()
 	{
-		// コンポーネントのリストから指定した型のコンポーネントを取得する
-		for (auto component : components)
+		T* component = nullptr;
+		// 配列を全捜査し全てに対してキャストを試みる
+		// キャストに成功したらそのポインタを返す
+		for (auto c : this->components)
 		{
-			T* castComponent = dynamic_cast<T*>(component);
-			if (castComponent != nullptr)
-			{
-				return castComponent;
-			}
+			component = dynamic_cast<T*>(c);
+			if (component != nullptr) { break; }
 		}
-		// 見つからなかった場合は追加予定のコンポーネントリストから取得する
-		for (auto component : newComponents)
+		// 新たに追加されたコンポーネントに対しても同様にキャストを試みる
+		for (auto c : this->newComponents)
 		{
-			T* castComponent = dynamic_cast<T*>(component);
-			if (castComponent != nullptr)
-			{
-				return castComponent;
-			}
+			component = dynamic_cast<T*>(c);
+			if (component != nullptr) { break; }
 		}
-		// それでも見つからなかった場合はnullptrを返す
-		return nullptr;
+		return component;
 	}
 
 	// コンポーネントの更新
@@ -119,9 +116,9 @@ private:
 	void SortComponents();
 
 protected:	// メンバ変数
-	CameraBase* m_pCamera;	// カメラ
-	TransformComponent* m_pTransform;	// トランスフォームコンポーネント
-	Object* m_pParent;			// 親オブジェクト
+	CameraBase* m_pCamera;	            // カメラ
+	TransformComponent* m_pTransform;	// 位置回転スケール
+	Object* m_pParent;			        // 親オブジェクト
 
 private:	// メンバ変数
 	// コンポーネントのリスト

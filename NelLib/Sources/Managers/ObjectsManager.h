@@ -1,6 +1,8 @@
 #pragma once
 
 // ====== インクルード部 ======
+#include <windows.h>
+#include <typeinfo>
 #include <vector>
 #include <Objects/Object.h>
 #include <System/Macro.h>
@@ -36,7 +38,18 @@ public:
 	template <typename T>
 	T* AddObject()
 	{
-		T* object = NEW T();
+		T* object = nullptr;
+		// Objectクラスを継承していないクラスは追加できない
+		if (!typeid(T).before(typeid(Object*)))
+		{
+			// エラーメッセージを表示
+			//typeidから型情報を取得してエラーとして出力する
+			std::string typeName = typeid(T).name();
+			std::string error = "エラー: " + typeName + " はObjectクラスを継承していません。";
+			OutputDebugStringA(error.c_str());
+			return object;
+		}
+		object = NEW T();
 		newObjects.push_back(object);
 		return object;
 	}

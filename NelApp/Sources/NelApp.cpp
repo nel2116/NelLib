@@ -13,7 +13,8 @@ void Init()
 	TestObject* UI = OBJECTS_MANAGER.AddObject<TestObject>();
 	UI->AddComponent<SpriteComponent>();
 	UI->SetOrder(100);
-	UI->GetComponent<TransformComponent>()->SetPosition(Vector3(1.0f, 0.0f, 0.0f));
+	// UI->GetComponent<TransformComponent>()->SetPosition(Vector3(1.0f, 0.0f, 0.0f));
+	UI->GetTransform()->SetScale(Vector3(0.5f, 0.5f, 0.5f));
 
 }
 
