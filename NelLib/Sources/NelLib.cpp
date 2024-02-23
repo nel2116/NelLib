@@ -4,6 +4,7 @@
 #include <DirectX/Sprite.h>
 #include <NelLib.h>
 #include <Managers/ObjectsManager.h>
+#include <Managers/SceneManager.h>
 #include <Managers/TimeManger.h>
 #include <Managers/CameraManager.h>
 #include <Managers/TextureManager.h>
@@ -24,6 +25,7 @@ void window(const char* appName, int width, int height)
 	Sprite::Init();						// スプライト初期化
 	InitInput();						// 入力初期化
 	// マネージャ初期化
+	SCENE_MANAGER.Init();				// シーンマネージャ初期化
 	OBJECTS_MANAGER.Init();				// オブジェクトマネージャ初期化
 	TEXTURE_MANAGER.Init();				// テクスチャマネージャ初期化
 	TIME_MANAGER.Init();				// タイムマネージャ初期化
@@ -95,6 +97,7 @@ void gmain()
 			// ===== 入力処理 =====
 			Input();
 			// ===== 更新処理 =====
+			SCENE_MANAGER.Update();
 			Update();
 			// ===== 描画処理 =====
 

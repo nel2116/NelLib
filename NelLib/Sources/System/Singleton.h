@@ -18,6 +18,7 @@ public:
 
 private:
 	// シングルトンのポインタ型
+	// スマートポインタなので子クラスを開放する必要はない
 	typedef std::unique_ptr<T> singleton_pointer_type;
 	// デフォルトコンストラクタ以外でインスタンスを構築したい場合、createInstance()を上書きする
 /*

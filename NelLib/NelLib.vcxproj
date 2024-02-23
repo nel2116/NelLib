@@ -153,6 +153,7 @@
     <ClCompile Include="Sources\DirectX\Texture.cpp" />
     <ClCompile Include="Sources\Managers\CameraManager.cpp" />
     <ClCompile Include="Sources\Managers\ObjectsManager.cpp" />
+    <ClCompile Include="Sources\Managers\SceneManager.cpp" />
     <ClCompile Include="Sources\Managers\TextureManager.cpp" />
     <ClCompile Include="Sources\Managers\TimeManger.cpp" />
     <ClCompile Include="Sources\NelLib.cpp" />
@@ -166,6 +167,9 @@
     <ClCompile Include="Sources\System\mathUtil.cpp" />
     <ClCompile Include="Sources\System\Model.cpp" />
     <ClCompile Include="Sources\System\QUATERNION.cpp" />
+    <ClCompile Include="Sources\System\Scenes\GameScene.cpp" />
+    <ClCompile Include="Sources\System\Scenes\Scene.cpp" />
+    <ClCompile Include="Sources\System\Scenes\TitleScene.cpp" />
     <ClCompile Include="Sources\System\VECTOR.cpp" />
     <ClCompile Include="Sources\System\window.cpp" />
     <ClCompile Include="Sources\System\_geometory.cpp" />
@@ -184,6 +188,7 @@
     <ClInclude Include="Sources\DirectX\VERTEX_BUFFER.h" />
     <ClInclude Include="Sources\Managers\CameraManager.h" />
     <ClInclude Include="Sources\Managers\ObjectsManager.h" />
+    <ClInclude Include="Sources\Managers\SceneManager.h" />
     <ClInclude Include="Sources\Managers\TextureManager.h" />
     <ClInclude Include="Sources\Managers\TimeManger.h" />
     <ClInclude Include="Sources\NelLib.h" />
@@ -199,6 +204,9 @@
     <ClInclude Include="Sources\System\mathUtil.h" />
     <ClInclude Include="Sources\System\Model.h" />
     <ClInclude Include="Sources\System\QUATERNION.h" />
+    <ClInclude Include="Sources\System\Scenes\GameScene.h" />
+    <ClInclude Include="Sources\System\Scenes\Scene.h" />
+    <ClInclude Include="Sources\System\Scenes\TitleScene.h" />
     <ClInclude Include="Sources\System\Singleton.h" />
     <ClInclude Include="Sources\System\VECTOR.h" />
     <ClInclude Include="Sources\System\window.h" />

@@ -2,19 +2,13 @@
 #include <DirectX/Renderer.h>
 #include <Managers/ObjectsManager.h>
 #include <Managers/CameraManager.h>
-#include "GameObjects/testObject.h"
-#include <Components/SpriteComponent.h>
+#include <Managers/SceneManager.h>
 
 void Init()
 {
 	// ===== èâä˙âªèàóù =====
-	window("Nel Game", 960, 540);
-	OBJECTS_MANAGER.AddObject<TestObject>();
-	TestObject* UI = OBJECTS_MANAGER.AddObject<TestObject>();
-	UI->AddComponent<SpriteComponent>();
-	UI->SetOrder(100);
-	// UI->GetComponent<TransformComponent>()->SetPosition(Vector3(1.0f, 0.0f, 0.0f));
-	UI->GetTransform()->SetScale(Vector3(0.5f, 0.5f, 0.5f));
+	window("Nel Game", 1280, 720);
+
 
 }
 

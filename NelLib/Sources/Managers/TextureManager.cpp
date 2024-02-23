@@ -11,7 +11,9 @@ void TextureManager::Init()
 
 	// テクスチャの読み込み
 	{
-		WARNINGHR(m_pTextures[TEX_DEFAULT]->Create("Assets/Textures/default.png"), "TEX_DEFAULTが読み込めませんでした。");	// TEX_DEFAULT
+		WARNINGHR(m_pTextures[TEX_DEFAULT]->Create("Assets/Textures/default.png"), "TEX_DEFAULTが読み込めませんでした。");		// TEX_DEFAULT
+		WARNINGHR(m_pTextures[TEX_DEFAULT2]->Create("Assets/Textures/default2.png"), "TEX_DEFAULT2が読み込めませんでした。");	// TEX_DEFAULT2
+		WARNINGHR(m_pTextures[TEX_TEST]->Create("Assets/Textures/test.png"), "TEX_TESTが読み込めませんでした。");				// TEX_TEST
 	}
 }
 

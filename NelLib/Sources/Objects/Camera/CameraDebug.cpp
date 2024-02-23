@@ -21,8 +21,8 @@ void CameraDebug::Update()
 	// ÉJÉÅÉâÇÃà íuÇìÆÇ©Ç∑
 	if (IsKeyPress(VK_UP)) { m_radY += MOVE_SPEED; }
 	if (IsKeyPress(VK_DOWN)) { m_radY -= MOVE_SPEED; }
-	if (IsKeyPress(VK_LEFT)) { m_radXZ -= MOVE_SPEED; }
-	if (IsKeyPress(VK_RIGHT)) { m_radXZ += MOVE_SPEED; }
+	if (IsKeyPress(VK_LEFT)) { m_radXZ += MOVE_SPEED; }
+	if (IsKeyPress(VK_RIGHT)) { m_radXZ -= MOVE_SPEED; }
 	if (IsKeyPress(VK_SHIFT)) { m_distance += MOVE_SPEED; }
 	if (IsKeyPress(VK_CONTROL)) { m_distance -= MOVE_SPEED; }
 

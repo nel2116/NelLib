@@ -12,6 +12,8 @@ public: // enum
 	enum TextureType
 	{
 		TEX_DEFAULT = 0,	// default.png
+		TEX_DEFAULT2,		// default2.png
+		TEX_TEST,			// test.png
 		TEX_MAX,
 	};
 
