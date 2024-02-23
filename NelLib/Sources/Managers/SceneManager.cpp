@@ -9,10 +9,7 @@ void SceneManager::Init()
 	AddScene(new GameScene());
 
 	// シーンの初期化
-	for (auto& scene : m_Scenes)
-	{
-		scene.second->Init();
-	}
+	m_pNowScene = m_Scenes.begin()->second;
 }
 
 void SceneManager::Uninit()
@@ -55,4 +52,5 @@ void SceneManager::ChangeScene(const std::string& name)
 {
 	// シーンの変更
 	m_pNowScene = m_Scenes[name];
+	m_pNowScene->Init();
 }

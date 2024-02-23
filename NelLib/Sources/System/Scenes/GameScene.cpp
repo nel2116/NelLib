@@ -1,5 +1,12 @@
 #include "GameScene.h"
 #include <Managers/SceneManager.h>
+#include <System/Input.h>
+
+GameScene::GameScene()
+{
+	// シーンの名前を設定
+	m_name = "GameScene";
+}
 
 void GameScene::Init()
 {
@@ -16,7 +23,7 @@ void GameScene::Uninit()
 
 void GameScene::Update()
 {
-	if (VK_RETURN)
+	if (IsKeyPress(VK_RETURN))
 	{
 		// シーンの変更
 		SCENE_MANAGER.ChangeScene("TitleScene");

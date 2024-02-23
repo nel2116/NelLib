@@ -6,6 +6,8 @@
 class TitleScene : public Scene
 {
 public:
+	TitleScene();
+	~TitleScene() {}
 
 	// ‰Šú‰»
 	void Init() override;
