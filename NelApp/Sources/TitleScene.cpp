@@ -1,5 +1,6 @@
 #include "TitleScene.h"
 #include <Managers/SceneManager.h>
+#include <Managers/CameraManager.h>
 #include <System/Input.h>
 
 TitleScene::TitleScene()
@@ -12,6 +13,7 @@ void TitleScene::Init()
 {
 	// ƒV[ƒ“‚Ì‰Šú‰»
 	ShowName();
+	CAMERA_MANAGER.SetNowCamera(CameraManager::E_CAM_DEBUG);
 }
 
 void TitleScene::Uninit()

@@ -1,6 +1,8 @@
 #pragma once
 // ====== インクルード ======
-#include "Scene.h"
+#include <System/Scenes/Scene.h>
+#include "Field.h"
+#include "Player.h"
 
 // ====== クラスの宣言 ======
 class GameScene : public Scene
@@ -22,5 +24,6 @@ public:
 	void Draw() override;
 
 private:
-
+	Field* m_Field;
+	Player* m_Player;
 };

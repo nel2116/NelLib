@@ -10,6 +10,7 @@ Shader* Geometory::m_pLineShader[2];
 DirectX::XMFLOAT4X4 Geometory::m_WVP[3];
 void* Geometory::m_pLineVtx;
 int Geometory::m_lineCnt = 0;
+DirectX::XMFLOAT4 Geometory::m_Color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 
 void Geometory::Init()
 {
@@ -54,7 +55,7 @@ void Geometory::AddLine(DirectX::XMFLOAT3 start, DirectX::XMFLOAT3 end, DirectX:
 	if (m_lineCnt < MAX_LINE_NUM)
 	{
 		LineVertex* pVtx = reinterpret_cast<LineVertex*>(m_pLineVtx);
-		pVtx[m_lineCnt * 2 + 0] = { start.x, start.y, start.z, color.x, color.y, color.z, color.w};
+		pVtx[m_lineCnt * 2 + 0] = { start.x, start.y, start.z, color.x, color.y, color.z, color.w };
 		pVtx[m_lineCnt * 2 + 1] = { end.x, end.y, end.z, color.x, color.y, color.z, color.w };
 		++m_lineCnt;
 	}
@@ -89,6 +90,22 @@ void Geometory::DrawBox()
 	if (m_pBox == nullptr)
 		return;
 	m_pVS->WriteBuffer(0, m_WVP);
+	m_pVS->WriteBuffer(1, &m_Color);
+	m_pVS->Bind();
+	m_pPS->Bind();
+	m_pBox->Draw();
+}
+void Geometory::DrawBox(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 scale, DirectX::XMFLOAT4 color)
+{
+	if (m_pBox == nullptr)
+		return;
+	DirectX::XMFLOAT4X4 world;
+	DirectX::XMMATRIX worldMat = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z) * DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
+	worldMat = DirectX::XMMatrixTranspose(worldMat);
+	DirectX::XMStoreFloat4x4(&world, worldMat);
+	m_WVP[0] = world;
+	m_pVS->WriteBuffer(0, m_WVP);
+	m_pVS->WriteBuffer(1, &color);
 	m_pVS->Bind();
 	m_pPS->Bind();
 	m_pBox->Draw();
@@ -98,6 +115,7 @@ void Geometory::DrawCylinder()
 	if (m_pCylinder == nullptr)
 		return;
 	m_pVS->WriteBuffer(0, m_WVP);
+	m_pVS->WriteBuffer(1, &m_Color);
 	m_pVS->Bind();
 	m_pPS->Bind();
 	m_pCylinder->Draw();
@@ -107,6 +125,7 @@ void Geometory::DrawSphere()
 	if (m_pSphere == nullptr)
 		return;
 	m_pVS->WriteBuffer(0, m_WVP);
+	m_pVS->WriteBuffer(1, &m_Color);
 	m_pVS->Bind();
 	m_pPS->Bind();
 	m_pSphere->Draw();
@@ -114,7 +133,7 @@ void Geometory::DrawSphere()
 
 void Geometory::MakeVS()
 {
-const char* VSCode = R"EOT(
+	const char* VSCode = R"EOT(
 struct VS_IN {
 	float3 pos : POSITION0;
 	float2 uv : TEXCOORD0;
@@ -122,11 +141,15 @@ struct VS_IN {
 struct VS_OUT {
 	float4 pos : SV_POSITION;
 	float2 uv : TEXCOORD0;
+	float4 color : COLOR0;
 };
 cbuffer Matrix : register(b0) {
 	float4x4 world;
 	float4x4 view;
 	float4x4 proj;
+};
+cbuffer Color : register(b1) {
+	float4 color;
 };
 VS_OUT main(VS_IN vin) {
 	VS_OUT vout;
@@ -135,6 +158,7 @@ VS_OUT main(VS_IN vin) {
 	vout.pos = mul(vout.pos, view);
 	vout.pos = mul(vout.pos, proj);
 	vout.uv = vin.uv;
+	vout.color = color;
 	return vout;
 })EOT";
 
@@ -149,16 +173,17 @@ void Geometory::MakePS()
 struct PS_IN {
 	float4 pos : SV_POSITION;
 	float2 uv : TEXCOORD0;
+	float4 color : COLOR0;
 };
 float4 main(PS_IN pin) : SV_TARGET0 {
-	float4 color = float4(1,1,1,1);
+	float4 color = pin.color;
 	float2 halfGrid = floor(abs(pin.uv) * 2.0f);
 	float2 quatGrid = floor(abs(pin.uv) * 8.0f);
 
 	float half = fmod(halfGrid.x + halfGrid.y, 2.0f);
 	float quat = fmod(quatGrid.x + quatGrid.y, 2.0f);
 
-	color.rgb = ((half * 0.1f) * quat + 0.45f) + (1 - quat) * 0.05f;
+//	color.rgb = ((half * 0.1f) * quat + 0.45f) + (1 - quat) * 0.05f;
 	return color;
 })EOT";
 #else

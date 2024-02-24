@@ -28,8 +28,10 @@ DirectX::XMFLOAT4X4 CameraBase::GetProjectionMatrix()
 void CameraBase::UpdateViewMatrix()
 {
 	// ビュー行列の更新
+	DirectX::XMFLOAT3 look = m_look.toXMFLOAT3();
+	DirectX::XMFLOAT3 up = m_up.toXMFLOAT3();
 	DirectX::XMFLOAT3 pos = m_pTransform->GetPosition3();
-	DirectX::XMMATRIX view = DirectX::XMMatrixLookAtLH(DirectX::XMLoadFloat3(&pos), DirectX::XMLoadFloat3(&m_look), DirectX::XMLoadFloat3(&m_up));
+	DirectX::XMMATRIX view = DirectX::XMMatrixLookAtLH(DirectX::XMLoadFloat3(&pos), DirectX::XMLoadFloat3(&look), DirectX::XMLoadFloat3(&up));
 	DirectX::XMStoreFloat4x4(&m_view, DirectX::XMMatrixTranspose(view));
 }
 

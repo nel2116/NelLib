@@ -56,7 +56,7 @@ public:
 
 	// オブジェクトの取得
 	template <typename T>
-	T* GetObject()
+	T* GetObjects()
 	{
 		for (auto object : objects)
 		{

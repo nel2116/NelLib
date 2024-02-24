@@ -13,6 +13,7 @@ public:	// 定数定義
 	{
 		E_CAM_DEBUG,	// デバッグカメラ
 		E_CAM_UI,		// UIカメラ
+		E_CAM_PLAYER,	// プレイヤーカメラ
 		E_CAM_MAX,		// カメラの最大数
 	};
 

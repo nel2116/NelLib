@@ -1,6 +1,6 @@
 #include "SceneManager.h"
-#include <System/Scenes/TitleScene.h>
-#include <System/Scenes/GameScene.h>
+#include "TitleScene.h"
+#include "GameScene.h"
 
 void SceneManager::Init()
 {
@@ -10,6 +10,7 @@ void SceneManager::Init()
 
 	// シーンの初期化
 	m_pNowScene = m_Scenes.begin()->second;
+	m_pNowScene->Init();
 }
 
 void SceneManager::Uninit()
@@ -41,16 +42,12 @@ void SceneManager::AddScene(Scene* pScene)
 {
 	// シーンの追加
 	m_Scenes[pScene->GetName()] = pScene;
-	// 現在のシーンがない場合は追加したシーンを現在のシーンにする
-	if (m_pNowScene == nullptr)
-	{
-		m_pNowScene = pScene;
-	}
 }
 
 void SceneManager::ChangeScene(const std::string& name)
 {
 	// シーンの変更
+	m_pNowScene->Uninit();
 	m_pNowScene = m_Scenes[name];
 	m_pNowScene->Init();
 }

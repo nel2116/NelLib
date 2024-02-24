@@ -31,6 +31,7 @@ public:
 	static void DrawLines();
 	static void DrawLine(DirectX::XMFLOAT3 start, DirectX::XMFLOAT3 end, DirectX::XMFLOAT4 color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 	static void DrawBox();
+	static void DrawBox(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 scale, DirectX::XMFLOAT4 color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 	static void DrawCylinder();
 	static void DrawSphere();
 
@@ -59,6 +60,7 @@ private:
 	static DirectX::XMFLOAT4X4 m_WVP[3];
 	static void* m_pLineVtx;
 	static int m_lineCnt;
+	static DirectX::XMFLOAT4 m_Color;
 };
 
 #endif // __GEOMETORY_H__

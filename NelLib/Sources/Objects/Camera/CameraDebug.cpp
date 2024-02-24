@@ -29,7 +29,7 @@ void CameraDebug::Update()
 	// カメラの注視点を向いてるベクトに合わせて動かす
 	// カメラの位置と注視点のベクトル
 	DirectX::XMVECTOR vCamPos = DirectX::XMLoadFloat3(&pos);
-	DirectX::XMVECTOR vCamLook = DirectX::XMLoadFloat3(&m_look);
+	DirectX::XMVECTOR vCamLook = m_look.toXMVECTOR();
 
 	// カメラの正面方向のベクトル
 	DirectX::XMVECTOR vFront;

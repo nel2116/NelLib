@@ -71,10 +71,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)\..\NelLib\Sources</IncludePath>
+    <IncludePath>$(SolutionDir)\..\NelLib\Sources;$(SolutionDir)\Sources</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\..\NelLib\Sources</IncludePath>
+    <IncludePath>$(SolutionDir)\..\NelLib\Sources;$(SolutionDir)\Sources</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -109,7 +109,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -129,7 +129,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -159,6 +159,7 @@
     <ClCompile Include="Sources\NelLib.cpp" />
     <ClCompile Include="Sources\Objects\Camera\CameraBase.cpp" />
     <ClCompile Include="Sources\Objects\Camera\CameraDebug.cpp" />
+    <ClCompile Include="Sources\Objects\Camera\CameraPlayer.cpp" />
     <ClCompile Include="Sources\Objects\Camera\CameraUI.cpp" />
     <ClCompile Include="Sources\Objects\Object.cpp" />
     <ClCompile Include="Sources\System\Geometory.cpp" />
@@ -167,9 +168,7 @@
     <ClCompile Include="Sources\System\mathUtil.cpp" />
     <ClCompile Include="Sources\System\Model.cpp" />
     <ClCompile Include="Sources\System\QUATERNION.cpp" />
-    <ClCompile Include="Sources\System\Scenes\GameScene.cpp" />
     <ClCompile Include="Sources\System\Scenes\Scene.cpp" />
-    <ClCompile Include="Sources\System\Scenes\TitleScene.cpp" />
     <ClCompile Include="Sources\System\VECTOR.cpp" />
     <ClCompile Include="Sources\System\window.cpp" />
     <ClCompile Include="Sources\System\_geometory.cpp" />
@@ -194,6 +193,7 @@
     <ClInclude Include="Sources\NelLib.h" />
     <ClInclude Include="Sources\Objects\Camera\CameraBase.h" />
     <ClInclude Include="Sources\Objects\Camera\CameraDebug.h" />
+    <ClInclude Include="Sources\Objects\Camera\CameraPlayer.h" />
     <ClInclude Include="Sources\Objects\Camera\CameraUI.h" />
     <ClInclude Include="Sources\Objects\Object.h" />
     <ClInclude Include="Sources\System\common.h" />
@@ -204,9 +204,7 @@
     <ClInclude Include="Sources\System\mathUtil.h" />
     <ClInclude Include="Sources\System\Model.h" />
     <ClInclude Include="Sources\System\QUATERNION.h" />
-    <ClInclude Include="Sources\System\Scenes\GameScene.h" />
     <ClInclude Include="Sources\System\Scenes\Scene.h" />
-    <ClInclude Include="Sources\System\Scenes\TitleScene.h" />
     <ClInclude Include="Sources\System\Singleton.h" />
     <ClInclude Include="Sources\System\VECTOR.h" />
     <ClInclude Include="Sources\System\window.h" />

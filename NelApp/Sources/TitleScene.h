@@ -1,6 +1,6 @@
 #pragma once
 // ====== インクルード ======
-#include "Scene.h"
+#include <System/Scenes/Scene.h>
 
 // ====== クラスの宣言 ======
 class TitleScene : public Scene

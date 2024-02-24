@@ -2,16 +2,19 @@
 #include "ObjectsManager.h"
 #include <Objects/Camera/CameraDebug.h>
 #include <Objects/Camera/CameraUI.h>
+#include <Objects/Camera/CameraPlayer.h>
 
 void CameraManager::Init()
 {
 	CameraBase* camera[E_CAM_MAX] = {};
 	camera[E_CAM_DEBUG] = OBJECTS_MANAGER.AddObject<CameraDebug>();
 	camera[E_CAM_UI] = OBJECTS_MANAGER.AddObject<CameraUI>();
+	camera[E_CAM_PLAYER] = OBJECTS_MANAGER.AddObject<CameraPlayer>();
 	for (int i = 0; i < E_CAM_MAX; ++i)
 	{
 		m_Cameras.push_back(camera[i]);
 	}
+	m_nowCamera = E_CAM_PLAYER;
 }
 
 void CameraManager::Uninit()

@@ -28,9 +28,8 @@
     <ClCompile Include="Sources\Objects\Camera\CameraUI.cpp" />
     <ClCompile Include="Sources\System\QUATERNION.cpp" />
     <ClCompile Include="Sources\Managers\SceneManager.cpp" />
-    <ClCompile Include="Sources\System\Scenes\TitleScene.cpp" />
-    <ClCompile Include="Sources\System\Scenes\GameScene.cpp" />
     <ClCompile Include="Sources\System\Scenes\Scene.cpp" />
+    <ClCompile Include="Sources\Objects\Camera\CameraPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelLib.h" />
@@ -65,8 +64,7 @@
     <ClInclude Include="Sources\Objects\Camera\CameraUI.h" />
     <ClInclude Include="Sources\Managers\SceneManager.h" />
     <ClInclude Include="Sources\System\Scenes\Scene.h" />
-    <ClInclude Include="Sources\System\Scenes\TitleScene.h" />
-    <ClInclude Include="Sources\System\Scenes\GameScene.h" />
+    <ClInclude Include="Sources\Objects\Camera\CameraPlayer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\VertexShader.cso" />
