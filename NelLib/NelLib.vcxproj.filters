@@ -32,6 +32,10 @@
     <ClCompile Include="Sources\Objects\Camera\CameraPlayer.cpp" />
     <ClCompile Include="Sources\Objects\Fade.cpp" />
     <ClCompile Include="Sources\Managers\ModelManager.cpp" />
+    <ClCompile Include="Sources\Components\StatusComponent.cpp" />
+    <ClCompile Include="Sources\Managers\BattleManager.cpp" />
+    <ClCompile Include="Sources\Managers\TextManager.cpp" />
+    <ClCompile Include="Sources\System\DirectWriteCustomFont.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelLib.h" />
@@ -69,6 +73,10 @@
     <ClInclude Include="Sources\Objects\Camera\CameraPlayer.h" />
     <ClInclude Include="Sources\Objects\Fade.h" />
     <ClInclude Include="Sources\Managers\ModelManager.h" />
+    <ClInclude Include="Sources\Components\StatusComponent.h" />
+    <ClInclude Include="Sources\Managers\BattleManager.h" />
+    <ClInclude Include="Sources\Managers\TextManager.h" />
+    <ClInclude Include="Sources\System\DirectWriteCustomFont.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\VertexShader.cso" />

@@ -9,6 +9,8 @@
 #include <Managers/CameraManager.h>
 #include <Managers/TextureManager.h>
 #include <Managers/ModelManager.h>
+#include <Managers/BattleManager.h>
+#include <Managers/TextManager.h>
 
 // ====== プロトタイプ宣言 ======
 void Init();
@@ -32,6 +34,8 @@ void window(const char* appName, int width, int height)
 	TEXTURE_MANAGER.Init();				// テクスチャマネージャ初期化
 	TIME_MANAGER.Init();				// タイムマネージャ初期化
 	CAMERA_MANAGER.Init();				// カメラマネージャ初期化
+	BATTLE_MANAGER.Init();				// バトルマネージャ初期化
+	TEXT_MANAGER.Init();				// テキストマネージャ初期化
 
 	// ジオメトリ用カメラ初期化
 	DirectX::XMFLOAT4X4 mat[2];
@@ -100,13 +104,15 @@ void gmain()
 			Input();
 			// ===== 更新処理 =====
 			SCENE_MANAGER.Update();
+			BATTLE_MANAGER.Update();
 			Update();
-			// ===== 描画処理 =====
 
 			// ===== 描画処理 =====
 			RENDERER.Begin();	// 描画開始
 
 			Draw();
+
+			TEXT_MANAGER.Draw();
 
 			RENDERER.End();		// 描画終了
 

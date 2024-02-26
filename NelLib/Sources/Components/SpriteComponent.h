@@ -7,7 +7,6 @@
 
 // ====== ‘O•ûéŒ¾ ======
 #define NORMAL_TEX_VEC Vector3(6.4f, 3.6f, 1.0f)
-class GameObject;
 
 // ====== ƒNƒ‰ƒX‚ÌéŒ¾ ======
 class SpriteComponent : public Component

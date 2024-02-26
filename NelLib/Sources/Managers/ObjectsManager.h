@@ -9,6 +9,9 @@
 #include <System/Singleton.h>
 #include "CameraManager.h"
 
+// ====== ‘O•ûéŒ¾ ======
+
+// ====== ƒNƒ‰ƒX‚ÌéŒ¾ ======
 class ObjectsManager : public Singleton<ObjectsManager>
 {
 public:

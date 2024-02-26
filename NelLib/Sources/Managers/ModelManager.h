@@ -19,7 +19,7 @@ public:
 
 public:
 	// デストラクタ
-	~ModelManager();
+	~ModelManager() { Uninit(); }
 
 	// 初期化
 	void Init();

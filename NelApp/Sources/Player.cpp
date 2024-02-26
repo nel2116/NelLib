@@ -1,7 +1,11 @@
 #include "Player.h"
+#include <Enemy.h>
 #include <System/Input.h>
 #include <Objects/Camera/CameraPlayer.h>
 #include <Managers/ModelManager.h>
+#include <Managers/SceneManager.h>
+#include <Managers/BattleManager.h>
+#include <Managers/TextManager.h>
 
 Player::Player()
 	: m_fSpeed(0.2f)
@@ -14,6 +18,26 @@ Player::Player()
 
 	GetTransform()->SetScale(Vector3() + 0.1f);
 	GetTransform()->SetPosition(Vector3(0.0f, -2.5f, 0.0f));
+
+	// ステータスの設定
+	m_pStatus = AddComponent<StatusComponent>();
+	m_pStatus->SetName("Player");
+	m_pStatus->SetLevel(1);
+	m_pStatus->SetHp(100);
+	m_pStatus->SetMaxHp(100);
+	m_pStatus->SetMp(0);
+	m_pStatus->SetMaxMp(0);
+	m_pStatus->SetAttack(10);
+	m_pStatus->SetDefence(5);
+	m_pStatus->SetSpeed(5);
+	m_pStatus->SetXp(0);
+	m_pStatus->SetMaxXp(100);
+	m_pStatus->SetGold(0);
+	m_pStatus->SetMagicResistance(0);
+	m_pStatus->SetPhysicalResistance(0);
+
+	// 状態
+	m_State = STATE_MOVE;
 }
 
 Player::~Player()
@@ -31,7 +55,13 @@ void Player::Uninit()
 
 void Player::Update()
 {
-	Move();
+	if (m_State == STATE_MOVE) { Move(); }
+	if (m_State == STATE_BATTLE && BATTLE_MANAGER.GetBattleState() == BattleManager::BATTLE_STATE_PLAYER_TURN) { Action(); }
+	if (IsKeyPress('I')) { m_pStatus->SetHp(0); }
+	// 10%の確率でバトル状態に遷移
+	if (m_State == STATE_MOVE && rand() % 100 < 10) { BATTLE_MANAGER.BattleStart(); }
+
+	TEXT_MANAGER.AddText("HP : " + std::to_string(m_pStatus->GetHp()), Vector2(0, 0));
 }
 
 void Player::Draw()
@@ -45,6 +75,21 @@ void Player::Draw()
 
 	m_pVS->WriteBuffer(0, mat);
 	m_pModel->Draw();
+}
+
+void Player::Damage(int damage)
+{
+	m_pStatus->SetHp(m_pStatus->GetHp() - damage);
+	if (m_pStatus->GetHp() < 0)
+	{
+		m_pStatus->SetHp(0);
+	}
+}
+
+void Player::EndBattle()
+{
+	m_State = STATE_MOVE;
+	m_pEnemies.clear();
 }
 
 void Player::Move()
@@ -101,3 +146,18 @@ void Player::Move()
 	pos.x += move.x; pos.y += move.y; pos.z += move.z;
 	GetTransform()->SetPosition(pos);
 }
+
+void Player::Action()
+{
+	if (IsKeyPress('P'))
+	{
+		// 全エネミーに攻撃
+		for (int i = 0; i < m_pEnemies.size(); i++)
+		{
+			m_pEnemies[i]->Damage(200);
+		}
+		// プレイヤーの行動終了
+		BATTLE_MANAGER.EndPlayerTurn();
+	}
+}
+

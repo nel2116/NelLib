@@ -6,7 +6,7 @@ void TextureManager::Init()
 	// テクスチャの初期化
 	for (int i = 0; i < TEX_MAX; ++i)
 	{
-		m_pTextures[i] = new Texture();
+		m_pTextures[i] = NEW Texture();
 	}
 
 	// テクスチャの読み込み

@@ -45,7 +45,10 @@ void Renderer::Init(int baseWidth, int baseHeight, bool fullscreen)
 
 	UINT createDeviceFlags = 0;
 
+	createDeviceFlags |= D3D11_CREATE_DEVICE_BGRA_SUPPORT;	// BGRAフォーマットのサポート
+
 #ifndef _DEBUG
+	// デバッグレイヤーを有効にするかどうか
 	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;	// デバッグレイヤーを有効にする
 #endif // !_DEBUG
 

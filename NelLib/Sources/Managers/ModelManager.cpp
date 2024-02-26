@@ -1,9 +1,5 @@
 #include "ModelManager.h"
 
-ModelManager::~ModelManager()
-{
-}
-
 void ModelManager::Init()
 {
 	for (int i = 0; i < MODEL_MAX; ++i)

@@ -7,6 +7,9 @@
     <ClCompile Include="Sources\GameScene.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\TitleUI.cpp" />
+    <ClCompile Include="Sources\Enemy.cpp" />
+    <ClCompile Include="Sources\EnemyFactory.cpp" />
+    <ClCompile Include="Sources\Slime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelApp.h" />
@@ -15,5 +18,8 @@
     <ClInclude Include="Sources\TitleScene.h" />
     <ClInclude Include="Sources\Player.h" />
     <ClInclude Include="Sources\TitleUI.h" />
+    <ClInclude Include="Sources\Enemy.h" />
+    <ClInclude Include="Sources\EnemyFactory.h" />
+    <ClInclude Include="Sources\Slime.h" />
   </ItemGroup>
 </Project>
