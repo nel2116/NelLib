@@ -36,3 +36,7 @@
 #define SAFE_DELETE_ARRAY(p) {if(p){delete[](p);(p)=NULL;}}
 #define SAFE_FREE(p) {if(p){free(p);(p)=NULL;}}
 #define SAFE_CLOSE(h) {if(h){CloseHandle(h);(h)=NULL;}}
+
+// ƒ‰ƒWƒAƒ“•ÏŠ·
+#define DEG2RAD(deg) ((deg) * (3.1415926f / 180.0f))
+#define RAD2DEG(rad) ((rad) * (180.0f / 3.1415926f))

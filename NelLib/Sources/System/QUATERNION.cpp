@@ -1,4 +1,5 @@
 #include "QUATERNION.h"
+#include "Macro.h"
 
 QUATERNION::QUATERNION()
 	: w(1.0f), x(0.0f), y(0.0f), z(0.0f)
@@ -22,6 +23,15 @@ QUATERNION& QUATERNION::operator=(const QUATERNION& q)
 	x = q.x;
 	y = q.y;
 	z = q.z;
+	return *this;
+}
+
+QUATERNION& QUATERNION::operator=(const DirectX::XMVECTOR& v)
+{
+	w = DirectX::XMVectorGetW(v);
+	x = DirectX::XMVectorGetX(v);
+	y = DirectX::XMVectorGetY(v);
+	z = DirectX::XMVectorGetZ(v);
 	return *this;
 }
 
@@ -194,21 +204,13 @@ QUATERNION QUATERNION::cross(const QUATERNION& q) const
 
 QUATERNION QUATERNION::slerp(const QUATERNION& q, float t) const
 {
-	// クォータニオンの球面線形補間は、クォータニオン同士の球面線形補間を求める
-	float d = dot(q);
-	if (d < 0.0f)
-	{
-		// クォータニオンのドット積が負の場合は、クォータニオンの符号を反転する
-		d = -d;
-	}
-	else
-	{
-		// クォータニオンのドット積が正の場合は、クォータニオンをそのまま使う
-	}
-	float angle = acosf(d);
-	float s1 = sinf((1.0f - t) * angle);
-	float s2 = sinf(t * angle);
-	return (*this * s1 + q * s2) / sinf(angle);
+	// 線形補間
+	float qr = dot(q);
+	float theta = acosf(qr);
+	float s0 = sinf(((1.0f - t) * theta) / sin(theta));
+	float s1 = sin(t * theta) / sin(theta);
+
+	return *this * s0 + q * s1;
 }
 
 QUATERNION QUATERNION::lerp(const QUATERNION& q, float t) const
@@ -256,10 +258,10 @@ DirectX::XMFLOAT4X4 QUATERNION::toFloat4x4() const
 QUATERNION QUATERNION::AngleAxis(float angle, Vector3 axis) const
 {
 	// 角度をラジアンに変換
-	angle = angle * PI / 180.0f;
+	angle = DEG2RAD(angle);
 
 	// 回転軸の長さを正規化
-	axis.normalize();
+	axis = axis.normalize();
 
 	// 回転角度の半分
 	float halfAngle = angle / 2.0f;

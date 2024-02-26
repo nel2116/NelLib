@@ -72,11 +72,13 @@ DirectX::XMFLOAT4X4 TransformComponent::GetWorldMatrix()
 
 void TransformComponent::translate(Vector3 move)
 {
+	m_oldPosition = m_position;
 	m_position += move;
 }
 
 void TransformComponent::translate(float x, float y, float z)
 {
+	m_oldPosition = m_position;
 	m_position.x += x;
 	m_position.y += y;
 	m_position.z += z;
@@ -85,12 +87,14 @@ void TransformComponent::translate(float x, float y, float z)
 void TransformComponent::rotate(QUATERNION rotate)
 {
 	// 回転の計算
+	m_oldRotation = m_rotation;
 	m_rotation = rotate * m_rotation;
 }
 
 void TransformComponent::rotate(float x, float y, float z)
 {
 	// 回転の計算
+	m_oldRotation = m_rotation;
 	QUATERNION q;
 
 	// クォータニオンの回転
@@ -122,11 +126,13 @@ void TransformComponent::rotate(float x, float y, float z)
 
 void TransformComponent::scale(Vector3 scale)
 {
+	m_oldScale = m_scale;
 	m_scale += scale;
 }
 
 void TransformComponent::scale(float x, float y, float z)
 {
+	m_oldScale = m_scale;
 	m_scale.x += x;
 	m_scale.y += y;
 	m_scale.z += z;

@@ -152,6 +152,7 @@
     <ClCompile Include="Sources\DirectX\Sprite.cpp" />
     <ClCompile Include="Sources\DirectX\Texture.cpp" />
     <ClCompile Include="Sources\Managers\CameraManager.cpp" />
+    <ClCompile Include="Sources\Managers\ModelManager.cpp" />
     <ClCompile Include="Sources\Managers\ObjectsManager.cpp" />
     <ClCompile Include="Sources\Managers\SceneManager.cpp" />
     <ClCompile Include="Sources\Managers\TextureManager.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="Sources\Objects\Camera\CameraDebug.cpp" />
     <ClCompile Include="Sources\Objects\Camera\CameraPlayer.cpp" />
     <ClCompile Include="Sources\Objects\Camera\CameraUI.cpp" />
+    <ClCompile Include="Sources\Objects\Fade.cpp" />
     <ClCompile Include="Sources\Objects\Object.cpp" />
     <ClCompile Include="Sources\System\Geometory.cpp" />
     <ClCompile Include="Sources\System\Input.cpp" />
@@ -186,6 +188,7 @@
     <ClInclude Include="Sources\DirectX\VERTEX.h" />
     <ClInclude Include="Sources\DirectX\VERTEX_BUFFER.h" />
     <ClInclude Include="Sources\Managers\CameraManager.h" />
+    <ClInclude Include="Sources\Managers\ModelManager.h" />
     <ClInclude Include="Sources\Managers\ObjectsManager.h" />
     <ClInclude Include="Sources\Managers\SceneManager.h" />
     <ClInclude Include="Sources\Managers\TextureManager.h" />
@@ -195,6 +198,7 @@
     <ClInclude Include="Sources\Objects\Camera\CameraDebug.h" />
     <ClInclude Include="Sources\Objects\Camera\CameraPlayer.h" />
     <ClInclude Include="Sources\Objects\Camera\CameraUI.h" />
+    <ClInclude Include="Sources\Objects\Fade.h" />
     <ClInclude Include="Sources\Objects\Object.h" />
     <ClInclude Include="Sources\System\common.h" />
     <ClInclude Include="Sources\System\Geometory.h" />
@@ -214,6 +218,12 @@
     <None Include="Assets\Shader\VertexShader.cso" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Sources\HLSL\Geometry.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="Sources\HLSL\VS_Model.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>

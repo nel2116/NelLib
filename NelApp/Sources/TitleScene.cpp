@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include <Managers/SceneManager.h>
 #include <Managers/CameraManager.h>
+#include <Managers/ObjectsManager.h>
 #include <System/Input.h>
 
 TitleScene::TitleScene()
@@ -12,12 +13,14 @@ TitleScene::TitleScene()
 void TitleScene::Init()
 {
 	// シーンの初期化
-	ShowName();
 	CAMERA_MANAGER.SetNowCamera(CameraManager::E_CAM_DEBUG);
+	m_TitleUI = OBJECTS_MANAGER.AddObject<TitleUI>();
 }
 
 void TitleScene::Uninit()
 {
+	// シーンの終了
+	if (m_TitleUI) { m_TitleUI->Destroy(); }
 }
 
 void TitleScene::Update()

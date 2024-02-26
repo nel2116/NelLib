@@ -3,6 +3,7 @@
 #include <map>
 #include <System/Singleton.h>
 #include <System/Scenes/Scene.h>
+#include <Objects/Fade.h>
 
 // ====== クラスの宣言 ======
 
@@ -32,7 +33,7 @@ public:
 private:	// メンバ変数
 	Scene* m_pNowScene;	// 現在のシーン
 	std::map<std::string, Scene*> m_Scenes;	// シーンのリスト
-
+	Fade* m_pFade;	// フェード
 
 private:	// シングルトン関連
 	friend Singleton<SceneManager>;

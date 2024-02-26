@@ -14,6 +14,8 @@ void TextureManager::Init()
 		WARNINGHR(m_pTextures[TEX_DEFAULT]->Create("Assets/Textures/default.png"), "TEX_DEFAULTが読み込めませんでした。");		// TEX_DEFAULT
 		WARNINGHR(m_pTextures[TEX_DEFAULT2]->Create("Assets/Textures/default2.png"), "TEX_DEFAULT2が読み込めませんでした。");	// TEX_DEFAULT2
 		WARNINGHR(m_pTextures[TEX_TEST]->Create("Assets/Textures/test.png"), "TEX_TESTが読み込めませんでした。");				// TEX_TEST
+		WARNINGHR(m_pTextures[TEX_WALL]->Create("Assets/Textures/wall.png"), "TEX_WALLが読み込めませんでした。");				// TEX_WALL
+		WARNINGHR(m_pTextures[TEX_FLOOR]->Create("Assets/Textures/floor.png"), "TEX_FLOORが読み込めませんでした。");			// TEX_FLOOR
 	}
 }
 

@@ -1,24 +1,23 @@
 #include "Player.h"
 #include <System/Input.h>
-#include <Objects/Camera/CameraBase.h>
+#include <Objects/Camera/CameraPlayer.h>
+#include <Managers/ModelManager.h>
 
 Player::Player()
-	: m_fSpeed(0.1f)
-	, m_fRotSpeed(0.1f)
+	: m_fSpeed(0.2f)
+	, m_fRotSpeed(1.0f)
 {
-	m_pModel = NEW Model();
-	m_pModel->Load("Assets/Models/eyeBat/eyebat.fbx");
+	m_pModel = MODEL_MANAGER.GetModel(ModelManager::MODEL_PLAYER);
 	m_pVS = NEW VertexShader();
 	m_pVS->Load("../NelLib/Assets/Shaders/VS_Model.cso");
 	m_pModel->SetVertexShader(m_pVS);
 
 	GetTransform()->SetScale(Vector3() + 0.1f);
-	GetTransform()->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
+	GetTransform()->SetPosition(Vector3(0.0f, -2.5f, 0.0f));
 }
 
 Player::~Player()
 {
-	SAFE_DELETE(m_pModel);
 	SAFE_DELETE(m_pVS);
 }
 
@@ -37,6 +36,8 @@ void Player::Update()
 
 void Player::Draw()
 {
+	if (!m_pCamera) return;
+	if (!m_pModel) return;
 	DirectX::XMFLOAT4X4 mat[3];
 	mat[0] = GetTransform()->GetWorldMatrix();
 	mat[1] = m_pCamera->GetViewMatrix();
@@ -52,6 +53,7 @@ void Player::Move()
 
 	bool bMove = false;
 
+	Vector3 pos = GetTransform()->GetPosition();
 	DirectX::XMFLOAT3 camPos = m_pCamera->GetTransform()->GetPosition3();
 	DirectX::XMFLOAT3 camLook = m_pCamera->GetLook().toXMFLOAT3();
 
@@ -72,14 +74,30 @@ void Player::Move()
 	if (IsKeyPress('D')) { bMove = true; vMove = DirectX::XMVectorAdd(vMove, vSide); }
 	if (IsKeyPress('A')) { bMove = true; vMove = DirectX::XMVectorSubtract(vMove, vSide); }
 
+	if (IsKeyPress(VK_SPACE)) { bMove = true; pos.y += m_fSpeed; }
+	if (IsKeyPress(VK_SHIFT)) { bMove = true; pos.y -= m_fSpeed; }
+
 	vMove = DirectX::XMVectorMultiply(vMove, DirectX::XMVectorSet(1.0f, 0.0f, 1.0f, 0.0f));
 	vMove = DirectX::XMVector3Normalize(vMove);
 	vMove = DirectX::XMVectorScale(vMove, m_fSpeed);
 
+	// カメラの正面方向にモデルを向ける
+	// 現在向いている方向
+	QUATERNION pRot = GetTransform()->GetRotation();
+	QUATERNION Forward;
+	float angle = static_cast<CameraPlayer*>(m_pCamera)->GetRadXZ();
+	// ラジアンから角度に変換
+	angle = RAD2DEG(angle) + 180.0f;
+	Forward = Forward.AngleAxis(angle, Vector3::up());
+
+	// 回転の補間
+//	pRot = pRot.lerp(Forward, 1.0f);
+	// 回転の設定
+	GetTransform()->SetRotation(Forward);
+
 	// 座標の更新
 	DirectX::XMFLOAT3 move;
 	DirectX::XMStoreFloat3(&move, vMove);
-	Vector3 pos = GetTransform()->GetPosition();
 	pos.x += move.x; pos.y += move.y; pos.z += move.z;
 	GetTransform()->SetPosition(pos);
 }

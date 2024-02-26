@@ -1,6 +1,7 @@
 #pragma once
 // ====== インクルード ======
 #include <System/Scenes/Scene.h>
+#include <TitleUI.h>
 
 // ====== クラスの宣言 ======
 class TitleScene : public Scene
@@ -23,5 +24,5 @@ public:
 
 private:
 	// シーンの名前
-
+	TitleUI* m_TitleUI;
 };

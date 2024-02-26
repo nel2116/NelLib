@@ -15,6 +15,9 @@ public:
 
 	void Uninit() override {}
 
+	float GetRadXZ() { return m_radXZ; }
+	float GetRadY() { return m_radY; }
+
 private:
 	// ====== ƒƒ“ƒo•Ï” ======
 	float m_radXZ;

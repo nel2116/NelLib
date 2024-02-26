@@ -6,6 +6,7 @@
 #include <Objects/Camera/CameraUI.h>
 
 // ====== 前方宣言 ======
+#define NORMAL_TEX_VEC Vector3(6.4f, 3.6f, 1.0f)
 class GameObject;
 
 // ====== クラスの宣言 ======
@@ -56,6 +57,8 @@ public:
 
 	// カラーの設定
 	void SetColor(Vector4 color) { m_spriteInfo.color = color; }
+
+	void SetAlpha(float alpha) { m_spriteInfo.color.w = alpha; }
 
 	// サイズの設定
 	void SetSize(Vector2 size) { m_spriteInfo.size = size; }

@@ -5,6 +5,9 @@
 #include <vector>
 #include <algorithm>
 #include <System/VECTOR.h>
+#include <Managers/TextureManager.h>
+#include <DirectX/Shader.h>
+#include <System/Model.h>
 
 // ====== 前方宣言 ======
 using namespace std;
@@ -31,6 +34,8 @@ public:	// enum
 public:
 	// コンストラクタ
 	Field();
+	// デストラクタ
+	~Field();
 
 	// 初期化
 	void Init() override;
@@ -100,7 +105,8 @@ private:
 	// キャラクターの配置
 	void SetChara();
 
-
+	// マップの端を壁にする
+	void SetWall();
 
 private: // メンバ変数
 	int m_width;                        // 幅
@@ -113,4 +119,9 @@ private: // メンバ変数
 	bool m_isStart;                     // 開始フラグ
 	Vector3 m_StartPos;                 // 開始位置
 	Vector3 m_EndPos;                   // 終了位置
+	Texture* m_pWall;					// テクスチャ
+	Texture* m_pFloor;					// テクスチャ
+	PixelShader* m_pPS;					// ピクセルシェーダー
+	VertexShader* m_pVS;				// 頂点シェーダー
+	Model* m_pModel;					// モデル
 };

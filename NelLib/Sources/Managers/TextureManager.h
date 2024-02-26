@@ -14,6 +14,8 @@ public: // enum
 		TEX_DEFAULT = 0,	// default.png
 		TEX_DEFAULT2,		// default2.png
 		TEX_TEST,			// test.png
+		TEX_WALL,			// wall.png
+		TEX_FLOOR,			// floor.png
 		TEX_MAX,
 	};
 

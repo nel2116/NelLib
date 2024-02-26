@@ -167,7 +167,8 @@ void Renderer::Init(int baseWidth, int baseHeight, bool fullscreen)
 	SetSamplerState(SAMPLER_LINEAR);
 
 	// クリアカラーの設定
-	SetClearColor(0.3f, 0.6f, 1.0f, 1.0f);
+//	SetClearColor(0.3f, 0.6f, 1.0f, 1.0f);
+	SetClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void Renderer::Release()

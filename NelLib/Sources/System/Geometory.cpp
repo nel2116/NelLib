@@ -6,11 +6,14 @@ MeshBuffer* Geometory::m_pSphere;
 MeshBuffer* Geometory::m_pLines;
 Shader* Geometory::m_pVS;
 Shader* Geometory::m_pPS;
+Shader* Geometory::m_pDefVS;
+Shader* Geometory::m_pDefPS;
 Shader* Geometory::m_pLineShader[2];
 DirectX::XMFLOAT4X4 Geometory::m_WVP[3];
 void* Geometory::m_pLineVtx;
 int Geometory::m_lineCnt = 0;
 DirectX::XMFLOAT4 Geometory::m_Color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+Texture* Geometory::m_pTex = nullptr;
 
 void Geometory::Init()
 {
@@ -24,13 +27,14 @@ void Geometory::Init()
 	MakeLineShader();
 	MakeLine();
 }
+
 void Geometory::Uninit()
 {
 	SAFE_DELETE_ARRAY(m_pLineVtx);
 	SAFE_DELETE(m_pLineShader[1]);
 	SAFE_DELETE(m_pLineShader[0]);
-	SAFE_DELETE(m_pPS);
-	SAFE_DELETE(m_pVS);
+	SAFE_DELETE(m_pDefPS);
+	SAFE_DELETE(m_pDefVS);
 	SAFE_DELETE(m_pLines);
 	SAFE_DELETE(m_pSphere);
 	SAFE_DELETE(m_pCylinder);
@@ -89,10 +93,10 @@ void Geometory::DrawBox()
 {
 	if (m_pBox == nullptr)
 		return;
-	m_pVS->WriteBuffer(0, m_WVP);
-	m_pVS->WriteBuffer(1, &m_Color);
-	m_pVS->Bind();
-	m_pPS->Bind();
+	m_pDefVS->WriteBuffer(0, m_WVP);
+	m_pDefVS->WriteBuffer(1, &m_Color);
+	m_pDefVS->Bind();
+	m_pDefPS->Bind();
 	m_pBox->Draw();
 }
 void Geometory::DrawBox(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 scale, DirectX::XMFLOAT4 color)
@@ -104,12 +108,29 @@ void Geometory::DrawBox(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 scale, DirectX:
 	worldMat = DirectX::XMMatrixTranspose(worldMat);
 	DirectX::XMStoreFloat4x4(&world, worldMat);
 	m_WVP[0] = world;
+	m_pDefVS->WriteBuffer(0, m_WVP);
+	m_pDefVS->WriteBuffer(1, &color);
+	m_pDefVS->Bind();
+	m_pDefPS->Bind();
+	m_pBox->Draw();
+}
+void Geometory::DrawTexBox(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 scale, DirectX::XMFLOAT4 color)
+{
+	if (m_pBox == nullptr)
+		return;
+	DirectX::XMFLOAT4X4 world;
+	DirectX::XMMATRIX worldMat = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z) * DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
+	worldMat = DirectX::XMMatrixTranspose(worldMat);
+	DirectX::XMStoreFloat4x4(&world, worldMat);
+	m_WVP[0] = world;
 	m_pVS->WriteBuffer(0, m_WVP);
 	m_pVS->WriteBuffer(1, &color);
+	m_pPS->SetTexture(0, m_pTex);
 	m_pVS->Bind();
 	m_pPS->Bind();
 	m_pBox->Draw();
 }
+
 void Geometory::DrawCylinder()
 {
 	if (m_pCylinder == nullptr)
@@ -129,6 +150,21 @@ void Geometory::DrawSphere()
 	m_pVS->Bind();
 	m_pPS->Bind();
 	m_pSphere->Draw();
+}
+
+void Geometory::SetPixelShader(PixelShader* pPS)
+{
+	m_pPS = pPS;
+}
+
+void Geometory::SetVertexShader(VertexShader* pVS)
+{
+	m_pVS = pVS;
+}
+
+void Geometory::SetTexture(Texture* pTex)
+{
+	m_pTex = pTex;
 }
 
 void Geometory::MakeVS()
@@ -162,8 +198,9 @@ VS_OUT main(VS_IN vin) {
 	return vout;
 })EOT";
 
-	m_pVS = NEW VertexShader();
-	m_pVS->Compile(VSCode);
+	m_pDefVS = NEW VertexShader();
+	m_pDefVS->Compile(VSCode);
+	m_pVS = m_pDefVS;
 }
 
 void Geometory::MakePS()
@@ -197,8 +234,9 @@ float4 main(PS_IN pin) : SV_TARGET0 {
 })EOT";
 #endif
 
-	m_pPS = NEW PixelShader();
-	m_pPS->Compile(PSCode);
+	m_pDefPS = NEW PixelShader();
+	m_pDefPS->Compile(PSCode);
+	m_pPS = m_pDefPS;
 }
 void Geometory::MakeLineShader()
 {

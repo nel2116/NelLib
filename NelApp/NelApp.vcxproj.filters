@@ -6,6 +6,7 @@
     <ClCompile Include="Sources\TitleScene.cpp" />
     <ClCompile Include="Sources\GameScene.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
+    <ClCompile Include="Sources\TitleUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelApp.h" />
@@ -13,5 +14,6 @@
     <ClInclude Include="Sources\GameScene.h" />
     <ClInclude Include="Sources\TitleScene.h" />
     <ClInclude Include="Sources\Player.h" />
+    <ClInclude Include="Sources\TitleUI.h" />
   </ItemGroup>
 </Project>

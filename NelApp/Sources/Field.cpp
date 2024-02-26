@@ -2,8 +2,13 @@
 #include "Field.h"
 #include <System/VECTOR.h>
 #include <System/Geometory.h>
+#include <System/Input.h>
 #include <Managers/ObjectsManager.h>
+#include <Managers/SceneManager.h>
+#include <Managers/ModelManager.h>
 #include <Player.h>
+
+#define BLOCK_SIZE 5.0f
 
 Field::Field()
 	: m_width(33)
@@ -11,6 +16,28 @@ Field::Field()
 	, m_outOfRange(-1)
 	, m_isStart(false)
 {
+	// テクスチャ
+	m_pWall = TEXTURE_MANAGER.GetTexture(TextureManager::TEX_WALL);
+	m_pFloor = TEXTURE_MANAGER.GetTexture(TextureManager::TEX_FLOOR);
+
+	// シェーダー
+	m_pPS = NEW PixelShader();
+	m_pPS->Load("../NelLib/Assets/Shaders/Geometry.cso");
+	m_pVS = NEW VertexShader();
+	m_pVS->Load("../NelLib/Assets/Shaders/VS_Model.cso");
+
+	// モデル
+	m_pModel = MODEL_MANAGER.GetModel(ModelManager::MODEL_STAIRS);
+
+	// シェーダー設定
+	Geometory::SetPixelShader(m_pPS);
+	m_pModel->SetVertexShader(m_pVS);
+}
+
+Field::~Field()
+{
+	SAFE_DELETE(m_pPS);
+	SAFE_DELETE(m_pVS);
 }
 
 void Field::Init()
@@ -37,9 +64,33 @@ void Field::Update()
 		ts->SetPosition(m_StartPos);
 		m_isStart = false;
 	}
-	if (ts->GetPosition().x == m_EndPos.x && ts->GetPosition().z == m_EndPos.z)
+	// キャラクターが階段に到達したら初期化
+	// ブロックの大きさ分誤差を考慮する
+	if (ts->GetPosition().x > m_EndPos.x - (BLOCK_SIZE / 2.0f + 0.5f) && ts->GetPosition().x < m_EndPos.x + (BLOCK_SIZE / 2.0f + 0.5f) &&
+		ts->GetPosition().z > m_EndPos.z - (BLOCK_SIZE / 2.0f + 0.5f) && ts->GetPosition().z < m_EndPos.z + (BLOCK_SIZE / 2.0f + 0.5f))
 	{
-		Init();
+		SCENE_MANAGER.ChangeScene("GameScene");
+	}
+	// 詰んだとき用
+	if (IsKeyPress('N') && IsKeyPress('X'))
+	{
+		SCENE_MANAGER.ChangeScene("TitleScene");
+	}
+	// すべての壁との当たり判定
+	for (int i = 0; i < m_height; ++i)
+	{
+		for (int j = 0; j < m_width; ++j)
+		{
+			if (m_map[i][j] == Wall)
+			{
+				// もしも当たっていたら、プレイヤーを元の位置に戻す
+				if (ts->GetPosition().x > j * BLOCK_SIZE - (BLOCK_SIZE / 2.0f + 0.5f) && ts->GetPosition().x < j * BLOCK_SIZE + (BLOCK_SIZE / 2.0f + 0.5f) &&
+					ts->GetPosition().z > i * BLOCK_SIZE - (BLOCK_SIZE / 2.0f + 0.5f) && ts->GetPosition().z < i * BLOCK_SIZE + (BLOCK_SIZE / 2.0f + 0.5f))
+				{
+					ts->SetPosition(ts->GetOldPosition());
+				}
+			}
+		}
 	}
 }
 
@@ -51,23 +102,31 @@ void Field::Draw()
 		{
 			if (m_map[i][j] == Wall)
 			{
-				Geometory::DrawBox(Vector3(j, 0.5f, i).toXMFLOAT3(), Vector3(1.0f, 2.0f, 1.0f).toXMFLOAT3(), Vector4(1.0f, 1.0f, 1.0f, 1.0f).toXMFLOAT4());
+				Geometory::SetTexture(m_pWall);
+				Geometory::DrawTexBox(Vector3(j * BLOCK_SIZE, 0.5f * BLOCK_SIZE, i * BLOCK_SIZE).toXMFLOAT3(), Vector3(1.0f * BLOCK_SIZE, 2.0f * BLOCK_SIZE, 1.0f * BLOCK_SIZE).toXMFLOAT3(), Vector4(0.1f, 0.1f, 0.1f, 1.0f).toXMFLOAT4());
 			}
-			else if (m_map[i][j] == Room)
+			else if (m_map[i][j] != Stairs)
 			{
-				Geometory::DrawBox(Vector3(j, -1.0f, i).toXMFLOAT3(), Vector3(1.0f, 1.0f, 1.0f).toXMFLOAT3(), Vector4(1.0f, 0.0f, 1.0f, 1.0f).toXMFLOAT4());
+				Geometory::SetTexture(m_pFloor);
+				Geometory::DrawTexBox(Vector3(j * BLOCK_SIZE, -1.0f * BLOCK_SIZE, i * BLOCK_SIZE).toXMFLOAT3(), Vector3(1.0f * BLOCK_SIZE, 1.0f * BLOCK_SIZE, 1.0f * BLOCK_SIZE).toXMFLOAT3(), Vector4(0.1f, 0.1f, 0.1f, 1.0f).toXMFLOAT4());
+				Geometory::DrawTexBox(Vector3(j * BLOCK_SIZE, 2.0f * BLOCK_SIZE, i * BLOCK_SIZE).toXMFLOAT3(), Vector3(1.0f * BLOCK_SIZE, 1.0f * BLOCK_SIZE, 1.0f * BLOCK_SIZE).toXMFLOAT3(), Vector4(0.1f, 0.1f, 0.1f, 1.0f).toXMFLOAT4());
 			}
-			else if (m_map[i][j] == Route)
-			{
-				Geometory::DrawBox(Vector3(j, -1.0f, i).toXMFLOAT3(), Vector3(1.0f, 1.0f, 1.0f).toXMFLOAT3(), Vector4(1.0f, 0.0f, 0.0f, 1.0f).toXMFLOAT4());
-			}
-			else if (m_map[i][j] == Stairs)
-			{
-				Geometory::DrawBox(Vector3(j, 0.5f, i).toXMFLOAT3(), Vector3(1.0f, 2.0f, 1.0f).toXMFLOAT3(), Vector4(0.0f, 1.0f, 0.0f, 1.0f).toXMFLOAT4());
-			}
-			else if (m_map[i][j] == Chara)
-			{
-				Geometory::DrawBox(Vector3(j, -1.0f, i).toXMFLOAT3(), Vector3(1.0f, 1.0f, 1.0f).toXMFLOAT3(), Vector4(0.0f, 0.0f, 1.0f, 1.0f).toXMFLOAT4());
+			else
+			{// 階段
+				if (!m_pCamera) return;
+				if (!m_pModel) return;
+				if (!m_pFloor) return;
+				if (!m_pWall) return;
+
+				DirectX::XMFLOAT4X4 mat[3];
+				DirectX::XMMATRIX world = DirectX::XMMatrixTranslation(m_EndPos.x, m_EndPos.y, m_EndPos.z);
+				world = DirectX::XMMatrixTranspose(world);
+				DirectX::XMStoreFloat4x4(&mat[0], world);
+				mat[1] = m_pCamera->GetViewMatrix();
+				mat[2] = m_pCamera->GetProjectionMatrix();
+
+				m_pVS->WriteBuffer(0, mat);
+				m_pModel->Draw();
 			}
 		}
 	}
@@ -502,15 +561,16 @@ void Field::DivideStart(int width, int height)
 
 	SetStairs();
 	SetChara();
+	SetWall();
 }
 
 void Field::SetStairs()
 {
 	auto room = m_divideRoom[0];
 	int x = GetRandom(room[0] + 1, room[2] - 1);
-	int y = GetRandom(room[1] + 1, room[3] - 1);
-	Set(x, y, Stairs);
-	m_EndPos = Vector3(x, -0.5f, y);
+	int z = GetRandom(room[1] + 1, room[3] - 1);
+	Set(x, z, Stairs);
+	m_EndPos = Vector3(x * BLOCK_SIZE, -1.0f * BLOCK_SIZE, z * BLOCK_SIZE);
 }
 
 void Field::SetChara()
@@ -522,6 +582,21 @@ void Field::SetChara()
 	int z = GetRandom(room[1] + 1, room[3] - 1);
 	Set(x, z, Chara);
 	float y = OBJECTS_MANAGER.GetObjects<Player>()->GetTransform()->GetPosition().y;
-	m_StartPos = Vector3(x, y, z);
+	m_StartPos = Vector3(x * BLOCK_SIZE, y, z * BLOCK_SIZE);
+}
+
+void Field::SetWall()
+{
+	// マップの端を壁にする
+	for (int i = 0; i < m_height; ++i)
+	{
+		Set(0, i, Wall);
+		Set(m_width - 1, i, Wall);
+	}
+	for (int i = 0; i < m_width; ++i)
+	{
+		Set(i, 0, Wall);
+		Set(i, m_height - 1, Wall);
+	}
 }
 

@@ -20,11 +20,13 @@ public:
 	QUATERNION(float x, float y, float z, float w); // 引数付きコンストラクタ
 	QUATERNION(const QUATERNION& q); // コピーコンストラクタ
 
+
 	// デストラクタ
 	~QUATERNION();
 
 	// 代入演算子
 	QUATERNION& operator=(const QUATERNION& q);
+	QUATERNION& operator=(const DirectX::XMVECTOR& v);
 
 	// 単項演算子
 	QUATERNION operator-() const; // 符号反転

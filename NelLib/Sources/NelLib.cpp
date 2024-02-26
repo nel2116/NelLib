@@ -8,6 +8,7 @@
 #include <Managers/TimeManger.h>
 #include <Managers/CameraManager.h>
 #include <Managers/TextureManager.h>
+#include <Managers/ModelManager.h>
 
 // ====== プロトタイプ宣言 ======
 void Init();
@@ -25,8 +26,9 @@ void window(const char* appName, int width, int height)
 	Sprite::Init();						// スプライト初期化
 	InitInput();						// 入力初期化
 	// マネージャ初期化
-	SCENE_MANAGER.Init();				// シーンマネージャ初期化
+	MODEL_MANAGER.Init();				// モデルマネージャ初期化
 	OBJECTS_MANAGER.Init();				// オブジェクトマネージャ初期化
+	SCENE_MANAGER.Init();				// シーンマネージャ初期化
 	TEXTURE_MANAGER.Init();				// テクスチャマネージャ初期化
 	TIME_MANAGER.Init();				// タイムマネージャ初期化
 	CAMERA_MANAGER.Init();				// カメラマネージャ初期化

@@ -4,6 +4,7 @@
 #include <DirectXMath.h>
 #include <DirectX/Shader.h>
 #include <DirectX/MeshBuffer.h>
+#include <DirectX/Texture.h>
 
 class Geometory
 {
@@ -32,8 +33,14 @@ public:
 	static void DrawLine(DirectX::XMFLOAT3 start, DirectX::XMFLOAT3 end, DirectX::XMFLOAT4 color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 	static void DrawBox();
 	static void DrawBox(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 scale, DirectX::XMFLOAT4 color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+	static void DrawTexBox(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 scale, DirectX::XMFLOAT4 color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 	static void DrawCylinder();
 	static void DrawSphere();
+
+	static void SetPixelShader(PixelShader* pPS);
+	static void SetVertexShader(VertexShader* pVS);
+
+	static void SetTexture(Texture* pTex);
 
 private:
 	static void MakeVS();
@@ -56,11 +63,14 @@ private:
 	static MeshBuffer* m_pLines;
 	static Shader* m_pVS;
 	static Shader* m_pPS;
+	static Shader* m_pDefVS;
+	static Shader* m_pDefPS;
 	static Shader* m_pLineShader[2];
 	static DirectX::XMFLOAT4X4 m_WVP[3];
 	static void* m_pLineVtx;
 	static int m_lineCnt;
 	static DirectX::XMFLOAT4 m_Color;
+	static Texture* m_pTex;
 };
 
 #endif // __GEOMETORY_H__
