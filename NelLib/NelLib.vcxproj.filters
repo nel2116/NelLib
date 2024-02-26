@@ -36,9 +36,6 @@
     <ClCompile Include="Sources\Managers\BattleManager.cpp" />
     <ClCompile Include="Sources\Managers\TextManager.cpp" />
     <ClCompile Include="Sources\System\DirectWriteCustomFont.cpp" />
-    <ClCompile Include="Sources\System\imgui_impl_dx11.cpp" />
-    <ClCompile Include="Sources\Managers\DebugManager.cpp" />
-    <ClCompile Include="Sources\System\imgui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelLib.h" />
@@ -80,12 +77,6 @@
     <ClInclude Include="Sources\Managers\BattleManager.h" />
     <ClInclude Include="Sources\Managers\TextManager.h" />
     <ClInclude Include="Sources\System\DirectWriteCustomFont.h" />
-    <ClInclude Include="Sources\System\imgui_impl_dx11.h" />
-    <ClInclude Include="Sources\Managers\DebugManager.h" />
-    <ClInclude Include="Sources\System\imgui.h" />
-    <ClInclude Include="Sources\System\imconfig.h" />
-    <ClInclude Include="Sources\System\imgui_internal.h" />
-    <ClInclude Include="Sources\System\imstb_textedit.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\VertexShader.cso" />

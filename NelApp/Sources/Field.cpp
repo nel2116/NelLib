@@ -22,9 +22,9 @@ Field::Field()
 
 	// シェーダー
 	m_pPS = NEW PixelShader();
-	m_pPS->Load("../NelLib/Assets/Shaders/Geometry.cso");
+	m_pPS->Load("Assets/Shaders/Geometry.cso");
 	m_pVS = NEW VertexShader();
-	m_pVS->Load("../NelLib/Assets/Shaders/VS_Model.cso");
+	m_pVS->Load("Assets/Shaders/VS_Model.cso");
 
 	// モデル
 	m_pModel = MODEL_MANAGER.GetModel(ModelManager::MODEL_STAIRS);

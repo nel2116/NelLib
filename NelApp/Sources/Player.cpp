@@ -13,7 +13,7 @@ Player::Player()
 {
 	m_pModel = MODEL_MANAGER.GetModel(ModelManager::MODEL_PLAYER);
 	m_pVS = NEW VertexShader();
-	m_pVS->Load("../NelLib/Assets/Shaders/VS_Model.cso");
+	m_pVS->Load("Assets/Shaders/VS_Model.cso");
 	m_pModel->SetVertexShader(m_pVS);
 
 	GetTransform()->SetScale(Vector3() + 0.1f);
