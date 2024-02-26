@@ -14,6 +14,7 @@ public:
 	{
 		std::string string;
 		Vector2 pos;
+		int drawFrame;
 	};
 
 public:
@@ -33,7 +34,7 @@ public:
 	void Draw();
 
 	// テキストの追加
-	void AddText(std::string string, Vector2 pos);
+	void AddText(std::string string, Vector2 pos, int frame);
 
 private:
 	// テキストのリスト
@@ -42,6 +43,8 @@ private:
 	DirectWriteCustomFont* m_pWrite;
 	FontData m_FontData;
 	int drawNum;
+
+	Vector2 m_pos;
 
 private: //	シングルトン関連
 	friend class Singleton<TextManager>;

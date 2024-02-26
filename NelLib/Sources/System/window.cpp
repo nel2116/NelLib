@@ -68,7 +68,7 @@ void createWindow(const char* appName, int windowWidth, int windowHeight)
 
 	//ウィンドウスタイルを決定する
 	unsigned windowStyle = WS_SYSMENU;//枠あり
-	if (windowWidth == 1920 && windowHeight == 1080) {
+	if (windowWidth >= 1920 && windowHeight >= 1080) {
 		windowStyle = WS_POPUP;//枠無
 	}
 

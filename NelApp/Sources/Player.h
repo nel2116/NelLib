@@ -37,6 +37,7 @@ public:
 	// 描画
 	void Draw() override;
 
+
 	// ダメージ
 	void Damage(int damage);
 
@@ -61,6 +62,9 @@ private:
 	void Move();
 
 	void Action();
+
+	// ステータスの描画
+	void DrawStatus();
 
 private:
 	float m_fSpeed;

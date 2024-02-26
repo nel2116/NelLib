@@ -3,6 +3,7 @@
 #include <vector>
 #include <System/Singleton.h>
 #include <Managers/ObjectsManager.h>
+#include "BattleUI.h"
 
 // ====== 前方宣言 ======
 class Player;
@@ -52,11 +53,12 @@ private:	// メンバ変数
 	std::vector<Enemy*> m_Enemys;
 
 	Player* m_pPlayer;
+	BattleUI* m_BattleUI;
 
 private:
 	// シングルトン関連
 	friend class Singleton<BattleManager>;
-	BattleManager() : m_BattleState(BATTLE_STATE_END), m_pPlayer(nullptr) {}
+	BattleManager() : m_BattleState(BATTLE_STATE_END), m_pPlayer(nullptr), m_BattleUI(nullptr) {}
 };
 // インスタンスの取得
 #define BATTLE_MANAGER BattleManager::GetInstance()

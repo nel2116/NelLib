@@ -3,23 +3,27 @@
   <ItemGroup>
     <ClCompile Include="Sources\NelApp.cpp" />
     <ClCompile Include="Sources\Field.cpp" />
-    <ClCompile Include="Sources\TitleScene.cpp" />
     <ClCompile Include="Sources\GameScene.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
-    <ClCompile Include="Sources\TitleUI.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
     <ClCompile Include="Sources\EnemyFactory.cpp" />
     <ClCompile Include="Sources\Slime.cpp" />
+    <ClCompile Include="Sources\Title\TitleBackground.cpp" />
+    <ClCompile Include="Sources\Title\TitleScene.cpp" />
+    <ClCompile Include="Sources\Title\TitleUI.cpp" />
+    <ClCompile Include="Sources\BattleUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelApp.h" />
     <ClInclude Include="Sources\Field.h" />
     <ClInclude Include="Sources\GameScene.h" />
-    <ClInclude Include="Sources\TitleScene.h" />
     <ClInclude Include="Sources\Player.h" />
-    <ClInclude Include="Sources\TitleUI.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\EnemyFactory.h" />
     <ClInclude Include="Sources\Slime.h" />
+    <ClInclude Include="Sources\Title\TitleUI.h" />
+    <ClInclude Include="Sources\Title\TitleBackground.h" />
+    <ClInclude Include="Sources\Title\TitleScene.h" />
+    <ClInclude Include="Sources\BattleUI.h" />
   </ItemGroup>
 </Project>

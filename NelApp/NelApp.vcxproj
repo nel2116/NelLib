@@ -142,6 +142,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Sources\BattleUI.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
     <ClCompile Include="Sources\EnemyFactory.cpp" />
     <ClCompile Include="Sources\Field.cpp" />
@@ -149,10 +150,12 @@
     <ClCompile Include="Sources\NelApp.cpp" />
     <ClCompile Include="Sources\Player.cpp" />
     <ClCompile Include="Sources\Slime.cpp" />
-    <ClCompile Include="Sources\TitleScene.cpp" />
-    <ClCompile Include="Sources\TitleUI.cpp" />
+    <ClCompile Include="Sources\Title\TitleBackground.cpp" />
+    <ClCompile Include="Sources\Title\TitleScene.cpp" />
+    <ClCompile Include="Sources\Title\TitleUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Sources\BattleUI.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\EnemyFactory.h" />
     <ClInclude Include="Sources\Field.h" />
@@ -160,8 +163,9 @@
     <ClInclude Include="Sources\NelApp.h" />
     <ClInclude Include="Sources\Player.h" />
     <ClInclude Include="Sources\Slime.h" />
-    <ClInclude Include="Sources\TitleScene.h" />
-    <ClInclude Include="Sources\TitleUI.h" />
+    <ClInclude Include="Sources\Title\TitleBackground.h" />
+    <ClInclude Include="Sources\Title\TitleScene.h" />
+    <ClInclude Include="Sources\Title\TitleUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

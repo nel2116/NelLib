@@ -57,11 +57,9 @@ void Player::Update()
 {
 	if (m_State == STATE_MOVE) { Move(); }
 	if (m_State == STATE_BATTLE && BATTLE_MANAGER.GetBattleState() == BattleManager::BATTLE_STATE_PLAYER_TURN) { Action(); }
+	if (m_State == STATE_BATTLE) { DrawStatus(); }
 	if (IsKeyPress('I')) { m_pStatus->SetHp(0); }
-	// 10%の確率でバトル状態に遷移
-	if (m_State == STATE_MOVE && rand() % 100 < 10) { BATTLE_MANAGER.BattleStart(); }
 
-	TEXT_MANAGER.AddText("HP : " + std::to_string(m_pStatus->GetHp()), Vector2(0, 0));
 }
 
 void Player::Draw()
@@ -75,6 +73,15 @@ void Player::Draw()
 
 	m_pVS->WriteBuffer(0, mat);
 	m_pModel->Draw();
+}
+
+void Player::DrawStatus()
+{
+	// ステータスの描画
+	TEXT_MANAGER.AddText("Name : " + m_pStatus->GetName(), Vector2(30, 13), 10);
+	TEXT_MANAGER.AddText("Level : " + std::to_string(m_pStatus->GetLevel()), Vector2(30, 53), 10);
+	TEXT_MANAGER.AddText("HP : " + std::to_string(m_pStatus->GetHp()) + "/" + std::to_string(m_pStatus->GetMaxHp()), Vector2(30, 93), 10);
+	TEXT_MANAGER.AddText("MP : " + std::to_string(m_pStatus->GetMp()) + "/" + std::to_string(m_pStatus->GetMaxMp()), Vector2(30, 133), 10);
 }
 
 void Player::Damage(int damage)
@@ -119,8 +126,8 @@ void Player::Move()
 	if (IsKeyPress('D')) { bMove = true; vMove = DirectX::XMVectorAdd(vMove, vSide); }
 	if (IsKeyPress('A')) { bMove = true; vMove = DirectX::XMVectorSubtract(vMove, vSide); }
 
-	if (IsKeyPress(VK_SPACE)) { bMove = true; pos.y += m_fSpeed; }
-	if (IsKeyPress(VK_SHIFT)) { bMove = true; pos.y -= m_fSpeed; }
+	// if (IsKeyPress(VK_SPACE)) { bMove = true; pos.y += m_fSpeed; }
+	// if (IsKeyPress(VK_SHIFT)) { bMove = true; pos.y -= m_fSpeed; }
 
 	vMove = DirectX::XMVectorMultiply(vMove, DirectX::XMVectorSet(1.0f, 0.0f, 1.0f, 0.0f));
 	vMove = DirectX::XMVector3Normalize(vMove);
@@ -135,10 +142,11 @@ void Player::Move()
 	angle = RAD2DEG(angle) + 180.0f;
 	Forward = Forward.AngleAxis(angle, Vector3::up());
 
-	// 回転の補間
-//	pRot = pRot.lerp(Forward, 1.0f);
 	// 回転の設定
 	GetTransform()->SetRotation(Forward);
+
+	// 移動
+	if (bMove) { if (rand() % 1000 < 3) { BATTLE_MANAGER.BattleStart(); } }
 
 	// 座標の更新
 	DirectX::XMFLOAT3 move;

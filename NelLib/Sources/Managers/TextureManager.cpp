@@ -11,11 +11,14 @@ void TextureManager::Init()
 
 	// テクスチャの読み込み
 	{
-		WARNINGHR(m_pTextures[TEX_DEFAULT]->Create("Assets/Textures/default.png"), "TEX_DEFAULTが読み込めませんでした。");		// TEX_DEFAULT
-		WARNINGHR(m_pTextures[TEX_DEFAULT2]->Create("Assets/Textures/default2.png"), "TEX_DEFAULT2が読み込めませんでした。");	// TEX_DEFAULT2
-		WARNINGHR(m_pTextures[TEX_TEST]->Create("Assets/Textures/test.png"), "TEX_TESTが読み込めませんでした。");				// TEX_TEST
-		WARNINGHR(m_pTextures[TEX_WALL]->Create("Assets/Textures/wall.png"), "TEX_WALLが読み込めませんでした。");				// TEX_WALL
-		WARNINGHR(m_pTextures[TEX_FLOOR]->Create("Assets/Textures/floor.png"), "TEX_FLOORが読み込めませんでした。");			// TEX_FLOOR
+		WARNINGHR(m_pTextures[TEX_DEFAULT]->Create("Assets/Textures/default.png"), "TEX_DEFAULTが読み込めませんでした。");		        // TEX_DEFAULT
+		WARNINGHR(m_pTextures[TEX_DEFAULT2]->Create("Assets/Textures/default2.png"), "TEX_DEFAULT2が読み込めませんでした。");	        // TEX_DEFAULT2
+		WARNINGHR(m_pTextures[TEX_TEST]->Create("Assets/Textures/test.png"), "TEX_TESTが読み込めませんでした。");				        // TEX_TEST
+		WARNINGHR(m_pTextures[TEX_WALL]->Create("Assets/Textures/wall.png"), "TEX_WALLが読み込めませんでした。");				        // TEX_WALL
+		WARNINGHR(m_pTextures[TEX_FLOOR]->Create("Assets/Textures/floor.png"), "TEX_FLOORが読み込めませんでした。");			        // TEX_FLOOR
+		WARNINGHR(m_pTextures[TEX_TITLE]->Create("Assets/Textures/TitleUI/title.png"), "TEX_TITLEが読み込めませんでした。");			// TEX_TITLE
+		WARNINGHR(m_pTextures[TEX_TITLE_UI]->Create("Assets/Textures/TitleUI/tartUI.png"), "TEX_TITLE_UIが読み込めませんでした。");		// TEX_TITLE_UI
+		WARNINGHR(m_pTextures[TEX_BATTLE_UI]->Create("Assets/Textures/battleUI.png"), "TEX_BATTLE_UIが読み込めませんでした。");			// TEX_BUTTLE_UI
 	}
 }
 

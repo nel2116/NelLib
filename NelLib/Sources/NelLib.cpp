@@ -30,10 +30,10 @@ void window(const char* appName, int width, int height)
 	// マネージャ初期化
 	MODEL_MANAGER.Init();				// モデルマネージャ初期化
 	OBJECTS_MANAGER.Init();				// オブジェクトマネージャ初期化
-	SCENE_MANAGER.Init();				// シーンマネージャ初期化
-	TEXTURE_MANAGER.Init();				// テクスチャマネージャ初期化
-	TIME_MANAGER.Init();				// タイムマネージャ初期化
 	CAMERA_MANAGER.Init();				// カメラマネージャ初期化
+	TEXTURE_MANAGER.Init();				// テクスチャマネージャ初期化
+	SCENE_MANAGER.Init();				// シーンマネージャ初期化
+	TIME_MANAGER.Init();				// タイムマネージャ初期化
 	BATTLE_MANAGER.Init();				// バトルマネージャ初期化
 	TEXT_MANAGER.Init();				// テキストマネージャ初期化
 
@@ -106,12 +106,13 @@ void gmain()
 			SCENE_MANAGER.Update();
 			BATTLE_MANAGER.Update();
 			Update();
+			TEXT_MANAGER.Update();
 
 			// ===== 描画処理 =====
 			RENDERER.Begin();	// 描画開始
 
+			SCENE_MANAGER.Draw();
 			Draw();
-
 			TEXT_MANAGER.Draw();
 
 			RENDERER.End();		// 描画終了

@@ -16,6 +16,9 @@ public: // enum
 		TEX_TEST,			// test.png
 		TEX_WALL,			// wall.png
 		TEX_FLOOR,			// floor.png
+		TEX_TITLE,			// title.png
+		TEX_TITLE_UI,		// titleUI.png
+		TEX_BATTLE_UI,		// battleUI.png
 		TEX_MAX,
 	};
 

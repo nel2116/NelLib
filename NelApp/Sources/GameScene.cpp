@@ -28,11 +28,12 @@ void GameScene::Uninit()
 
 void GameScene::Update()
 {
-	if (IsKeyPress(VK_RETURN))
+	// 詰んだとき用
+	if (IsKeyPress('N') && IsKeyPress('X'))
 	{
-		// シーンの変更
 		SCENE_MANAGER.ChangeScene("TitleScene");
 	}
+
 }
 
 void GameScene::Draw()

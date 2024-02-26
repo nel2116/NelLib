@@ -42,6 +42,8 @@ public:
 	// ƒ_ƒ[ƒW‚ğó‚¯‚½
 	virtual void Damage(int damage);
 
+	std::string GetName() { return m_pStatus->GetName(); }
+
 	// €–S”»’è
 	// true : €–S
 	// false : ¶‘¶

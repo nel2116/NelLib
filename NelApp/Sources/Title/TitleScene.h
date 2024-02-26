@@ -1,7 +1,10 @@
 #pragma once
 // ====== インクルード ======
+#include <DirectX/Texture.h>
+#include <Objects/Camera/CameraBase.h>
 #include <System/Scenes/Scene.h>
-#include <TitleUI.h>
+#include <Title/TitleUI.h>
+#include <Title/TitleBackGround.h>
 
 // ====== クラスの宣言 ======
 class TitleScene : public Scene
@@ -23,6 +26,6 @@ public:
 	void Draw() override;
 
 private:
-	// シーンの名前
 	TitleUI* m_TitleUI;
+	TitleBackGround* m_TitleBackGround;
 };

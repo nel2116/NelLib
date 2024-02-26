@@ -1,5 +1,5 @@
 #include "SceneManager.h"
-#include "TitleScene.h"
+#include "Title/TitleScene.h"
 #include "GameScene.h"
 #include "ObjectsManager.h"
 
@@ -59,6 +59,12 @@ void SceneManager::Update()
 
 void SceneManager::Draw()
 {
+	// 現在のシーンの描画
+	// フェード中は描画しない
+	if (m_pNowScene && !m_pFade->IsFade())
+	{
+		m_pNowScene->Draw();
+	}
 }
 
 void SceneManager::AddScene(Scene* pScene)

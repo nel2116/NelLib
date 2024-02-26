@@ -1,11 +1,15 @@
 #include "BattleManager.h"
 #include <Managers/SceneManager.h>
+#include <Managers/TextManager.h>
 #include <EnemyFactory.h>
 #include <Player.h>
 #include <Enemy.h>
 
 void BattleManager::Init()
 {
+	m_BattleUI = OBJECTS_MANAGER.AddObject<BattleUI>();
+	m_BattleUI->Init();
+	m_BattleUI->SetEnable(false);
 }
 
 void BattleManager::Uninit()
@@ -57,12 +61,18 @@ void BattleManager::Update()
 		m_Enemys.clear();
 
 		// バトル終了時のメッセージを表示
+		TEXT_MANAGER.AddText("モンスターを倒した！", Vector2(490.0f, 200.0f), 120);
+
+		// バトルUIを非表示
+		m_BattleUI->SetEnable(false);
 
 		// プレイヤーの状態を移動に設定
 		m_pPlayer->EndBattle();
 	}
 	// プレイヤーが死んでいるのならシーンを変える
 	if (m_pPlayer->IsDead()) { SCENE_MANAGER.ChangeScene("TitleScene"); }
+
+
 }
 
 void BattleManager::Draw()
@@ -78,7 +88,7 @@ void BattleManager::BattleStart()
 
 	// 戦闘を行うエネミーの数をランダムに決定
 	// 最小 : 1, 最大 : 3
-	int enemyNum = rand() % 3;
+	int enemyNum = rand() % 3 + 1;
 
 	// リストのサイズを変更する
 	m_Enemys.resize(enemyNum);
@@ -95,8 +105,15 @@ void BattleManager::BattleStart()
 	// バトルの状態をプレイヤーのターンに設定
 	m_BattleState = BATTLE_STATE_PLAYER_TURN;
 
+	// バトルUIを表示
+	m_BattleUI->SetEnable(true);
+
 	// バトル開始時のメッセージを表示
-	// TODO : メッセージ表示処理
+	TEXT_MANAGER.AddText("モンスターが現れた！", Vector2(500.0f, 490.0f), 110);
+	for (int i = 0; i < m_Enemys.size(); ++i)
+	{
+		TEXT_MANAGER.AddText(m_Enemys[i]->GetName() + "が現れた！", Vector2(580.0f, 530.0f + (30.0f * i)), 120);
+	};
 
 	// バトル開始時のBGMを再生
 	// TODO : BGM再生処理

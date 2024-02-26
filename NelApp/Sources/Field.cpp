@@ -58,6 +58,9 @@ void Field::Uninit()
 
 void Field::Update()
 {
+	// ƒJƒƒ‰‚ª‚È‚¢ê‡‚Íˆ—‚µ‚È‚¢
+	if (!m_pCamera)return;
+
 	TransformComponent* ts = OBJECTS_MANAGER.GetObjects<Player>()->GetTransform();
 	if (m_isStart)
 	{
@@ -70,11 +73,6 @@ void Field::Update()
 		ts->GetPosition().z > m_EndPos.z - (BLOCK_SIZE / 2.0f + 0.5f) && ts->GetPosition().z < m_EndPos.z + (BLOCK_SIZE / 2.0f + 0.5f))
 	{
 		SCENE_MANAGER.ResetScene();
-	}
-	// ‹l‚ñ‚¾‚Æ‚«—p
-	if (IsKeyPress('N') && IsKeyPress('X'))
-	{
-		SCENE_MANAGER.ChangeScene("TitleScene");
 	}
 	// ‚·‚×‚Ä‚Ì•Ç‚Æ‚Ì“–‚½‚è”»’è
 	for (int i = 0; i < m_height; ++i)
@@ -113,11 +111,6 @@ void Field::Draw()
 			}
 			else
 			{// ŠK’i
-				if (!m_pCamera) return;
-				if (!m_pModel) return;
-				if (!m_pFloor) return;
-				if (!m_pWall) return;
-
 				DirectX::XMFLOAT4X4 mat[3];
 				DirectX::XMMATRIX world = DirectX::XMMatrixTranslation(m_EndPos.x, m_EndPos.y, m_EndPos.z);
 				world = DirectX::XMMatrixTranspose(world);
@@ -127,6 +120,7 @@ void Field::Draw()
 
 				m_pVS->WriteBuffer(0, mat);
 				m_pModel->Draw();
+				Geometory::DrawTexBox(Vector3(j * BLOCK_SIZE, 2.0f * BLOCK_SIZE, i * BLOCK_SIZE).toXMFLOAT3(), Vector3(1.0f * BLOCK_SIZE, 1.0f * BLOCK_SIZE, 1.0f * BLOCK_SIZE).toXMFLOAT3(), Vector4(0.1f, 0.1f, 0.1f, 1.0f).toXMFLOAT4());
 			}
 		}
 	}
