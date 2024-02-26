@@ -5,6 +5,8 @@
 #include <System/Input.h>
 
 GameScene::GameScene()
+	: m_Field(nullptr)
+	, m_Player(nullptr)
 {
 	// ƒV[ƒ“‚Ì–¼‘O‚ğİ’è
 	m_name = "GameScene";

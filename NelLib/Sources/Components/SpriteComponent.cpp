@@ -14,7 +14,6 @@ SpriteComponent::SpriteComponent(Object* pObject)
 
 void SpriteComponent::Init()
 {
-	m_spriteInfo.texture = TEXTURE_MANAGER.GetTexture(TextureManager::TEX_TEST);   // テクスチャの取得
 	m_pCamera = CAMERA_MANAGER.GetCamera(CameraManager::E_CAM_UI);		// カメラの設定
 }
 

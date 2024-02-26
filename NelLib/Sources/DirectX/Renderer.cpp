@@ -44,7 +44,12 @@ void Renderer::Init(int baseWidth, int baseHeight, bool fullscreen)
 	UINT numDriverTypes = ARRAYSIZE(driverTypes);	// ドライバの数
 
 	UINT createDeviceFlags = 0;
+
+#ifndef _DEBUG
 	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;	// デバッグレイヤーを有効にする
+#endif // !_DEBUG
+
+
 
 	// 機能レベル
 	D3D_FEATURE_LEVEL featureLevels[] =

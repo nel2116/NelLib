@@ -57,6 +57,9 @@ private:
 	// フェードの時間カウント
 	float m_fFadeTimeCount;
 
+	// アルファ値
+	float m_fAlpha;
+
 	// フェードのテクスチャ
 	SpriteComponent* m_pSprite;
 };

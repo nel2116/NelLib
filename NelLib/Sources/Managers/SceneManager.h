@@ -28,16 +28,18 @@ public:
 	Scene* GetScene(const std::string& name) { return m_Scenes[name]; }
 	// シーン名の取得
 	std::string GetSceneName() { return m_pNowScene->GetName(); }
-
+	// シーンリセット
+	void ResetScene();
 
 private:	// メンバ変数
-	Scene* m_pNowScene;	// 現在のシーン
+	Scene* m_pNowScene;		// 現在のシーン
+	Scene* m_pNextScene;	// 次のシーン
 	std::map<std::string, Scene*> m_Scenes;	// シーンのリスト
 	Fade* m_pFade;	// フェード
 
 private:	// シングルトン関連
 	friend Singleton<SceneManager>;
-	SceneManager() : m_pNowScene(nullptr) {}
+	SceneManager() : m_pNowScene(nullptr), m_pNextScene(nullptr), m_pFade(nullptr) {}
 };
 // シーンマネージャのインスタンスの取得
 #define SCENE_MANAGER SceneManager::GetInstance()

@@ -31,7 +31,7 @@ HRESULT Texture::Create(const char* fileName)
 		hr = DirectX::LoadFromTGAFile(wPath, &mdata, image);
 	else
 		hr = DirectX::LoadFromWICFile(wPath, DirectX::WIC_FLAGS::WIC_FLAGS_NONE, &mdata, image);
-	if (FAILED(hr)) 
+	if (FAILED(hr))
 	{
 		return E_FAIL;
 	}
@@ -218,5 +218,5 @@ HRESULT DepthStencil::CreateResource(D3D11_TEXTURE2D_DESC& desc, const void* pDa
 	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 
 	// ¶¬
-	return RENDERER. GetDevice()->CreateDepthStencilView(m_pTex, &dsvDesc, &m_pDSV);
+	return RENDERER.GetDevice()->CreateDepthStencilView(m_pTex, &dsvDesc, &m_pDSV);
 }

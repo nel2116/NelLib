@@ -6,15 +6,15 @@
 void SceneManager::Init()
 {
 	// シーンの登録
-	AddScene(new TitleScene());
-	AddScene(new GameScene());
-
-	// シーンの初期化
-	m_pNowScene = m_Scenes["TitleScene"];
-	m_pNowScene->Init();
+	AddScene(NEW TitleScene());
+	AddScene(NEW GameScene());
 
 	// フェードの初期化
 	m_pFade = OBJECTS_MANAGER.AddObject<Fade>();
+
+	// シーンの初期化
+	m_pNextScene = m_pNowScene = m_Scenes["TitleScene"];
+	m_pNowScene->Init();
 }
 
 void SceneManager::Uninit()
@@ -33,11 +33,25 @@ void SceneManager::Uninit()
 
 void SceneManager::Update()
 {
-	// フェード中はシーンを更新しない
-	if (m_pFade->IsFade()) { return; }
+	if (m_pNextScene != m_pNowScene)
+	{
+		if (m_pFade->GetState() != Fade::FADE_OUT)
+		{
+			// フェードの終了
+			m_pFade->FadeIn(1.0f);
+
+			// 現在のシーンの終了
+			if (m_pNowScene) { m_pNowScene->Uninit(); }
+
+			// 次のシーンの開始
+			m_pNowScene = m_pNextScene;
+			m_pNowScene->Init();
+		}
+	}
 
 	// 現在のシーンの更新
-	if (m_pNowScene)
+	// フェード中は更新しない
+	if (m_pNowScene && !m_pFade->IsFade())
 	{
 		m_pNowScene->Update();
 	}
@@ -59,11 +73,21 @@ void SceneManager::ChangeScene(const std::string& name)
 	if (m_pFade->IsFade()) { return; }
 
 	// フェードの開始
-	m_pFade->FadeIn(1.0f);
+	m_pFade->FadeOut(1.0f);
 
 	// シーンの変更
-	m_pNowScene->Uninit();
-	m_pNowScene = m_Scenes[name];
-	m_pNowScene->Init();
+	m_pNextScene = m_Scenes[name];
+}
 
+void SceneManager::ResetScene()
+{
+	// フェード中はシーンをリセットできない
+	if (m_pFade->IsFade()) { return; }
+
+	// フェードの開始
+	m_pFade->FadeIn(1.0f);
+
+	// シーンのリセット
+	m_pNowScene->Uninit();
+	m_pNowScene->Init();
 }

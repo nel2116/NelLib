@@ -5,10 +5,10 @@ Fade::Fade()
 	: m_fFadeTime(0.0f)
 	, m_fFadeTimeCount(0.0f)
 	, m_FadeState(FADE_NONE)
+	, m_fAlpha(0.0f)
 {
 	SetOrder(500);
 	m_pSprite = AddComponent<SpriteComponent>();
-	m_pSprite->SetTexture(TEXTURE_MANAGER.GetTexture(TextureManager::TEX_DEFAULT2));
 	m_pTransform->SetScale(NORMAL_TEX_VEC);
 }
 
@@ -18,6 +18,7 @@ Fade::~Fade()
 
 void Fade::Init()
 {
+	m_pSprite->SetTexture(TEXTURE_MANAGER.GetTexture(TextureManager::TEX_DEFAULT));
 }
 
 void Fade::Uninit()
@@ -35,21 +36,22 @@ void Fade::Update()
 		m_FadeState = FADE_NONE;
 	}
 
-	float alpha = 0.0f;
 	if (m_FadeState == FADE_IN)
 	{
-		alpha = 1.0f - (m_fFadeTimeCount / m_fFadeTime);
+		// フェードイン
+		m_fAlpha = 1.0f - (m_fFadeTimeCount / m_fFadeTime);
 	}
 	else if (m_FadeState == FADE_OUT)
 	{
-		alpha = m_fFadeTimeCount / m_fFadeTime;
+		// フェードアウト
+		m_fAlpha = m_fFadeTimeCount / m_fFadeTime;
 	}
 
-	m_pSprite->SetAlpha(alpha);
 }
 
 void Fade::Draw()
 {
+	m_pSprite->SetAlpha(m_fAlpha);
 }
 
 void Fade::FadeIn(float time)
@@ -59,7 +61,7 @@ void Fade::FadeIn(float time)
 	m_FadeState = FADE_IN;
 	m_fFadeTime = time;
 	m_fFadeTimeCount = 0.0f;
-	m_pSprite->SetAlpha(1.0f);
+	m_fAlpha = 1.0f;
 }
 
 void Fade::FadeOut(float time)
@@ -69,5 +71,5 @@ void Fade::FadeOut(float time)
 	m_FadeState = FADE_OUT;
 	m_fFadeTime = time;
 	m_fFadeTimeCount = 0.0f;
-	m_pSprite->SetAlpha(0.0f);
+	m_fAlpha = 0.0f;
 }

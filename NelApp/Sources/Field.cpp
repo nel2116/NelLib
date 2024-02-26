@@ -69,7 +69,7 @@ void Field::Update()
 	if (ts->GetPosition().x > m_EndPos.x - (BLOCK_SIZE / 2.0f + 0.5f) && ts->GetPosition().x < m_EndPos.x + (BLOCK_SIZE / 2.0f + 0.5f) &&
 		ts->GetPosition().z > m_EndPos.z - (BLOCK_SIZE / 2.0f + 0.5f) && ts->GetPosition().z < m_EndPos.z + (BLOCK_SIZE / 2.0f + 0.5f))
 	{
-		SCENE_MANAGER.ChangeScene("GameScene");
+		SCENE_MANAGER.ResetScene();
 	}
 	// ‹l‚ñ‚¾‚Æ‚«—p
 	if (IsKeyPress('N') && IsKeyPress('X'))

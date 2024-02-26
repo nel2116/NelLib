@@ -6,7 +6,6 @@ TitleUI::TitleUI()
 	, m_pSprite(nullptr)
 {
 	m_pSprite = AddComponent<SpriteComponent>();
-	m_pSprite->SetTexture(TEXTURE_MANAGER.GetTexture(TextureManager::TEX_TEST));
 	m_pTransform->SetScale(NORMAL_TEX_VEC);
 }
 
@@ -16,6 +15,7 @@ TitleUI::~TitleUI()
 
 void TitleUI::Init()
 {
+	m_pSprite->SetTexture(TEXTURE_MANAGER.GetTexture(TextureManager::TEX_TEST));
 }
 
 void TitleUI::Uninit()
