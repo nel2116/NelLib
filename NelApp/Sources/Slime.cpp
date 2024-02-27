@@ -1,11 +1,13 @@
 #include "Slime.h"
 #include <Managers/ObjectsManager.h>
 #include <Player.h>
+#include <Managers/TextureManager.h>
 
 void Slime::Init()
 {
 	m_pPlayer = OBJECTS_MANAGER.GetObjects<Player>();
 	// ステータスを初期化
+	m_pStatus->SetName("スライム");
 	m_pStatus->SetLevel(1);
 	m_pStatus->SetHp(100);
 	m_pStatus->SetMaxHp(100);
@@ -19,6 +21,7 @@ void Slime::Init()
 	m_pStatus->SetGold(0);
 	m_pStatus->SetMagicResistance(0);
 	m_pStatus->SetPhysicalResistance(0);
+	m_Sprite->SetTexture(TEXTURE_MANAGER.GetTexture(TextureManager::TEX_SLIME));
 }
 
 void Slime::Uninit()

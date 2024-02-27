@@ -164,6 +164,8 @@ void Player::Action()
 		{
 			m_pEnemies[i]->Damage(200);
 		}
+		TEXT_MANAGER.AddText("全体に200のダメージ！", Vector2(500.0f, 620.0f), 60);
+
 		// プレイヤーの行動終了
 		BATTLE_MANAGER.EndPlayerTurn();
 	}

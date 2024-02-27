@@ -88,7 +88,8 @@ void BattleManager::BattleStart()
 
 	// 戦闘を行うエネミーの数をランダムに決定
 	// 最小 : 1, 最大 : 3
-	int enemyNum = rand() % 3 + 1;
+//	int enemyNum = rand() % 3 + 1;
+	int enemyNum = 3;
 
 	// リストのサイズを変更する
 	m_Enemys.resize(enemyNum);
@@ -97,6 +98,10 @@ void BattleManager::BattleStart()
 	for (int i = 0; i < enemyNum; i++)
 	{
 		m_Enemys[i] = EnemyFactory::CreateEnemy(0);
+		Vector3 pos = Vector3(-0.3f + (float)i * 1.1f, 0.0f, 0.0f);
+		// 二体目のエネミーのみ、位置を調整
+		if (i == 1) { pos.y += 0.2f; }
+		m_Enemys[i]->GetTransform()->SetPosition(pos);
 	}
 
 	// エネミーのポインタをプレイヤーに設定
@@ -112,7 +117,7 @@ void BattleManager::BattleStart()
 	TEXT_MANAGER.AddText("モンスターが現れた！", Vector2(500.0f, 490.0f), 110);
 	for (int i = 0; i < m_Enemys.size(); ++i)
 	{
-		TEXT_MANAGER.AddText(m_Enemys[i]->GetName() + "が現れた！", Vector2(580.0f, 530.0f + (30.0f * i)), 120);
+		TEXT_MANAGER.AddText(m_Enemys[i]->GetName() + "が現れた！", Vector2(500.0f, 530.0f + (30.0f * i)), 120);
 	};
 
 	// バトル開始時のBGMを再生

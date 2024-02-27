@@ -19,6 +19,12 @@ public: // enum
 		TEX_TITLE,			// title.png
 		TEX_TITLE_UI,		// titleUI.png
 		TEX_BATTLE_UI,		// battleUI.png
+		TEX_SLIME,			// slime.png
+		TEX_GOBLIN,			// goblin.png
+		TEX_BAT,			// bat.png
+		// TEX_SPIDER,			// spider.png
+		TEX_SKELETON,		// skeleton.png
+		TEX_DRAGON,			// dragon.png
 		TEX_MAX,
 	};
 
