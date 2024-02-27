@@ -4,6 +4,7 @@
 #include <System/Model.h>
 #include <DirectX/Shader.h>
 #include <Components/StatusComponent.h>
+#include <CommandUI.h>
 
 // ====== 前方宣言 ======
 class Enemy;
@@ -57,11 +58,17 @@ public:
 
 	void SetEnemys(std::vector<Enemy*> pEnemies) { m_pEnemies = pEnemies; }
 
+	void Action(int num);
+
 private:
 	// 移動
 	void Move();
 
-	void Action();
+	void Attack();
+
+	void Defence();
+
+	void Item();
 
 	// ステータスの描画
 	void DrawStatus();
@@ -69,9 +76,11 @@ private:
 private:
 	float m_fSpeed;
 	float m_fRotSpeed;
+	int m_nSelect;
 	Model* m_pModel;
 	VertexShader* m_pVS;
 	StatusComponent* m_pStatus;
 	STATE m_State;
 	std::vector<Enemy*> m_pEnemies;
+	CommandUI* m_pUI;
 };

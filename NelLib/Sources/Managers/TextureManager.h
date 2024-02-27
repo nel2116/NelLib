@@ -19,6 +19,7 @@ public: // enum
 		TEX_TITLE,			// title.png
 		TEX_TITLE_UI,		// titleUI.png
 		TEX_BATTLE_UI,		// battleUI.png
+		TEX_COMMAND_UI,		// commandUI.png
 		TEX_SLIME,			// slime.png
 		TEX_GOBLIN,			// goblin.png
 		TEX_BAT,			// bat.png

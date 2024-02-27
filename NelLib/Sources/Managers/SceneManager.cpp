@@ -10,7 +10,7 @@ void SceneManager::Init()
 	AddScene(NEW GameScene());
 
 	// フェードの初期化
-	m_pFade = OBJECTS_MANAGER.AddObject<Fade>();
+	m_pFade = OBJECTS_MANAGER.AddObjects<Fade>();
 
 	// シーンの初期化
 	m_pNextScene = m_pNowScene = m_Scenes["TitleScene"];

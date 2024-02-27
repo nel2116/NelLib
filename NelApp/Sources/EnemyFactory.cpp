@@ -18,7 +18,7 @@ Enemy* EnemyFactory::CreateEnemy(int type)
 
 Enemy* EnemyFactory::CreateSlime()
 {
-	Slime* pSlime = OBJECTS_MANAGER.AddObject<Slime>();
+	Slime* pSlime = OBJECTS_MANAGER.AddObjects<Slime>();
 	pSlime->Init();
 	return pSlime;
 }

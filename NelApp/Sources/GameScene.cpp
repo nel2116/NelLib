@@ -16,8 +16,8 @@ void GameScene::Init()
 {
 	// ÉJÉÅÉâÇÃê›íË
 	CAMERA_MANAGER.SetNowCamera(CameraManager::E_CAM_PLAYER);
-	m_Field = OBJECTS_MANAGER.AddObject<Field>();
-	m_Player = OBJECTS_MANAGER.AddObject<Player>();
+	m_Field = OBJECTS_MANAGER.AddObjects<Field>();
+	m_Player = OBJECTS_MANAGER.AddObjects<Player>();
 }
 
 void GameScene::Uninit()

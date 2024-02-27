@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sources\BattleUI.cpp" />
+    <ClCompile Include="Sources\CommandUI.cpp" />
     <ClCompile Include="Sources\Enemy.cpp" />
     <ClCompile Include="Sources\EnemyFactory.cpp" />
     <ClCompile Include="Sources\Field.cpp" />
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\BattleUI.h" />
+    <ClInclude Include="Sources\CommandUI.h" />
     <ClInclude Include="Sources\Enemy.h" />
     <ClInclude Include="Sources\EnemyFactory.h" />
     <ClInclude Include="Sources\Field.h" />

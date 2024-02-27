@@ -6,10 +6,13 @@
 #include <Managers/SceneManager.h>
 #include <Managers/BattleManager.h>
 #include <Managers/TextManager.h>
+#include <CommandUI.h>
 
 Player::Player()
 	: m_fSpeed(0.2f)
 	, m_fRotSpeed(1.0f)
+	, m_pUI(nullptr)
+	, m_nSelect(0)
 {
 	m_pModel = MODEL_MANAGER.GetModel(ModelManager::MODEL_PLAYER);
 	m_pVS = NEW VertexShader();
@@ -38,6 +41,9 @@ Player::Player()
 
 	// 状態
 	m_State = STATE_MOVE;
+
+	m_pUI = OBJECTS_MANAGER.AddObjects<CommandUI>();
+	m_pUI->SetEnable(false);
 }
 
 Player::~Player()
@@ -51,12 +57,12 @@ void Player::Init()
 
 void Player::Uninit()
 {
+	m_pUI->Destroy();
 }
 
 void Player::Update()
 {
 	if (m_State == STATE_MOVE) { Move(); }
-	if (m_State == STATE_BATTLE && BATTLE_MANAGER.GetBattleState() == BattleManager::BATTLE_STATE_PLAYER_TURN) { Action(); }
 	if (m_State == STATE_BATTLE) { DrawStatus(); }
 	if (IsKeyPress('I')) { m_pStatus->SetHp(0); }
 
@@ -96,7 +102,34 @@ void Player::Damage(int damage)
 void Player::EndBattle()
 {
 	m_State = STATE_MOVE;
+	m_pUI->SetEnable(false);
 	m_pEnemies.clear();
+}
+
+void Player::Action(int num)
+{
+	switch (num)
+	{
+	case CommandUI::COMMAND_TYPE::CMD_ESCAPE:
+		m_pUI->FlagDown();
+		BATTLE_MANAGER.PlayerEscape();
+		break;
+	case CommandUI::COMMAND_TYPE::CMD_ATTACK:
+		Attack();
+		break;
+	case CommandUI::COMMAND_TYPE::CMD_DEFENCE:
+		Defence();
+		// プレイヤーの行動終了
+		BATTLE_MANAGER.EndPlayerTurn();
+		break;
+	case CommandUI::COMMAND_TYPE::CMD_ITEM:
+		Item();
+		// プレイヤーの行動終了
+		BATTLE_MANAGER.EndPlayerTurn();
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::Move()
@@ -145,8 +178,12 @@ void Player::Move()
 	// 回転の設定
 	GetTransform()->SetRotation(Forward);
 
-	// 移動
-	if (bMove) { if (rand() % 1000 < 3) { BATTLE_MANAGER.BattleStart(); } }
+	// 0.3%の確率で敵とエンカウント
+	if (bMove) {
+		if (rand() % 1000 < 10) {
+			BATTLE_MANAGER.BattleStart(); m_pUI->SetEnable(true);
+		}
+	}
 
 	// 座標の更新
 	DirectX::XMFLOAT3 move;
@@ -155,19 +192,30 @@ void Player::Move()
 	GetTransform()->SetPosition(pos);
 }
 
-void Player::Action()
+void Player::Attack()
 {
-	if (IsKeyPress('P'))
-	{
-		// 全エネミーに攻撃
-		for (int i = 0; i < m_pEnemies.size(); i++)
-		{
-			m_pEnemies[i]->Damage(200);
-		}
-		TEXT_MANAGER.AddText("全体に200のダメージ！", Vector2(500.0f, 620.0f), 60);
+	if (IsKeyPress('A')) { m_nSelect--; }
+	if (IsKeyPress('D')) { m_nSelect++; }
+	if (m_nSelect <= 0) { m_nSelect = 0; }
+	if (m_nSelect >= m_pEnemies.size()) { m_nSelect = m_pEnemies.size(); }
 
-		// プレイヤーの行動終了
-		BATTLE_MANAGER.EndPlayerTurn();
+	if (IsKeyPress(VK_RETURN))
+	{
+		m_pEnemies[m_nSelect]->Damage(m_pStatus->GetAttack());
+		std::string str = m_pEnemies[m_nSelect]->GetName() + "に" + std::to_string(m_pStatus->GetAttack()) + "ダメージ！";
+		TEXT_MANAGER.AddText(str, Vector2(500.0f, 500.0f), 60);
 	}
+}
+
+void Player::Defence()
+{
+	m_pStatus->SetDefence(10);
+	TEXT_MANAGER.AddText("プレイヤーは守りを固めた！", Vector2(500.0f, 500.0f), 60);
+	m_pUI->FlagDown();
+}
+
+void Player::Item()
+{
+	m_pUI->FlagDown();
 }
 

@@ -2,6 +2,7 @@
 #include <Player.h>
 #include <Managers/ObjectsManager.h>
 #include <Managers/BattleManager.h>
+#include <Managers/TextManager.h>
 
 Enemy::Enemy()
 	: m_pStatus(nullptr)
@@ -9,6 +10,7 @@ Enemy::Enemy()
 	, m_pPlayer(nullptr)
 	, m_Command(COMMAND_ATTACK)
 	, m_bIsAction(false)
+	, m_TextPosX(0.0f)
 {
 	m_pStatus = AddComponent<StatusComponent>();
 	m_Sprite = AddComponent<SpriteComponent>();
@@ -37,6 +39,7 @@ void Enemy::Init()
 	m_pStatus->SetGold(0);
 	m_pStatus->SetMagicResistance(0);
 	m_pStatus->SetPhysicalResistance(0);
+	m_TextPosX = 390.0f;
 }
 
 void Enemy::Uninit()
@@ -51,6 +54,9 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
+	TEXT_MANAGER.AddText("Name : " + m_pStatus->GetName(), Vector2(m_TextPosX, 13.0f), 10);
+	TEXT_MANAGER.AddText("HP : " + std::to_string(m_pStatus->GetHp()) + " / " + std::to_string(m_pStatus->GetMaxHp()), Vector2(m_TextPosX, 43.0f), 10);
+
 }
 
 void Enemy::Damage(int damage)

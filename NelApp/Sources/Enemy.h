@@ -43,6 +43,9 @@ public:
 	virtual void Damage(int damage);
 
 	std::string GetName() { return m_pStatus->GetName(); }
+	void SetName(std::string str) { m_pStatus->SetName(str); }
+
+	void SetTextPosX(float x) { m_TextPosX = x; }
 
 	// Ž€–S”»’è
 	// true : Ž€–S
@@ -79,4 +82,5 @@ protected:
 	COMMAND_TYPE m_Command;
 	Player* m_pPlayer;
 	bool m_bIsAction;
+	float m_TextPosX;
 };

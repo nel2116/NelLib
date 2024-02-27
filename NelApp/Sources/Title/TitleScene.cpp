@@ -17,8 +17,8 @@ void TitleScene::Init()
 {
 	// ÉVÅ[ÉìÇÃèâä˙âª
 	CAMERA_MANAGER.SetNowCamera(CameraManager::E_CAM_DEBUG);
-	m_TitleUI = OBJECTS_MANAGER.AddObject<TitleUI>();
-	m_TitleBackGround = OBJECTS_MANAGER.AddObject<TitleBackGround>();
+	m_TitleUI = OBJECTS_MANAGER.AddObjects<TitleUI>();
+	m_TitleBackGround = OBJECTS_MANAGER.AddObjects<TitleBackGround>();
 }
 
 void TitleScene::Uninit()

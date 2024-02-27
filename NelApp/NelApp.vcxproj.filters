@@ -12,6 +12,7 @@
     <ClCompile Include="Sources\Title\TitleScene.cpp" />
     <ClCompile Include="Sources\Title\TitleUI.cpp" />
     <ClCompile Include="Sources\BattleUI.cpp" />
+    <ClCompile Include="Sources\CommandUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sources\NelApp.h" />
@@ -25,5 +26,6 @@
     <ClInclude Include="Sources\Title\TitleBackground.h" />
     <ClInclude Include="Sources\Title\TitleScene.h" />
     <ClInclude Include="Sources\BattleUI.h" />
+    <ClInclude Include="Sources\CommandUI.h" />
   </ItemGroup>
 </Project>

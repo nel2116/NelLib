@@ -17,9 +17,6 @@ public:
 	// I—¹
 	void Uninit() override;
 
-	// XV
-	void Draw() override;
-
 private:
 	// UŒ‚
 	void Attack() override;

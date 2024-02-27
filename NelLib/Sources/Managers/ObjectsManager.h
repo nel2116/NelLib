@@ -39,7 +39,7 @@ public:
 
 	// オブジェクトの追加
 	template <typename T>
-	T* AddObject()
+	T* AddObjects()
 	{
 		T* object = nullptr;
 		// Objectクラスを継承していないクラスは追加できない

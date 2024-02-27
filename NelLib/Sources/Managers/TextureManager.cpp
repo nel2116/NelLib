@@ -19,6 +19,7 @@ void TextureManager::Init()
 		WARNINGHR(m_pTextures[TEX_TITLE]->Create("Assets/Textures/TitleUI/title.png"), "TEX_TITLEが読み込めませんでした。");			// TEX_TITLE
 		WARNINGHR(m_pTextures[TEX_TITLE_UI]->Create("Assets/Textures/TitleUI/tartUI.png"), "TEX_TITLE_UIが読み込めませんでした。");		// TEX_TITLE_UI
 		WARNINGHR(m_pTextures[TEX_BATTLE_UI]->Create("Assets/Textures/battleUI.png"), "TEX_BATTLE_UIが読み込めませんでした。");			// TEX_BUTTLE_UI
+		WARNINGHR(m_pTextures[TEX_COMMAND_UI]->Create("Assets/Textures/commandUI.png"), "TEX_COMMAND_UIが読み込めませんでした。");	// TEX_COMMAND_UI
 		WARNINGHR(m_pTextures[TEX_SLIME]->Create("Assets/Textures/Enemy/slime.png"), "TEX_SLIMEが読み込めませんでした。");				// TEX_SLIME
 		WARNINGHR(m_pTextures[TEX_GOBLIN]->Create("Assets/Textures/Enemy/goblin.png"), "TEX_GOBLINが読み込めませんでした。");			// TEX_GOBLIN
 		WARNINGHR(m_pTextures[TEX_BAT]->Create("Assets/Textures/Enemy/bat.png"), "TEX_BATが読み込めませんでした。");					// TEX_BAT

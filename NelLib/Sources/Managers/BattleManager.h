@@ -44,6 +44,8 @@ public:
 
 	void EndPlayerTurn();
 
+	void PlayerEscape();
+
 private:	// ƒƒ“ƒo•Ï”
 
 	// ƒoƒgƒ‹‚Ìó‘Ô

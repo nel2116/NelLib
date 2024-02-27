@@ -7,9 +7,9 @@
 void CameraManager::Init()
 {
 	CameraBase* camera[E_CAM_MAX] = {};
-	camera[E_CAM_DEBUG] = OBJECTS_MANAGER.AddObject<CameraDebug>();
-	camera[E_CAM_UI] = OBJECTS_MANAGER.AddObject<CameraUI>();
-	camera[E_CAM_PLAYER] = OBJECTS_MANAGER.AddObject<CameraPlayer>();
+	camera[E_CAM_DEBUG] = OBJECTS_MANAGER.AddObjects<CameraDebug>();
+	camera[E_CAM_UI] = OBJECTS_MANAGER.AddObjects<CameraUI>();
+	camera[E_CAM_PLAYER] = OBJECTS_MANAGER.AddObjects<CameraPlayer>();
 	for (int i = 0; i < E_CAM_MAX; ++i)
 	{
 		m_Cameras.push_back(camera[i]);

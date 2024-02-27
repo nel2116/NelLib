@@ -7,7 +7,7 @@
 
 void BattleManager::Init()
 {
-	m_BattleUI = OBJECTS_MANAGER.AddObject<BattleUI>();
+	m_BattleUI = OBJECTS_MANAGER.AddObjects<BattleUI>();
 	m_BattleUI->Init();
 	m_BattleUI->SetEnable(false);
 }
@@ -24,15 +24,6 @@ void BattleManager::Update()
 	m_pPlayer = OBJECTS_MANAGER.GetObjects<Player>();
 	if (!m_pPlayer) { return; }
 
-	if (m_BattleState == BATTLE_STATE_ENEMY_TURN)
-	{
-		// 全エネミーの行動フラグを立てる
-		for (int i = 0; i < m_Enemys.size(); ++i)
-		{
-			m_Enemys[i]->StartAction();
-		}
-	}
-
 	// エネミーが全滅しているかどうかの判定
 	// すべてのエネミーの行動が終わっているかどうか判定
 	bool IsAllEnemyDead = false;
@@ -41,12 +32,26 @@ void BattleManager::Update()
 
 	for (int i = 0; i < m_Enemys.size(); ++i)
 	{
-		if (m_Enemys[i]->IsDead()) { IsAllEnemyDeadCount++; }
+		if (m_Enemys[i]->IsDead())
+		{
+			m_Enemys[i]->SetEnable(false);
+			TEXT_MANAGER.AddText(m_Enemys[i]->GetName() + "を倒した！", Vector2(530.0f, 530.0f), 60);
+			IsAllEnemyDeadCount++;
+		}
 		if (!m_Enemys[i]->IsAction()) { IsAllEnemyActionCount++; }
 	}
 
 	if (IsAllEnemyDeadCount == m_Enemys.size()) { IsAllEnemyDead = true; }
 	if (IsAllEnemyActionCount == m_Enemys.size()) { m_BattleState = BATTLE_STATE_PLAYER_TURN; }
+
+	if (m_BattleState == BATTLE_STATE_ENEMY_TURN && IsAllEnemyActionCount != m_Enemys.size())
+	{
+		// 全エネミーの行動フラグを立てる
+		for (int i = 0; i < m_Enemys.size(); ++i)
+		{
+			m_Enemys[i]->StartAction();
+		}
+	}
 
 	if (IsAllEnemyDead)
 	{
@@ -71,7 +76,6 @@ void BattleManager::Update()
 	}
 	// プレイヤーが死んでいるのならシーンを変える
 	if (m_pPlayer->IsDead()) { SCENE_MANAGER.ChangeScene("TitleScene"); }
-
 
 }
 
@@ -98,10 +102,12 @@ void BattleManager::BattleStart()
 	for (int i = 0; i < enemyNum; i++)
 	{
 		m_Enemys[i] = EnemyFactory::CreateEnemy(0);
+		m_Enemys[i]->SetName(m_Enemys[i]->GetName() + std::to_string(i));
 		Vector3 pos = Vector3(-0.3f + (float)i * 1.1f, 0.0f, 0.0f);
 		// 二体目のエネミーのみ、位置を調整
 		if (i == 1) { pos.y += 0.2f; }
 		m_Enemys[i]->GetTransform()->SetPosition(pos);
+		m_Enemys[i]->SetTextPosX(390.0f + (300.0f * i));
 	}
 
 	// エネミーのポインタをプレイヤーに設定
@@ -114,10 +120,10 @@ void BattleManager::BattleStart()
 	m_BattleUI->SetEnable(true);
 
 	// バトル開始時のメッセージを表示
-	TEXT_MANAGER.AddText("モンスターが現れた！", Vector2(500.0f, 490.0f), 110);
+	TEXT_MANAGER.AddText("モンスターが現れた！", Vector2(530.0f, 490.0f), 110);
 	for (int i = 0; i < m_Enemys.size(); ++i)
 	{
-		TEXT_MANAGER.AddText(m_Enemys[i]->GetName() + "が現れた！", Vector2(500.0f, 530.0f + (30.0f * i)), 120);
+		TEXT_MANAGER.AddText(m_Enemys[i]->GetName() + "が現れた！", Vector2(530.0f, 530.0f + (30.0f * i)), 120);
 	};
 
 	// バトル開始時のBGMを再生
@@ -134,4 +140,26 @@ void BattleManager::EndPlayerTurn()
 {
 	// バトルの状態をエネミーのターンに設定
 	m_BattleState = BATTLE_STATE_ENEMY_TURN;
+}
+
+void BattleManager::PlayerEscape()
+{
+	// バトルの状態を終了に設定
+	m_BattleState = BATTLE_STATE_END;
+
+	// リストのお片付け
+	for (int i = 0; i < m_Enemys.size(); ++i)
+	{
+		m_Enemys[i]->Destroy();
+	}
+	m_Enemys.clear();
+
+	// バトル終了時のメッセージを表示
+	TEXT_MANAGER.AddText("ぷれいやーは逃げ出した！", Vector2(490.0f, 230.0f), 120);
+
+	// バトルUIを非表示
+	m_BattleUI->SetEnable(false);
+
+	// プレイヤーの状態を移動に設定
+	m_pPlayer->EndBattle();
 }
